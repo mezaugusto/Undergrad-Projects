@@ -1,0 +1,1279 @@
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       1
+
+                   ********************************************************
+                   *Caja registradora bsica para microprocesador MC68HC11*
+                   * Meza Pea Augusto                                    *
+                   * Moreno Tagle Raphael Ivn                            *
+                   * Muoz Alvarez Rosa Mara Yolotzin                    *
+                   ********************************************************
+
+                   **********************************
+                   *    VARIABLES PUERTO SERIAL     *
+                   **********************************
+                   OPTION EQU   $1039
+                   DDRD   EQU   $1009
+                   SCDR   EQU   $102F
+                   SCCR2  EQU   $102D
+                   SCSR   EQU   $102E
+                   SCCR1  EQU   $102C
+                   BAUD   EQU   $102B
+                   HPRIO  EQU   $103C
+                   ***********************************
+                   * DECLARACION DE VARIABLES        *
+                   ***********************************
+                   ORDEN    EQU $0000
+                   TOTALA   EQU $0002
+                   TOTALB   EQU $0004
+                   TOTALC   EQU $0006
+                   TOTALD   EQU $0008
+                   TOTALE   EQU $000a
+                   TOTAL    EQU $000c
+                   U1       EQU $0010
+                   DIR_BASE EQU $0011
+                   U3       EQU $0012
+                   U4       EQU $0013
+                   U5       EQU $0014
+                   PRINTADD EQU $0015
+                   AUX      EQU $0017
+                   VAR      EQU $0019
+                   CANT_A   EQU $001a
+                   CANT_B   EQU $001b
+                   CANT_C   EQU $001c
+                   CANT_D   EQU $001d
+                   CANT_E   EQU $001e
+                   SHARP    EQU $001f
+                   ***********************************
+                   *  CUERPO  DEL PROGRAMA           *
+                   ***********************************
+                           ORG   $8000
+                   ***STRINGS con los numeros en letra y mensajes de error*****
+  8000 20 20 20 20 ERR     FCC     "     ERROR      n"
+. 8004 20 45 52 52
+. 8008 4F 32 20 20
+. 800C 20 20 20 20
+. 8010 6E
+  8011 29 78 35 30 ESPA    FCC     ")x50    n"
+. 8015 20 20 20 20
+. 8019 6E
+  801A 29 78 31 30 ESPB    FCC     ")x100   n"
+. 801E 30 20 20 20
+. 8022 6E
+  8023 29 78 32 30 ESPC    FCC     ")x200   n"
+. 8027 30 20 20 20
+. 802B 6E
+  802C 29 78 33 30 ESPD    FCC     ")x300   n"
+. 8030 30 20 20 20
+. 8034 6E
+  8035 29 78 34 30 ESPE    FCC     ")x400   n"
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       2
+
+. 8039 30 20 20 20
+. 803D 6E
+  803E 41 52 54 3A ART     FCC     "ART:n"
+. 8042 6E
+  8043 20 20 54 4F TOT     FCC     "  TOT:n"
+. 8047 54 3A 6E
+  804A 41 28 6E    CANTA   FCC     "A(n"
+  804D 42 28 6E    CANTB   FCC     "B(n"
+  8050 43 28 6E    CANTC   FCC     "C(n"
+  8053 44 28 6E    CANTD   FCC     "D(n"
+  8056 45 28 6E    CANTE   FCC     "E(n"
+  8059 20 20 20 20 TICKET  FCC     "     TICKET     n"
+. 805D 20 54 49 43
+. 8061 4B 45 54 20
+. 8065 20 20 20 20
+. 8069 6E
+  806A 20 59 20 43 YCINCO  FCC     " Y CINCOn"
+. 806E 49 4E 43 4F
+. 8072 6E
+  8073 43 49 4E 43 CINCO   FCC     "CINCOn"
+. 8077 4F 6E
+  8079 44 49 45 5A DIEZ    FCC     "DIEZn"
+. 807D 6E
+  807E 51 55 49 4E QUINCE  FCC     "QUINCEn"
+. 8082 43 45 6E
+  8085 56 45 49 4E VEINTE  FCC     "VEINTEn"
+. 8089 54 45 6E
+  808C 56 45 49 4E VEICIN  FCC     "VEINTICINCOn"
+. 8090 54 49 43 49
+. 8094 4E 43 4F 6E
+  8098 54 52 45 49 TREINTA FCC     "TREINTAn"
+. 809C 4E 54 41 6E
+  80A0 43 55 41 52 CUAREN  FCC     "CUARENTAn"
+. 80A4 45 4E 54 41
+. 80A8 6E
+  80A9 43 49 4E 43 CINCUEN FCC     "CINCUENTAn"
+. 80AD 55 45 4E 54
+. 80B1 41 6E
+  80B3 53 45 53 45 SESEN   FCC     "SESENTAn"
+. 80B7 4E 54 41 6E
+  80BB 53 45 54 45 SETEN   FCC     "SETENTAn"
+. 80BF 4E 54 41 6E
+  80C3 4F 43 48 45 OCHEN   FCC     "OCHENTAn"
+. 80C7 4E 54 41 6E
+  80CB 4E 4F 56 45 NOVEN   FCC     "NOVENTAn"
+. 80CF 4E 54 41 6E
+  80D3 43 49 45 4E CIEN    FCC     "CIENn"
+. 80D7 6E
+  80D8 43 49 45 4E CIENTO  FCC     "CIENTOn"
+. 80DC 54 4F 6E
+  80DF 44 4F 53 43 DOSCIEN FCC     "DOSCIENTOSn"
+. 80E3 49 45 4E 54
+. 80E7 4F 53 6E
+  80EA 54 52 45 53 TRECIEN FCC     "TRESCIENTOSn"
+. 80EE 43 49 45 4E
+. 80F2 54 4F 53 6E
+  80F6 43 55 41 54 CUACIEN FCC     "CUATROCIENTOSn"
+. 80FA 52 4F 43 49
+. 80FE 45 4E 54 4F
+. 8102 53 6E
+  8104 51 55 49 4E QUICIEN FCC     "QUINIENTOSn"
+. 8108 49 45 4E 54
+. 810C 4F 53 6E
+  810F 53 45 49 53 SEICIEN FCC     "SEISCIENTOSn"
+. 8113 43 49 45 4E
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       3
+
+. 8117 54 4F 53 6E
+  811B 53 45 54 45 SETCIEN FCC     "SETECIENTOSn"
+. 811F 43 49 45 4E
+. 8123 54 4F 53 6E
+  8127 4F 43 48 4F OCHCIEN FCC     "OCHOCIENTOSn"
+. 812B 43 49 45 4E
+. 812F 54 4F 53 6E
+  8133 4E 4F 56 45 NOVCIEN FCC     "NOVECIENTOSn"
+. 8137 43 49 45 4E
+. 813B 54 4F 53 6E
+  813F 4D 49 4C 6E MIL     FCC     "MILn"
+  8143 44 4F 53 20 DOSMIL  FCC     "DOS MILn"
+. 8147 4D 49 4C 6E
+  814B 54 52 45 53 TREMIL  FCC     "TRES MILn"
+. 814F 20 4D 49 4C
+. 8153 6E
+  8154 43 55 41 54 CUAMIL  FCC     "CUATRO MILn"
+. 8158 52 4F 20 4D
+. 815C 49 4C 6E
+  815F 43 49 4E 43 CINMIL  FCC     "CINCO MILn"
+. 8163 4F 20 4D 49
+. 8167 4C 6E
+  8169 53 45 49 53 SEIMIL  FCC     "SEIS MILn"
+. 816D 20 4D 49 4C
+. 8171 6E
+  8172 53 49 45 54 SIEMIL  FCC     "SIETE MILn"
+. 8176 45 20 4D 49
+. 817A 4C 6E
+  817C 4F 43 48 4F OCHMIL  FCC     "OCHO MILn"
+. 8180 20 4D 49 4C
+. 8184 6E
+  8185 4E 55 45 56 NUEMIL  FCC     "NUEVE MILn"
+. 8189 45 20 4D 49
+. 818D 4C 6E
+                   *************INICIO**************************
+                   INICIO
+                   ****************CONF. PUERTO SERIAL**********
+  818F 8E 00 EE            LDS #$00EE
+  8192 BD 87 C9            JSR SERIAL
+                   ***************CLR VARIABLES****************
+  8195 7F 00 02            CLR TOTALA
+  8198 7F 00 03            CLR $0003
+  819B 7F 00 04            CLR TOTALB
+  819E 7F 00 05            CLR $0005
+  81A1 7F 00 06            CLR TOTALC
+  81A4 7F 00 07            CLR $0007
+  81A7 7F 00 08            CLR TOTALD
+  81AA 7F 00 09            CLR $0009
+  81AD 7F 00 0A            CLR TOTALE
+  81B0 7F 00 0B            ClR $000b
+  81B3 7F 00 0C            CLR TOTAL
+  81B6 7F 00 0D            CLR $000d
+  81B9 7F 00 1A            CLR CANT_A
+  81BC 7F 00 1B            CLR CANT_B
+  81BF 7F 00 1C            CLR CANT_C
+  81C2 7F 00 1D            CLR CANT_D
+  81C5 7F 00 1E            CLR CANT_E
+  81C8 7F 00 1F            CLR SHARP
+  81CB 7F 00 17            CLR AUX
+  81CE 18 CE 00 00         LDY #0
+                   **************LEER DEL PUERTO SERIAL**********
+                   ENCICLATE
+  81D2 86 3F               LDAA #'?
+  81D4 97 00               STAA ORDEN
+                   CICLO
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       4
+
+  81D6 96 00               LDAA ORDEN
+  81D8 81 3F               CMPA #'?
+  81DA 27 FA               BEQ CICLO
+  81DC 81 2B               CMPA #'+
+  81DE 27 F2               BEQ ENCICLATE
+  81E0 81 3D               CMPA #'=
+  81E2 27 3A               BEQ SALTO
+  81E4 81 23               CMPA #'#
+  81E6 27 30               BEQ RESTAR
+  81E8 D6 1F               LDAB SHARP
+  81EA 2E 76               BGT INRESTAR
+                   *************COMPARA CARACTERES***************
+  81EC 81 45               CMPA #'E
+  81EE 23 03               BLS NOLOWCASE
+  81F0 BD 82 0E            JSR LOWCASE
+                   NOLOWCASE
+  81F3 81 41               CMPA #'A
+  81F5 27 2A               BEQ SUMAR_A
+  81F7 81 42               CMPA #'B
+  81F9 27 33               BEQ SUMAR_B
+  81FB 81 43               CMPA #'C
+  81FD 27 3C               BEQ SUMAR_C
+  81FF 81 44               CMPA #'D
+  8201 27 45               BEQ SUMAR_D
+  8203 81 45               CMPA #'E
+  8205 27 4E               BEQ SUMAR_E
+  8207 81 41               CMPA #'A
+  8209 25 0A               BLO INVALID
+  820B 7E 81 D2            JMP ENCICLATE
+
+                   LOWCASE
+  820E 81 7A               CMPA #'z
+  8210 22 03               BHI INVALID
+  8212 80 20               SUBA #$0020
+  8214 39                  RTS
+
+  8215 7E 83 CB    INVALID JMP ERROR
+                   *********Set Bandera de Sharp**********
+                   RESTAR
+  8218 7C 00 1F            INC SHARP
+  821B 7E 81 D2            JMP ENCICLATE
+                   ******Saltar a rutina de Imprimir en pantalla**
+                   SALTO
+  821E 7E 83 DF            JMP IMPRIMIR
+                   **************Operaciones de Sumar*************
+                   SUMAR_A
+  8221 DC 02               LDD TOTALA
+  8223 C3 00 32            ADDD #50
+  8226 DD 02               STD TOTALA
+  8228 7C 00 1A            INC CANT_A
+  822B 7E 81 D2            JMP ENCICLATE
+
+                   SUMAR_B
+  822E DC 04               LDD TOTALB
+  8230 C3 00 64            ADDD #100
+  8233 DD 04               STD TOTALB
+  8235 7C 00 1B            INC CANT_B
+  8238 7E 81 D2            JMP ENCICLATE
+
+                   SUMAR_C
+  823B DC 06               LDD TOTALC
+  823D C3 00 C8            ADDD #200
+  8240 DD 06               STD TOTALC
+  8242 7C 00 1C            INC CANT_C
+  8245 7E 81 D2            JMP ENCICLATE
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       5
+
+
+                   SUMAR_D
+  8248 DC 08               LDD TOTALD
+  824A C3 01 2C            ADDD #300
+  824D DD 08               STD TOTALD
+  824F 7C 00 1D            INC CANT_D
+  8252 7E 81 D2            JMP ENCICLATE
+
+                   SUMAR_E
+  8255 DC 0A               LDD TOTALE
+  8257 C3 01 90            ADDD #400
+  825A DD 0A               STD TOTALE
+  825C 7C 00 1E            INC CANT_E
+  825F 7E 81 D2            JMP ENCICLATE
+                   **********OPERACIONES DE RESTAR*****************
+                   INRESTAR
+  8262 81 45               CMPA #'E
+  8264 23 03               BLS NOLOWCASE2
+  8266 BD 82 0E            JSR LOWCASE
+                   NOLOWCASE2
+  8269 81 41               CMPA #'A
+  826B 27 17               BEQ RESTAR_A
+  826D 81 42               CMPA #'B
+  826F 27 23               BEQ RESTAR_B
+  8271 81 43               CMPA #'C
+  8273 27 2F               BEQ RESTAR_C
+  8275 81 44               CMPA #'D
+  8277 27 3B               BEQ RESTAR_D
+  8279 81 45               CMPA #'E
+  827B 27 47               BEQ RESTAR_E
+  827D 81 41               CMPA #'A
+  827F 25 94               BLO INVALID
+  8281 7E 81 D2            JMP ENCICLATE
+
+                   RESTAR_A
+  8284 DC 02               LDD TOTALA
+  8286 83 00 32            SUBD #50
+  8289 DD 02               STD TOTALA
+  828B 7A 00 1A            DEC CANT_A
+  828E 7F 00 1F            CLR SHARP
+  8291 7E 81 D2            JMP ENCICLATE
+
+                   RESTAR_B
+  8294 DC 04               LDD TOTALB
+  8296 83 00 64            SUBD #100
+  8299 DD 04               STD TOTALB
+  829B 7A 00 1B            DEC CANT_B
+  829E 7F 00 1F            CLR SHARP
+  82A1 7E 81 D2            JMP ENCICLATE
+
+                   RESTAR_C
+  82A4 DC 06               LDD TOTALC
+  82A6 83 00 C8            SUBD #200
+  82A9 DD 06               STD TOTALC
+  82AB 7A 00 1C            DEC CANT_C
+  82AE 7F 00 1F            CLR SHARP
+  82B1 7E 81 D2            JMP ENCICLATE
+
+                   RESTAR_D
+  82B4 DC 08               LDD TOTALD
+  82B6 83 01 2C            SUBD #300
+  82B9 DD 08               STD TOTALD
+  82BB 7A 00 1D            DEC CANT_D
+  82BE 7F 00 1F            CLR SHARP
+  82C1 7E 81 D2            JMP ENCICLATE
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       6
+
+
+                   RESTAR_E
+  82C4 DC 0A               LDD TOTALE
+  82C6 83 01 90            SUBD #400
+  82C9 DD 0A               STD TOTALE
+  82CB 7A 00 1E            DEC CANT_E
+  82CE 7F 00 1F            CLR SHARP
+  82D1 7E 81 D2            JMP ENCICLATE
+                   *************************DESCUENTOS***********************
+                   DESCUENTOS
+  82D4 BD 82 EA            JSR DESCUENTOSA
+  82D7 BD 83 17            JSR DESCUENTOSB
+  82DA BD 83 44            JSR DESCUENTOSC
+  82DD BD 83 71            JSR DESCUENTOSD
+  82E0 BD 83 9E            JSR DESCUENTOSE
+  82E3 39                  RTS
+                   ****************************Divide el acumulador D entre 2***
+.                  **********************
+                   DIVIDIR
+  82E4 CE 00 02            LDX #2
+  82E7 02                  IDIV
+  82E8 8F                  XGDX
+  82E9 39                  RTS
+                   ****************************DESCUENTOS de A******************
+.                  *******
+                   DESCUENTOSA
+  82EA D6 1A               LDAB CANT_A
+  82EC C1 02               CMPB #2
+  82EE 27 0D               BEQ VEINTEA
+  82F0 C1 03               CMPB #3
+  82F2 27 0F               BEQ TREINTAA
+  82F4 C1 04               CMPB #4
+  82F6 27 11               BEQ CUARENTAA
+  82F8 C1 05               CMPB #5
+  82FA 24 13               BHS CINCUENTAA
+  82FC 39                  RTS
+                   VEINTEA
+  82FD CC 00 50            LDD #80
+  8300 DD 02               STD TOTALA
+  8302 39                  RTS
+                   TREINTAA
+  8303 CC 00 69            LDD #105
+  8306 DD 02               STD TOTALA
+  8308 39                  RTS
+                   CUARENTAA
+  8309 CC 00 78            LDD #120
+  830C DD 02               STD TOTALA
+  830E 39                  RTS
+
+                   CINCUENTAA
+  830F DC 02               LDD TOTALA
+  8311 BD 82 E4            JSR DIVIDIR
+  8314 DD 02               STD TOTALA
+  8316 39                  RTS
+                   **************************DESCUENTOS de B********************
+.                  *****
+                   DESCUENTOSB
+  8317 D6 1B               LDAB CANT_B
+  8319 C1 02               CMPB #2
+  831B 27 0D               BEQ VEINTEB
+  831D C1 03               CMPB #3
+  831F 27 0F               BEQ TREINTAB
+  8321 C1 04               CMPB #4
+  8323 27 11               BEQ CUARENTAB
+  8325 C1 05               CMPB #5
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       7
+
+  8327 24 13               BHS CINCUENTAB
+  8329 39                  RTS
+                   VEINTEB
+  832A CC 00 A0            LDD #160
+  832D DD 04               STD TOTALB
+  832F 39                  RTS
+                   TREINTAB
+  8330 CC 00 D2            LDD #210
+  8333 DD 04               STD TOTALB
+  8335 39                  RTS
+                   CUARENTAB
+  8336 CC 00 F0            LDD #240
+  8339 DD 04               STD TOTALB
+  833B 39                  RTS
+
+                   CINCUENTAB
+  833C DC 04               LDD TOTALB
+  833E BD 82 E4            JSR DIVIDIR
+  8341 DD 04               STD TOTALB
+  8343 39                  RTS
+                   *************************DESCUENTOS de C*********************
+.                  ****
+                   DESCUENTOSC
+  8344 D6 1C               LDAB CANT_C
+  8346 C1 02               CMPB #2
+  8348 27 0D               BEQ VEINTEC
+  834A C1 03               CMPB #3
+  834C 27 0F               BEQ TREINTAC
+  834E C1 04               CMPB #4
+  8350 27 11               BEQ CUARENTAC
+  8352 C1 05               CMPB #5
+  8354 24 13               BHS CINCUENTAC
+  8356 39                  RTS
+                   VEINTEC
+  8357 CC 01 40            LDD #320
+  835A DD 06               STD TOTALC
+  835C 39                  RTS
+                   TREINTAC
+  835D CC 01 A4            LDD #420
+  8360 DD 06               STD TOTALC
+  8362 39                  RTS
+                   CUARENTAC
+  8363 CC 01 E0            LDD #480
+  8366 DD 06               STD TOTALC
+  8368 39                  RTS
+
+                   CINCUENTAC
+  8369 DC 06               LDD TOTALC
+  836B BD 82 E4            JSR DIVIDIR
+  836E DD 06               STD TOTALC
+  8370 39                  RTS
+                   *************************DESCUENTOS de D*********************
+.                  ****
+                   DESCUENTOSD
+  8371 D6 1D               LDAB CANT_D
+  8373 C1 02               CMPB #2
+  8375 27 0D               BEQ VEINTED
+  8377 C1 03               CMPB #3
+  8379 27 0F               BEQ TREINTAD
+  837B C1 04               CMPB #4
+  837D 27 11               BEQ CUARENTAD
+  837F C1 05               CMPB #5
+  8381 24 13               BHS CINCUENTAD
+  8383 39                  RTS
+                   VEINTED
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       8
+
+  8384 CC 01 E0            LDD #480
+  8387 DD 08               STD TOTALD
+  8389 39                  RTS
+                   TREINTAD
+  838A CC 02 76            LDD #630
+  838D DD 08               STD TOTALD
+  838F 39                  RTS
+                   CUARENTAD
+  8390 CC 02 D0            LDD #720
+  8393 DD 08               STD TOTALD
+  8395 39                  RTS
+
+                   CINCUENTAD
+  8396 DC 08               LDD TOTALD
+  8398 BD 82 E4            JSR DIVIDIR
+  839B DD 08               STD TOTALD
+  839D 39                  RTS
+                   **************************DESCUENTOS de E********************
+.                  *****
+                   DESCUENTOSE
+  839E D6 1E               LDAB CANT_E
+  83A0 C1 02               CMPB #2
+  83A2 27 0D               BEQ VEINTEE
+  83A4 C1 03               CMPB #3
+  83A6 27 0F               BEQ TREINTAE
+  83A8 C1 04               CMPB #4
+  83AA 27 11               BEQ CUARENTAE
+  83AC C1 05               CMPB #5
+  83AE 24 13               BHS CINCUENTAE
+  83B0 39                  RTS
+                   VEINTEE
+  83B1 CC 02 80            LDD #640
+  83B4 DD 0A               STD TOTALE
+  83B6 39                  RTS
+                   TREINTAE
+  83B7 CC 03 48            LDD #840
+  83BA DD 0A               STD TOTALE
+  83BC 39                  RTS
+                   CUARENTAE
+  83BD CC 03 C0            LDD #960
+  83C0 DD 0A               STD TOTALE
+  83C2 39                  RTS
+
+                   CINCUENTAE
+  83C3 DC 0A               LDD TOTALE
+  83C5 BD 82 E4            JSR DIVIDIR
+  83C8 DD 0A               STD TOTALE
+  83CA 39                  RTS
+                   ******Subrutina que despliega un mensaje de Error************
+.                  *
+                   ERROR
+  83CB BD 84 4D            JSR CLR
+  83CE CE 80 00            LDX #ERR
+  83D1 CC 00 80            LDD #$0080
+  83D4 DD 15               STD PRINTADD
+  83D6 BD 87 A3            JSR PRINT
+  83D9 7E 83 DC            JMP NOPLOOP
+                   NOPLOOP
+  83DC 7E 83 DC            JMP NOPLOOP
+                   ******TERMINA LA OPERACION Y CALCULA LOS TOTALES*************
+                   IMPRIMIR
+  83DF BD 82 D4            JSR DESCUENTOS
+  83E2 CC 00 00            LDD #0
+  83E5 D3 02               ADDD TOTALA
+  83E7 1A 83 27 0F         CPD #$270f
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       9
+
+  83EB 22 DE               BHI ERROR
+  83ED D3 04               ADDD TOTALB
+  83EF 1A 83 27 0F         CPD #$270f
+  83F3 22 D6               BHI ERROR
+  83F5 D3 06               ADDD TOTALC
+  83F7 1A 83 27 0F         CPD #$270f
+  83FB 22 CE               BHI ERROR
+  83FD D3 08               ADDD TOTALD
+  83FF 1A 83 27 0F         CPD #$270f
+  8403 22 C6               BHI ERROR
+  8405 D3 0A               ADDD TOTALE
+  8407 1A 83 27 0F         CPD #$270f
+  840B 22 BE               BHI ERROR
+  840D DD 0C               STD TOTAL
+  840F BD 84 4D            JSR CLR
+  8412 7E 84 97            JMP MILES
+                   ****Subrutina que convierte el acumulador D a decimal*****
+                   DECIMAL
+  8415 7F 00 10            CLR U1
+  8418 7F 00 11            CLR DIR_BASE
+  841B 7F 00 12            CLR U3
+  841E 7F 00 13            CLR U4
+  8421 7F 00 14            CLR U5
+  8424 1A 83 00 00         CPD #0
+  8428 27 22               BEQ FIN
+                   BINBCD
+  842A CE 27 10            LDX  #$2710
+  842D 02                  IDIV
+  842E 8F                  XGDX
+  842F D7 10               STAB U1
+  8431 8F                  XGDX
+  8432 CE 03 E8            LDX  #$3E8
+  8435 02                  IDIV
+  8436 8F                  XGDX
+  8437 D7 11               STAB DIR_BASE
+  8439 8F                  XGDX
+                   BNBCD
+  843A CE 00 64            LDX  #$64
+  843D 02                  IDIV
+  843E 8F                  XGDX
+  843F D7 12               STAB U3
+  8441 8F                  XGDX
+  8442 CE 00 0A            LDX  #$A
+  8445 02                  IDIV
+  8446 8F                  XGDX
+  8447 D7 13               STAB U4
+  8449 8F                  XGDX
+  844A D7 14               STAB U5
+  844C 39          FIN     RTS
+                   *******BORRA LA PANTALLA DESDE $0020 a $00e0 ************
+                   CLR
+  844D 18 CE 00 20         LDY #$0020
+  8451 86 FF               LDAA #$ff
+                   BORRAR
+  8453 18 A7 00            STAA 0,Y
+  8456 18 08               INY
+  8458 18 8C 00 E0         CPY #$00e0
+  845C 27 03               BEQ FINCLR
+  845E 7E 84 53            JMP BORRAR
+                   FINCLR
+  8461 39                  RTS
+                   ********Rutinas de Impresion de numeros de 2 y 4 digitos*****
+.                  ********
+                   PRINT4
+  8462 CE 00 00            LDX #0
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE      10
+
+  8465 18 DE 15            LDY PRINTADD
+  8468 8C 00 04    LOOP    CPX #4
+  846B 27 0D               BEQ FIN_PRINT4
+  846D A6 11               LDAA DIR_BASE,X
+  846F 8B 30               ADDA #$30
+  8471 18 A7 00            STAA 0,Y
+  8474 08                  INX
+  8475 18 08               INY
+  8477 7E 84 68            JMP LOOP
+                   FIN_PRINT4
+  847A 39                  RTS
+
+                   PRINT2
+  847B CE 00 02            LDX #2
+  847E 18 DE 15            LDY PRINTADD
+  8481 8C 00 04    LOOP2   CPX #4
+  8484 27 0D               BEQ FIN_PRINT2
+  8486 A6 11               LDAA DIR_BASE,X
+  8488 8B 30               ADDA #$30
+  848A 18 A7 00            STAA 0,Y
+  848D 08                  INX
+  848E 18 08               INY
+  8490 7E 84 81            JMP LOOP2
+                   FIN_PRINT2
+  8493 18 DF 15            STY PRINTADD
+  8496 39                  RTS
+                   *************EMPIEZA A IMPRIMIR EL TICKET******************
+                   MILES
+                   ************IMPRIME EL FORMATO DEL TICKET********************
+.                  *
+  8497 CC 00 20            LDD #$0020
+  849A DD 15               STD PRINTADD
+  849C CE 80 59            LDX #TICKET
+  849F BD 87 A3            JSR PRINT
+                   *******************Linea de las A************************
+  84A2 CC 00 30            LDD #$0030
+  84A5 DD 15               STD PRINTADD
+  84A7 CE 80 4A            LDX #CANTA
+  84AA BD 87 A3            JSR PRINT
+  84AD D6 1A               LDAB CANT_A
+  84AF 4F                  CLRA
+  84B0 BD 84 15            JSR DECIMAL
+  84B3 BD 84 7B            JSR PRINT2
+  84B6 CE 80 11            LDX #ESPA
+  84B9 BD 87 A3            JSR PRINT
+  84BC DC 02               LDD TOTALA
+  84BE BD 84 15            JSR DECIMAL
+  84C1 BD 84 62            JSR PRINT4
+                   *******************Linea de las B************************
+  84C4 CC 00 40            LDD #$0040
+  84C7 DD 15               STD PRINTADD
+  84C9 CE 80 4D            LDX #CANTB
+  84CC BD 87 A3            JSR PRINT
+  84CF D6 1B               LDAB CANT_B
+  84D1 4F                  CLRA
+  84D2 BD 84 15            JSR DECIMAL
+  84D5 BD 84 7B            JSR PRINT2
+  84D8 CE 80 1A            LDX #ESPB
+  84DB BD 87 A3            JSR PRINT
+  84DE DC 04               LDD TOTALB
+  84E0 BD 84 15            JSR DECIMAL
+  84E3 BD 84 62            JSR PRINT4
+                   *******************Linea de las C************************
+  84E6 CC 00 50            LDD #$0050
+  84E9 DD 15               STD PRINTADD
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE      11
+
+  84EB CE 80 50            LDX #CANTC
+  84EE BD 87 A3            JSR PRINT
+  84F1 D6 1C               LDAB CANT_C
+  84F3 4F                  CLRA
+  84F4 BD 84 15            JSR DECIMAL
+  84F7 BD 84 7B            JSR PRINT2
+  84FA CE 80 23            LDX #ESPC
+  84FD BD 87 A3            JSR PRINT
+  8500 DC 06               LDD TOTALC
+  8502 BD 84 15            JSR DECIMAL
+  8505 BD 84 62            JSR PRINT4
+                   *******************Linea de las D************************
+  8508 CC 00 60            LDD #$0060
+  850B DD 15               STD PRINTADD
+  850D CE 80 53            LDX #CANTD
+  8510 BD 87 A3            JSR PRINT
+  8513 D6 1D               LDAB CANT_D
+  8515 4F                  CLRA
+  8516 BD 84 15            JSR DECIMAL
+  8519 BD 84 7B            JSR PRINT2
+  851C CE 80 2C            LDX #ESPD
+  851F BD 87 A3            JSR PRINT
+  8522 DC 08               LDD TOTALD
+  8524 BD 84 15            JSR DECIMAL
+  8527 BD 84 62            JSR PRINT4
+                   *******************Linea de las E************************
+  852A CC 00 70            LDD #$0070
+  852D DD 15               STD PRINTADD
+  852F CE 80 56            LDX #CANTE
+  8532 BD 87 A3            JSR PRINT
+  8535 D6 1E               LDAB CANT_E
+  8537 4F                  CLRA
+  8538 BD 84 15            JSR DECIMAL
+  853B BD 84 7B            JSR PRINT2
+  853E CE 80 35            LDX #ESPE
+  8541 BD 87 A3            JSR PRINT
+  8544 DC 0A               LDD TOTALE
+  8546 BD 84 15            JSR DECIMAL
+  8549 BD 84 62            JSR PRINT4
+                   *************Linea Articulos y Total en digitos**********
+  854C CC 00 80            LDD #$0080
+  854F DD 15               STD PRINTADD
+  8551 CE 80 3E            LDX #ART
+  8554 BD 87 A3            JSR PRINT
+  8557 D6 1A               LDAB CANT_A
+  8559 DB 1B               ADDB CANT_B
+  855B DB 1C               ADDB CANT_C
+  855D DB 1D               ADDB CANT_D
+  855F DB 1E               ADDB CANT_E
+  8561 86 00               LDAA #0
+  8563 BD 84 15            JSR DECIMAL
+  8566 BD 84 7B            JSR PRINT2
+  8569 CE 80 43            LDX #TOT
+  856C BD 87 A3            JSR PRINT
+  856F DC 0C               LDD TOTAL
+  8571 BD 84 15            JSR DECIMAL
+  8574 BD 84 62            JSR PRINT4
+                   ***************TERMINA formato del ticket******************
+  8577 DC 0C               LDD TOTAL
+  8579 18 CE 00 03         LDY #3
+  857D BD 84 15            JSR DECIMAL
+  8580 18 CE 00 00         LDY #0
+  8584 CE 00 00            LDX #0
+  8587 CC 00 A0            LDD #$00a0
+  858A DD 15               STD PRINTADD
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE      12
+
+  858C 18 A6 11            LDAA DIR_BASE,Y
+  858F 81 01               CMPA #1
+  8591 27 23               BEQ ONET
+  8593 81 02               CMPA #2
+  8595 27 28               BEQ TWOT
+  8597 81 03               CMPA #3
+  8599 27 2D               BEQ THREET
+  859B 81 04               CMPA #4
+  859D 27 32               BEQ FOURT
+  859F 81 05               CMPA #5
+  85A1 27 37               BEQ FIVET
+  85A3 81 06               CMPA #6
+  85A5 27 3C               BEQ SIXT
+  85A7 81 07               CMPA #7
+  85A9 27 41               BEQ SEVENT
+  85AB 81 08               CMPA #8
+  85AD 27 46               BEQ EIGHTT
+  85AF 81 09               CMPA #9
+  85B1 27 4B               BEQ NINET
+  85B3 7E 86 07            JMP CIENTOS
+
+                   ONET
+  85B6 CE 81 3F            LDX #MIL
+  85B9 BD 87 A3            JSR PRINT
+  85BC 7E 86 07            JMP CIENTOS
+
+                   TWOT
+  85BF CE 81 43            LDX #DOSMIL
+  85C2 BD 87 A3            JSR PRINT
+  85C5 7E 86 07            JMP CIENTOS
+
+                   THREET
+  85C8 CE 81 4B            LDX #TREMIL
+  85CB BD 87 A3            JSR PRINT
+  85CE 7E 86 07            JMP CIENTOS
+
+                   FOURT
+  85D1 CE 81 54            LDX #CUAMIL
+  85D4 BD 87 A3            JSR PRINT
+  85D7 7E 86 07            JMP CIENTOS
+
+                   FIVET
+  85DA CE 81 5F            LDX #CINMIL
+  85DD BD 87 A3            JSR PRINT
+  85E0 7E 86 07            JMP CIENTOS
+
+                   SIXT
+  85E3 CE 81 69            LDX #SEIMIL
+  85E6 BD 87 A3            JSR PRINT
+  85E9 7E 86 07            JMP CIENTOS
+
+                   SEVENT
+  85EC CE 81 72            LDX #SIEMIL
+  85EF BD 87 A3            JSR PRINT
+  85F2 7E 86 07            JMP CIENTOS
+
+                   EIGHTT
+  85F5 CE 81 7C            LDX #OCHMIL
+  85F8 BD 87 A3            JSR PRINT
+  85FB 7E 86 07            JMP CIENTOS
+
+                   NINET
+  85FE CE 81 85            LDX #NUEMIL
+  8601 BD 87 A3            JSR PRINT
+  8604 7E 86 07            JMP CIENTOS
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE      13
+
+
+                   ************EMPIEZAN LOS CIENTOS****************
+                   CIENTOS
+  8607 18 08               INY
+  8609 CC 00 B0            LDD #$00b0
+  860C DD 15               STD PRINTADD
+  860E 18 A6 11            LDAA DIR_BASE,Y
+  8611 81 01               CMPA #1
+  8613 27 23               BEQ ONEH
+  8615 81 02               CMPA #2
+  8617 27 52               BEQ TWOH
+  8619 81 03               CMPA #3
+  861B 27 57               BEQ THREEH
+  861D 81 04               CMPA #4
+  861F 27 5C               BEQ FOURH
+  8621 81 05               CMPA #5
+  8623 27 61               BEQ FIVEH
+  8625 81 06               CMPA #6
+  8627 27 66               BEQ SIXH
+  8629 81 07               CMPA #7
+  862B 27 6B               BEQ SEVENH
+  862D 81 08               CMPA #8
+  862F 27 70               BEQ EIGHTH
+  8631 81 09               CMPA #9
+  8633 27 75               BEQ NINEH
+  8635 7E 86 C4            JMP DECENAS
+                   ONEH
+  8638 18 08               INY
+  863A 18 A6 11            LDAA DIR_BASE,Y
+  863D 81 00               CMPA #0
+  863F 27 0B               BEQ UN_CERO
+  8641 CE 80 D8            LDX #CIENTO
+  8644 BD 87 A3            JSR PRINT
+  8647 18 09               DEY
+  8649 7E 86 C4            JMP DECENAS
+
+                   UN_CERO
+  864C 18 08               INY
+  864E 18 A6 11            LDAA DIR_BASE,Y
+  8651 81 00               CMPA #0
+  8653 27 0D               BEQ DOS_CEROS
+  8655 CE 80 D8            LDX #CIENTO
+  8658 BD 87 A3            JSR PRINT
+  865B 18 09               DEY
+  865D 18 09               DEY
+  865F 7E 86 C4            JMP DECENAS
+
+                   DOS_CEROS
+  8662 CE 80 D3            LDX #CIEN
+  8665 BD 87 A3            JSR PRINT
+  8668 7E 81 D2            JMP ENCICLATE
+
+                   TWOH
+  866B CE 80 DF            LDX #DOSCIEN
+  866E BD 87 A3            JSR PRINT
+  8671 7E 86 C4            JMP DECENAS
+
+                   THREEH
+  8674 CE 80 EA            LDX #TRECIEN
+  8677 BD 87 A3            JSR PRINT
+  867A 7E 86 C4            JMP DECENAS
+
+                   FOURH
+  867D CE 80 F6            LDX #CUACIEN
+  8680 BD 87 A3            JSR PRINT
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE      14
+
+  8683 7E 86 C4            JMP DECENAS
+
+                   FIVEH
+  8686 CE 81 04            LDX #QUICIEN
+  8689 BD 87 A3            JSR PRINT
+  868C 7E 86 C4            JMP DECENAS
+
+                   SIXH
+  868F CE 81 0F            LDX #SEICIEN
+  8692 BD 87 A3            JSR PRINT
+  8695 7E 86 C4            JMP DECENAS
+
+                   SEVENH
+  8698 CE 81 1B            LDX #SETCIEN
+  869B BD 87 A3            JSR PRINT
+  869E 7E 86 C4            JMP DECENAS
+
+                   EIGHTH
+  86A1 CE 81 27            LDX #OCHCIEN
+  86A4 BD 87 A3            JSR PRINT
+  86A7 7E 86 C4            JMP DECENAS
+
+                   NINEH
+  86AA CE 81 33            LDX #NOVCIEN
+  86AD BD 87 A3            JSR PRINT
+  86B0 7E 86 C4            JMP DECENAS
+                   *************ESTA EST AQUI PARA QUE ALCANZEN LOS SALTOS**
+                   FIVE
+  86B3 BD 87 C1            JSR NEXTCMP
+  86B6 27 03               BEQ FIVEV
+  86B8 7E 81 D2            JMP ENCICLATE
+  86BB CE 80 73    FIVEV   LDX #CINCO
+  86BE BD 87 A3            JSR PRINT
+  86C1 7E 81 D2            JMP ENCICLATE
+                   ******************AQUI EMPIEZAN LAS DECENAS**************
+                   DECENAS
+  86C4 18 08               INY
+  86C6 CC 00 C0            LDD #$00c0
+  86C9 DD 15               STD PRINTADD
+  86CB 18 A6 11            LDAA DIR_BASE,Y
+  86CE 81 00               CMPA #0
+  86D0 27 E1               BEQ FIVE
+  86D2 81 01               CMPA #1
+  86D4 27 20               BEQ TEN
+  86D6 81 02               CMPA #2
+  86D8 27 2A               BEQ TWENTY
+  86DA 81 03               CMPA #3
+  86DC 27 34               BEQ THIRTY
+  86DE 81 04               CMPA #4
+  86E0 27 3E               BEQ FORTY
+  86E2 81 05               CMPA #5
+  86E4 27 48               BEQ FIFTY
+  86E6 81 06               CMPA #6
+  86E8 27 52               BEQ SIXTY
+  86EA 81 07               CMPA #7
+  86EC 27 5C               BEQ SEVENTY
+  86EE 81 08               CMPA #8
+  86F0 27 66               BEQ EIGHTY
+  86F2 81 09               CMPA #9
+  86F4 27 70               BEQ NINETY
+
+                   TEN
+  86F6 BD 87 C1            JSR NEXTCMP
+  86F9 27 79               BEQ QNCE
+  86FB CE 80 79            LDX #DIEZ
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE      15
+
+  86FE BD 87 A3            JSR PRINT
+  8701 7E 81 D2            JMP ENCICLATE
+
+                   TWENTY
+  8704 BD 87 C1            JSR NEXTCMP
+  8707 27 74               BEQ TWEFIV
+  8709 CE 80 85            LDX #VEINTE
+  870C BD 87 A3            JSR PRINT
+  870F 7E 81 D2            JMP ENCICLATE
+
+                   THIRTY
+  8712 CE 80 98            LDX #TREINTA
+  8715 BD 87 A3            JSR PRINT
+  8718 BD 87 C1            JSR NEXTCMP
+  871B 27 69               BEQ ANDFIV
+  871D 7E 81 D2            JMP ENCICLATE
+
+
+                   FORTY
+  8720 CE 80 A0            LDX #CUAREN
+  8723 BD 87 A3            JSR PRINT
+  8726 BD 87 C1            JSR NEXTCMP
+  8729 27 5B               BEQ ANDFIV
+  872B 7E 81 D2            JMP ENCICLATE
+
+                   FIFTY
+  872E CE 80 A9            LDX #CINCUEN
+  8731 BD 87 A3            JSR PRINT
+  8734 BD 87 C1            JSR NEXTCMP
+  8737 27 4D               BEQ ANDFIV
+  8739 7E 81 D2            JMP ENCICLATE
+
+                   SIXTY
+  873C CE 80 B3            LDX #SESEN
+  873F BD 87 A3            JSR PRINT
+  8742 BD 87 C1            JSR NEXTCMP
+  8745 27 3F               BEQ ANDFIV
+  8747 7E 81 D2            JMP ENCICLATE
+
+                   SEVENTY
+  874A CE 80 BB            LDX #SETEN
+  874D BD 87 A3            JSR PRINT
+  8750 BD 87 C1            JSR NEXTCMP
+  8753 27 31               BEQ ANDFIV
+  8755 7E 81 D2            JMP ENCICLATE
+
+                   EIGHTY
+  8758 CE 80 C3            LDX #OCHEN
+  875B BD 87 A3            JSR PRINT
+  875E BD 87 C1            JSR NEXTCMP
+  8761 27 23               BEQ ANDFIV
+  8763 7E 81 D2            JMP ENCICLATE
+
+                   NINETY
+  8766 CE 80 CB            LDX #NOVEN
+  8769 BD 87 A3            JSR PRINT
+  876C BD 87 C1            JSR NEXTCMP
+  876F 27 15               BEQ ANDFIV
+  8771 7E 81 D2            JMP ENCICLATE
+                   QNCE
+  8774 CE 80 7E            LDX #QUINCE
+  8777 BD 87 A3            JSR PRINT
+  877A 7E 81 D2            JMP ENCICLATE
+
+                   TWEFIV
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE      16
+
+  877D CE 80 8C            LDX #VEICIN
+  8780 BD 87 A3            JSR PRINT
+  8783 7E 81 D2            JMP ENCICLATE
+
+                   ANDFIV
+  8786 CE 80 6A            LDX #YCINCO
+  8789 DC 15               LDD PRINTADD
+  878B 1A 83 00 C8         CPD #$00c8
+  878F 22 06               BHI NEXTLINE
+  8791 BD 87 A3            JSR PRINT
+  8794 7E 81 D2            JMP ENCICLATE
+                   NEXTLINE
+  8797 08                  INX
+  8798 CC 00 D0            LDD #$00d0
+  879B DD 15               STD PRINTADD
+  879D BD 87 A3            JSR PRINT
+  87A0 7E 81 D2            JMP ENCICLATE
+
+                   *********ESTA SUBRUTINA IMPRIME EL STRING QUE SE ENCUENTRE
+                   *********EN LA DIRECCION A LA QUE APUNTA EL REGISTRO X
+  87A3 A6 00       PRINT   LDAA 0,X
+  87A5 81 6E               CMPA #'n
+  87A7 27 17               BEQ FINPRNT
+  87A9 18 DF 17            STY AUX
+  87AC 18 DE 15            LDY PRINTADD
+  87AF 18 A7 00            STAA 0,Y
+  87B2 18 DE 17            LDY AUX
+  87B5 08                  INX
+  87B6 DC 15               LDD PRINTADD
+  87B8 C3 00 01            ADDD #1
+  87BB DD 15               STD PRINTADD
+  87BD 7E 87 A3            JMP PRINT
+  87C0 39          FINPRNT RTS
+
+                   ***********SUBRUTINA PARA AHORRAR LINEAS*****
+                   NEXTCMP
+  87C1 18 08               INY
+  87C3 18 A6 11            LDAA DIR_BASE,Y
+  87C6 81 05               CMPA #5
+  87C8 39                  RTS
+                   **************************************************
+                   * SUBRUTINA  DE CONFIGURACION PUERTO SERIAL      *
+                   **************************************************
+                   SERIAL
+  87C9 CC 30 2C            LDD   #$302C  * CONFIGURA PUERTO SERIAL
+  87CC B7 10 2B            STAA  BAUD    * BAUD  9600  para cristal de 8MHz
+  87CF F7 10 2D            STAB  SCCR2   * HABILITA  RX Y TX PERO INTERRUPCN
+.                  SOLO RX
+  87D2 86 00               LDAA  #$00
+  87D4 B7 10 2C            STAA  SCCR1   * 8 BITS
+  87D7 86 FE               LDAA  #$FE    * CONFIG PUERTO D COMO SALIDAS (EXCEPTO
+.                  PD0)
+  87D9 B7 10 09            STAA  DDRD    * SEA  ENABLE DEL DISPLAY  PD4  Y RS
+.                  PD3
+  87DC 86 04               LDAA  #$04
+  87DE B7 10 3C            STAA  HPRIO
+  87E1 86 00               LDAA  #$00
+  87E3 06                  TAP
+  87E4 39                  RTS
+                   ***********************************
+                   * ATENCION A INTERRUPCION SERIAL
+                   ***********************************
+                           ORG  $F100
+  F100 B6 10 2E            LDAA SCSR
+  F103 B6 10 2F            LDAA SCDR
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE      17
+
+  F106 97 00               STAA ORDEN
+  F108 7A 00 19            DEC  VAR
+  F10B 3B                  RTI
+                   ***********************************
+                   * VECTOR INTERRUPCION SERIAL
+                   ***********************************
+                           ORG   $FFD6
+  FFD6 F1 00               FCB   $F1,$00
+                   ***********************************
+                   *RESET
+                   ***********************************
+                           ORG    $FFFE
+  FFFE 80 00       RESET   FCB    $80,$00
+                   ***********************************
+                           END   $8000
+
+  Symbol Table 
+
+  U3                 0012
+  U4                 0013
+  U5                 0014
+  SUMAR_A            8221
+  SUMAR_B            822E
+  SUMAR_C            823B
+  SUMAR_D            8248
+  SUMAR_E            8255
+  ONEH               8638
+  CUAMIL             8154
+  DOSCIEN            80DF
+  FOURH              867D
+  ONET               85B6
+  CIENTO             80D8
+  SERIAL             87C9
+  DECENAS            86C4
+  OPTION             1039
+  FOURT              85D1
+  NOPLOOP            83DC
+  DECIMAL            8415
+  DESCUENTOS         82D4
+  TRECIEN            80EA
+  TOTALA             0002
+  LOOP2              8481
+  BORRAR             8453
+  ERROR              83CB
+  TOTALB             0004
+  TOTALC             0006
+  TOTALD             0008
+  TOTALE             000A
+  IMPRIMIR           83DF
+  LOWCASE            820E
+  TWOH               866B
+  CUACIEN            80F6
+  CINMIL             815F
+  TWOT               85BF
+  RESTAR             8218
+  FIN_PRINT2         8493
+  DIR_BASE           0011
+  FIN_PRINT4         847A
+  SEICIEN            810F
+  TREMIL             814B
+  FORTY              8720
+  SIXTY              873C
+  EIGHTH             86A1
+  THIRTY             8712
+  SCCR1              102C
+  Symbol Table     C:\Users\Augusto\Documents\Python\               PAGE      18
+
+  EIGHTT             85F5
+  SCCR2              102D
+  EIGHTY             8758
+  THREEH             8674
+  QUICIEN            8104
+  FIVE               86B3
+  TWEFIV             877D
+  NINETY             8766
+  BAUD               102B
+  CIEN               80D3
+  BNBCD              843A
+  THREET             85C8
+  CINCO              8073
+  CICLO              81D6
+  FINCLR             8461
+  FIFTY              872E
+  ANDFIV             8786
+  YCINCO             806A
+  VAR                0019
+  CUARENTAA          8309
+  INVALID            8215
+  CUARENTAB          8336
+  CINCUEN            80A9
+  CUARENTAC          8363
+  CUARENTAD          8390
+  CUARENTAE          83BD
+  CUAREN             80A0
+  MILES              8497
+  SESEN              80B3
+  RESTAR_A           8284
+  RESTAR_B           8294
+  RESTAR_C           82A4
+  RESTAR_D           82B4
+  RESTAR_E           82C4
+  NEXTCMP            87C1
+  NUEMIL             8185
+  INRESTAR           8262
+  SHARP              001F
+  NOVEN              80CB
+  TWENTY             8704
+  TOT                8043
+  SEVENTY            874A
+  CANTA              804A
+  CANTB              804D
+  CANTC              8050
+  CANTD              8053
+  DESCUENTOSA        82EA
+  CANTE              8056
+  DESCUENTOSB        8317
+  BINBCD             842A
+  DESCUENTOSC        8344
+  RESET              FFFE
+  FIVEH              8686
+  PRINT2             847B
+  DESCUENTOSD        8371
+  DESCUENTOSE        839E
+  PRINT4             8462
+  ENCICLATE          81D2
+  QNCE               8774
+  TREINTA            8098
+  FIVET              85DA
+  FIVEV              86BB
+  PRINT              87A3
+  TREINTAA           8303
+  TREINTAB           8330
+  Symbol Table     C:\Users\Augusto\Documents\Python\               PAGE      19
+
+  ORDEN              0000
+  TREINTAC           835D
+  TREINTAD           838A
+  TREINTAE           83B7
+  HPRIO              103C
+  ART                803E
+  NOVCIEN            8133
+  SETCIEN            811B
+  CINCUENTAA         830F
+  SALTO              821E
+  CINCUENTAB         833C
+  CINCUENTAC         8369
+  NOLOWCASE          81F3
+  CINCUENTAD         8396
+  CINCUENTAE         83C3
+  CIENTOS            8607
+  OCHCIEN            8127
+  SCSR               102E
+  DIEZ               8079
+  FIN                844C
+  SEIMIL             8169
+  VEICIN             808C
+  SETEN              80BB
+  DOS_CEROS          8662
+  OCHMIL             817C
+  DOSMIL             8143
+  UN_CERO            864C
+  TOTAL              000C
+  CANT_A             001A
+  CANT_B             001B
+  CANT_C             001C
+  OCHEN              80C3
+  CANT_D             001D
+  SIEMIL             8172
+  CANT_E             001E
+  DDRD               1009
+  ESPA               8011
+  ESPB               801A
+  ESPC               8023
+  FINPRNT            87C0
+  ESPD               802C
+  ESPE               8035
+  AUX                0017
+  SCDR               102F
+  VEINTE             8085
+  SIXH               868F
+  NINEH              86AA
+  NEXTLINE           8797
+  VEINTEA            82FD
+  VEINTEB            832A
+  SEVENH             8698
+  VEINTEC            8357
+  VEINTED            8384
+  VEINTEE            83B1
+  LOOP               8468
+  PRINTADD           0015
+  SIXT               85E3
+  NINET              85FE
+  DIVIDIR            82E4
+  SEVENT             85EC
+  ERR                8000
+  CLR                844D
+  NOLOWCASE2         8269
+  MIL                813F
+  QUINCE             807E
+  Symbol Table     C:\Users\Augusto\Documents\Python\               PAGE      20
+
+  INICIO             818F
+  TEN                86F6
+  TICKET             8059
+  U1                 0010

@@ -1,0 +1,499 @@
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       1
+
+                   DIR_BASE EQU $0026 *AQUI EMPIEZA A LEER EL NUM EN DECIMAL
+                   PRINTADD EQU $0030 *GUARDA LA POSICION DONDE DEBE IMPRIMIR
+                   AUX      EQU $0032 *GUARDA TEMPORALMENTE EL ACUM Y
+
+                           ORG     $8000
+
+                   *******STRINGS con los numeros en letra************
+  8000 20 59 20 43 YCINCO  FCC     " Y CINCO0"
+. 8004 49 4E 43 4F
+. 8008 30
+  8009 43 49 4E 43 CINCO   FCC     "CINCO0"
+. 800D 4F 30
+  800F 44 49 45 5A DIEZ    FCC     "DIEZ0"
+. 8013 30
+  8014 51 55 49 4E QUINCE  FCC     "QUINCE0"
+. 8018 43 45 30
+  801B 56 45 49 4E VEINTE  FCC     "VEINTE0"
+. 801F 54 45 30
+  8022 56 45 49 4E VEICIN  FCC     "VEINTICINCO0"
+. 8026 54 49 43 49
+. 802A 4E 00 4F 30
+  802E 54 52 45 49 TREINTA FCC     "TREINTA0"
+. 8032 4E 54 41 30
+  8036 43 55 41 52 CUAREN  FCC     "CUARENTA0"
+. 803A 45 4E 54 41
+. 803E 30
+  803F 43 49 4E 43 CINCUEN FCC     "CINCUENTA0"
+. 8043 55 45 4E 54
+. 8047 41 30
+  8049 53 45 53 45 SESEN   FCC     "SESENTA0"
+. 804D 4E 54 41 30
+  8051 53 45 54 45 SETEN   FCC     "SETENTA0"
+. 8055 4E 54 41 30
+  8059 4F 43 48 45 OCHEN   FCC     "OCHENTA0"
+. 805D 4E 54 41 30
+  8061 4E 4F 56 45 NOVEN   FCC     "NOVENTA0"
+. 8065 4E 54 41 30
+  8069 43 49 45 4E CIEN    FCC     "CIEN0"
+. 806D 30
+  806E 43 49 45 4E CIENTO  FCC     "CIENTO0"
+. 8072 54 4F 30
+  8075 44 4F 53 43 DOSCIEN FCC     "DOSCIENTOS0"
+. 8079 49 45 4E 54
+. 807D 4F 53 30
+  8080 54 52 45 53 TRECIEN FCC     "TRESCIENTOS0"
+. 8084 43 49 45 4E
+. 8088 54 4F 53 30
+  808C 43 55 41 54 CUACIEN FCC     "CUATROCIENTOS0"
+. 8090 52 4F 43 49
+. 8094 45 4E 54 4F
+. 8098 53 30
+  809A 51 55 49 4E QUICIEN FCC     "QUINIENTOS0"
+. 809E 49 45 4E 54
+. 80A2 4F 53 30
+  80A5 53 45 49 53 SEICIEN FCC     "SEISCIENTOS0"
+. 80A9 43 49 45 4E
+. 80AD 54 4F 53 30
+  80B1 53 45 54 45 SETCIEN FCC     "SETECIENTOS0"
+. 80B5 43 49 45 4E
+. 80B9 54 4F 53 30
+  80BD 4F 43 48 4F OCHCIEN FCC     "OCHOCIENTOS0"
+. 80C1 43 49 45 4E
+. 80C5 54 4F 53 30
+  80C9 4E 4F 56 45 NOVCIEN FCC     "NOVECIENTOS0"
+. 80CD 43 49 45 4E
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       2
+
+. 80D1 54 4F 53 30
+  80D5 4D 49 4C 30 MIL     FCC     "MIL0"
+  80D9 44 4F 53 20 DOSMIL  FCC     "DOS MIL0"
+. 80DD 4D 49 4C 30
+  80E1 54 52 45 53 TREMIL  FCC     "TRES MIL0"
+. 80E5 20 4D 49 4C
+. 80E9 30
+  80EA 43 55 41 54 CUAMIL  FCC     "CUATRO MIL0"
+. 80EE 52 4F 20 4D
+. 80F2 49 4C 30
+  80F5 43 49 4E 43 CINMIL  FCC     "CINCO MIL0"
+. 80F9 4F 20 4D 49
+. 80FD 4C 30
+  80FF 53 45 49 53 SEIMIL  FCC     "SEIS MIL0"
+. 8103 20 4D 49 4C
+. 8107 30
+  8108 53 49 45 54 SIEMIL  FCC     "SIETE MIL0"
+. 810C 45 20 4D 49
+. 8110 4C 30
+  8112 4F 43 48 4F OCHMIL  FCC     "OCHO MIL0"
+. 8116 20 4D 49 4C
+. 811A 30
+  811B 4E 55 45 56 NUEMIL  FCC     "NUEVE MIL0"
+. 811F 45 20 4D 49
+. 8123 4C 30
+
+  8125 7F 00 25            CLR $0025 *PARA IDENTIFICAR DONDE ESTA EL NUMERO
+  8128 7F 00 2A            CLR $002A *IDEM
+  812B 18 CE 00 60         LDY #$0060
+  812F 86 FF               LDAA #$ff
+                   *******BORRA LA PANTALLA DESDE $0060 a $00e0 ************
+                   BORRAR
+  8131 18 A7 00            STAA 0,Y
+  8134 18 08               INY
+  8136 18 8C 00 E0         CPY #$00e0
+  813A 27 03               BEQ MILES
+  813C 7E 81 31            JMP BORRAR
+                   ********EMPIEZA POR IMPRIMIR LOS MILES*************
+                   MILES
+  813F 18 CE 00 00         LDY #0
+  8143 CE 00 00            LDX #0
+  8146 CC 00 B0            LDD #$00b0
+  8149 DD 30               STD PRINTADD
+  814B 18 A6 26            LDAA DIR_BASE,Y
+  814E 81 01               CMPA #1
+  8150 27 23               BEQ ONET
+  8152 81 02               CMPA #2
+  8154 27 28               BEQ TWOT
+  8156 81 03               CMPA #3
+  8158 27 2D               BEQ THREET
+  815A 81 04               CMPA #4
+  815C 27 32               BEQ FOURT
+  815E 81 05               CMPA #5
+  8160 27 37               BEQ FIVET
+  8162 81 06               CMPA #6
+  8164 27 3C               BEQ SIXT
+  8166 81 07               CMPA #7
+  8168 27 41               BEQ SEVENT
+  816A 81 08               CMPA #8
+  816C 27 46               BEQ EIGHTT
+  816E 81 09               CMPA #9
+  8170 27 4B               BEQ NINET
+  8172 7E 81 C6            JMP CIENTOS *QUIERE DECIR QUE ES 0
+
+                   ONET
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       3
+
+  8175 CE 80 D5            LDX #MIL
+  8178 BD 83 52            JSR PRINT
+  817B 7E 81 C6            JMP CIENTOS
+
+                   TWOT
+  817E CE 80 D9            LDX #DOSMIL
+  8181 BD 83 52            JSR PRINT
+  8184 7E 81 C6            JMP CIENTOS
+
+                   THREET
+  8187 CE 80 E1            LDX #TREMIL
+  818A BD 83 52            JSR PRINT
+  818D 7E 81 C6            JMP CIENTOS
+
+                   FOURT
+  8190 CE 80 EA            LDX #CUAMIL
+  8193 BD 83 52            JSR PRINT
+  8196 7E 81 C6            JMP CIENTOS
+
+                   FIVET
+  8199 CE 80 F5            LDX #CINMIL
+  819C BD 83 52            JSR PRINT
+  819F 7E 81 C6            JMP CIENTOS
+
+                   SIXT
+  81A2 CE 80 FF            LDX #SEIMIL
+  81A5 BD 83 52            JSR PRINT
+  81A8 7E 81 C6            JMP CIENTOS
+
+                   SEVENT
+  81AB CE 81 08            LDX #SIEMIL
+  81AE BD 83 52            JSR PRINT
+  81B1 7E 81 C6            JMP CIENTOS
+
+                   EIGHTT
+  81B4 CE 81 12            LDX #OCHMIL
+  81B7 BD 83 52            JSR PRINT
+  81BA 7E 81 C6            JMP CIENTOS
+
+                   NINET
+  81BD CE 81 1B            LDX #NUEMIL
+  81C0 BD 83 52            JSR PRINT
+  81C3 7E 81 C6            JMP CIENTOS
+
+                   ************EMPIEZAN LOS CIENTOS****************
+                   CIENTOS
+  81C6 18 08               INY
+  81C8 CC 00 C0            LDD #$00c0
+  81CB DD 30               STD PRINTADD
+  81CD 18 A6 26            LDAA DIR_BASE,Y
+  81D0 81 01               CMPA #1
+  81D2 27 23               BEQ ONEH
+  81D4 81 02               CMPA #2
+  81D6 27 52               BEQ TWOH
+  81D8 81 03               CMPA #3
+  81DA 27 57               BEQ THREEH
+  81DC 81 04               CMPA #4
+  81DE 27 5C               BEQ FOURH
+  81E0 81 05               CMPA #5
+  81E2 27 61               BEQ FIVEH
+  81E4 81 06               CMPA #6
+  81E6 27 66               BEQ SIXH
+  81E8 81 07               CMPA #7
+  81EA 27 6B               BEQ SEVENH
+  81EC 81 08               CMPA #8
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       4
+
+  81EE 27 70               BEQ EIGHTH
+  81F0 81 09               CMPA #9
+  81F2 27 75               BEQ NINEH
+  81F4 7E 82 87            JMP DECENAS
+                   ONEH
+  81F7 18 08               INY
+  81F9 18 A6 26            LDAA DIR_BASE,Y
+  81FC 81 00               CMPA #0
+  81FE 27 0B               BEQ UN_CERO
+  8200 CE 80 6E            LDX #CIENTO
+  8203 BD 83 52            JSR PRINT
+  8206 18 09               DEY
+  8208 7E 82 87            JMP DECENAS
+
+                   UN_CERO
+  820B 18 08               INY
+  820D 18 A6 26            LDAA DIR_BASE,Y
+  8210 81 00               CMPA #0
+  8212 27 0D               BEQ DOS_CEROS
+  8214 CE 80 6E            LDX #CIENTO
+  8217 BD 83 52            JSR PRINT
+  821A 18 09               DEY
+  821C 18 09               DEY
+  821E 7E 82 87            JMP DECENAS
+
+                   DOS_CEROS
+  8221 CE 80 69            LDX #CIEN
+  8224 BD 83 52            JSR PRINT
+  8227 7E 82 72            JMP CICLO
+
+                   TWOH
+  822A CE 80 75            LDX #DOSCIEN
+  822D BD 83 52            JSR PRINT
+  8230 7E 82 87            JMP DECENAS
+
+                   THREEH
+  8233 CE 80 80            LDX #TRECIEN
+  8236 BD 83 52            JSR PRINT
+  8239 7E 82 87            JMP DECENAS
+
+                   FOURH
+  823C CE 80 8C            LDX #CUACIEN
+  823F BD 83 52            JSR PRINT
+  8242 7E 82 87            JMP DECENAS
+
+                   FIVEH
+  8245 CE 80 9A            LDX #QUICIEN
+  8248 BD 83 52            JSR PRINT
+  824B 7E 82 87            JMP DECENAS
+
+                   SIXH
+  824E CE 80 A5            LDX #SEICIEN
+  8251 BD 83 52            JSR PRINT
+  8254 7E 82 87            JMP DECENAS
+
+                   SEVENH
+  8257 CE 80 B1            LDX #SETCIEN
+  825A BD 83 52            JSR PRINT
+  825D 7E 82 87            JMP DECENAS
+
+                   EIGHTH
+  8260 CE 80 BD            LDX #OCHCIEN
+  8263 BD 83 52            JSR PRINT
+  8266 7E 82 87            JMP DECENAS
+
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       5
+
+                   NINEH
+  8269 CE 80 C9            LDX #NOVCIEN
+  826C BD 83 52            JSR PRINT
+  826F 7E 82 87            JMP DECENAS
+                   *******************CICLO ETERNO***************************
+                   CICLO
+  8272 01                  NOP
+  8273 7E 82 72            JMP CICLO
+                   *************ESTA EST AQUI PARA QUE ALCANZEN LOS SALTOS**
+                   FIVE
+  8276 BD 83 70            JSR NEXTCMP
+  8279 27 03               BEQ FIVEV
+  827B 7E 82 72            JMP CICLO
+  827E CE 80 09    FIVEV   LDX #CINCO
+  8281 BD 83 52            JSR PRINT
+  8284 7E 82 72            JMP CICLO
+                   ******************AQUI EMPIEZAN LAS DECENAS**************
+                   DECENAS
+  8287 18 08               INY
+  8289 CC 00 D0            LDD #$00d0
+  828C DD 30               STD PRINTADD
+  828E 18 A6 26            LDAA DIR_BASE,Y
+  8291 81 00               CMPA #0
+  8293 27 E1               BEQ FIVE
+  8295 81 01               CMPA #1
+  8297 27 20               BEQ TEN
+  8299 81 02               CMPA #2
+  829B 27 2A               BEQ TWENTY
+  829D 81 03               CMPA #3
+  829F 27 34               BEQ THIRTY
+  82A1 81 04               CMPA #4
+  82A3 27 3E               BEQ FORTY
+  82A5 81 05               CMPA #5
+  82A7 27 48               BEQ FIFTY
+  82A9 81 06               CMPA #6
+  82AB 27 52               BEQ SIXTY
+  82AD 81 07               CMPA #7
+  82AF 27 5C               BEQ SEVENTY
+  82B1 81 08               CMPA #8
+  82B3 27 66               BEQ EIGHTY
+  82B5 81 09               CMPA #9
+  82B7 27 70               BEQ NINETY
+
+                   TEN
+  82B9 BD 83 70            JSR NEXTCMP
+  82BC 27 79               BEQ QNCE
+  82BE CE 80 0F            LDX #DIEZ
+  82C1 BD 83 52            JSR PRINT
+  82C4 7E 82 72            JMP CICLO
+
+                   TWENTY
+  82C7 BD 83 70            JSR NEXTCMP
+  82CA 27 74               BEQ TWEFIV
+  82CC CE 80 1B            LDX #VEINTE
+  82CF BD 83 52            JSR PRINT
+  82D2 7E 82 72            JMP CICLO
+
+                   THIRTY
+  82D5 CE 80 2E            LDX #TREINTA
+  82D8 BD 83 52            JSR PRINT
+  82DB BD 83 70            JSR NEXTCMP
+  82DE 27 69               BEQ ANDFIV
+  82E0 7E 82 72            JMP CICLO
+
+
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       6
+
+                   FORTY
+  82E3 CE 80 36            LDX #CUAREN
+  82E6 BD 83 52            JSR PRINT
+  82E9 BD 83 70            JSR NEXTCMP
+  82EC 27 5B               BEQ ANDFIV
+  82EE 7E 82 72            JMP CICLO
+
+                   FIFTY
+  82F1 CE 80 3F            LDX #CINCUEN
+  82F4 BD 83 52            JSR PRINT
+  82F7 BD 83 70            JSR NEXTCMP
+  82FA 27 4D               BEQ ANDFIV
+  82FC 7E 82 72            JMP CICLO
+
+                   SIXTY
+  82FF CE 80 49            LDX #SESEN
+  8302 BD 83 52            JSR PRINT
+  8305 BD 83 70            JSR NEXTCMP
+  8308 27 3F               BEQ ANDFIV
+  830A 7E 82 72            JMP CICLO
+
+                   SEVENTY
+  830D CE 80 51            LDX #SETEN
+  8310 BD 83 52            JSR PRINT
+  8313 BD 83 70            JSR NEXTCMP
+  8316 27 31               BEQ ANDFIV
+  8318 7E 82 72            JMP CICLO
+
+                   EIGHTY
+  831B CE 80 59            LDX #OCHEN
+  831E BD 83 52            JSR PRINT
+  8321 BD 83 70            JSR NEXTCMP
+  8324 27 23               BEQ ANDFIV
+  8326 7E 82 72            JMP CICLO
+
+                   NINETY
+  8329 CE 80 61            LDX #NOVEN
+  832C BD 83 52            JSR PRINT
+  832F BD 83 70            JSR NEXTCMP
+  8332 27 15               BEQ ANDFIV
+  8334 7E 82 72            JMP CICLO
+                   QNCE
+  8337 CE 80 14            LDX #QUINCE
+  833A BD 83 52            JSR PRINT
+  833D 7E 82 72            JMP CICLO
+
+                   TWEFIV
+  8340 CE 80 22            LDX #VEICIN
+  8343 BD 83 52            JSR PRINT
+  8346 7E 82 72            JMP CICLO
+
+                   ANDFIV
+  8349 CE 80 00            LDX #YCINCO
+  834C BD 83 52            JSR PRINT
+  834F 7E 82 72            JMP CICLO
+
+                   *********ESTA SUBRUTINA IMPRIME EL STRING QUE SE ENCUENTRE
+                   *********EN LA DIRECCION A LA QUE APUNTA EL REGISTRO X
+  8352 A6 00       PRINT   LDAA 0,X
+  8354 81 30               CMPA #'0
+  8356 27 17               BEQ FINPRNT
+  8358 18 DF 32            STY AUX
+  835B 18 DE 30            LDY PRINTADD
+  835E 18 A7 00            STAA 0,Y
+  8361 18 DE 32            LDY AUX
+  ADDR B1 B2 B3 B4 C:\Users\Augusto\Documents\Python\               PAGE       7
+
+  8364 08                  INX
+  8365 DC 30               LDD PRINTADD
+  8367 C3 00 01            ADDD #1
+  836A DD 30               STD PRINTADD
+  836C 7E 83 52            JMP PRINT
+  836F 39          FINPRNT RTS
+
+                   ***********SUBRUTINA PARA AHORRAR LINEAS*****
+                   NEXTCMP
+  8370 18 08               INY
+  8372 18 A6 26            LDAA DIR_BASE,Y
+  8375 81 05               CMPA #5
+  8377 39                  RTS
+
+  Symbol Table 
+
+  ONEH               81F7
+  CUAMIL             80EA
+  DOSCIEN            8075
+  FOURH              823C
+  ONET               8175
+  CIENTO             806E
+  DECENAS            8287
+  FOURT              8190
+  TRECIEN            8080
+  BORRAR             8131
+  TWOH               822A
+  CUACIEN            808C
+  CINMIL             80F5
+  TWOT               817E
+  DIR_BASE           0026
+  SEICIEN            80A5
+  TREMIL             80E1
+  FORTY              82E3
+  SIXTY              82FF
+  EIGHTH             8260
+  THIRTY             82D5
+  EIGHTT             81B4
+  EIGHTY             831B
+  THREEH             8233
+  QUICIEN            809A
+  FIVE               8276
+  TWEFIV             8340
+  NINETY             8329
+  CIEN               8069
+  THREET             8187
+  CINCO              8009
+  CICLO              8272
+  FIFTY              82F1
+  ANDFIV             8349
+  YCINCO             8000
+  CINCUEN            803F
+  CUAREN             8036
+  MILES              813F
+  SESEN              8049
+  NEXTCMP            8370
+  NUEMIL             811B
+  NOVEN              8061
+  TWENTY             82C7
+  SEVENTY            830D
+  FIVEH              8245
+  QNCE               8337
+  TREINTA            802E
+  FIVET              8199
+  FIVEV              827E
+  Symbol Table     C:\Users\Augusto\Documents\Python\               PAGE       8
+
+  PRINT              8352
+  NOVCIEN            80C9
+  SETCIEN            80B1
+  CIENTOS            81C6
+  OCHCIEN            80BD
+  DIEZ               800F
+  SEIMIL             80FF
+  VEICIN             8022
+  SETEN              8051
+  DOS_CEROS          8221
+  OCHMIL             8112
+  DOSMIL             80D9
+  UN_CERO            820B
+  OCHEN              8059
+  SIEMIL             8108
+  FINPRNT            836F
+  AUX                0032
+  VEINTE             801B
+  SIXH               824E
+  NINEH              8269
+  SEVENH             8257
+  PRINTADD           0030
+  SIXT               81A2
+  NINET              81BD
+  SEVENT             81AB
+  MIL                80D5
+  QUINCE             8014
+  TEN                82B9
