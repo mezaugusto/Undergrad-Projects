@@ -11,46 +11,19 @@
 
 FILE *bitacora;
 char *linea;
-int estado=1,changed=0;
-pthread_t his_thread;
-pthread_mutex_t muthis = PTHREAD_MUTEX_INITIALIZER;
+int estado=1,changed=0,scripting=0,back_stout,back_sterr;
+pthread_t his_thread,scr_thread;
 int micd(char **args);
 int miayuda(char **args);
 int misalida(char **args);
-char *nuestros[] = {"cd","ayuda","salir"};
-int (*funciones[]) (char **) = {&micd,&miayuda,&misalida};
+int mihistory(char **args);
+int miscript(char **args);
+char *nuestros[] = {"cd","ayuda","salir","history","script"};
+int (*funciones[]) (char **) = {&micd,&miayuda,&misalida,&mihistory,&miscript};
 
 int cuantasFunciones()
 {
 	return sizeof(nuestros)/sizeof(char*);
-}
-
-int micd(char **args)
-{
-	if(args[1] == NULL)
-		fprintf(stderr, "bam:\"cd\" requiere 1 argumento\n");
-	else
-		if(chdir(args[1]) != 0)	perror("bam");
-	return 1;
-}
-
-int miayuda(char **args)
-{
-	int i;
-	printf("\t\tBAM Shell\n");
-	printf("Programado por Augusto Meza Peña y Rosa Maria Yolotzin Muñoz Alvarez\n");
-	printf("Con codigo de Stephen Brennan's LSH https://github.com/brenns10/lsh\n");
-	printf("Comandos del Shell\n");
-	for (i = 0; i < cuantasFunciones(); i++)
-    	printf("  %s\n", nuestros[i]);
-
-    printf("Octubre - 2015, Facultad de Ingenieria UNAM\n");
-    return 1;
-}
-
-int misalida(char **args)
-{
-	return 0;
 }
 
 char **parseo(char *linea)
@@ -116,7 +89,7 @@ void loop()
 	char **linea_parse;
 	size_t lon = 0;
 	do {
-		printf("¬ ");
+		if(!scripting)printf("¬ ");
 		linea = (char*)NULL;
 		getline(&linea,&lon,stdin);
 		linea_parse = parseo(linea);
@@ -138,11 +111,103 @@ void *histhread(void *args)
 	do{
 		if(changed)
 		{
+			if(scripting)	fprintf(stdout, "¬ %s", linea);
 			fprintf(bitacora, "%s", linea);
 			changed=0;		
 		}
 	}while(estado);
 	fclose(bitacora);
+}
+
+int micd(char **args)
+{
+	if(args[1] == NULL)
+		fprintf(stderr, "bam:\"cd\" requiere 1 argumento\n");
+	else
+		if(chdir(args[1]) != 0)	perror("bam");
+	return 1;
+}
+
+int miayuda(char **args)
+{
+	int i;
+	printf("\t\tBAM Shell\n");
+	printf("Programado por Augusto Meza Peña y Rosa Maria Yolotzin Muñoz Alvarez\n");
+	printf("Con codigo de Stephen Brennan's LSH https://github.com/brenns10/lsh\n");
+	printf("Comandos del Shell\n");
+	for (i = 0; i < cuantasFunciones(); i++)
+    	printf("  %s\n", nuestros[i]);
+
+    printf("Octubre - 2015, Facultad de Ingenieria UNAM\n");
+    return 1;
+}
+
+int misalida(char **args)
+{
+	return 0;
+}
+
+int mihistory(char **args)
+{
+	char *hist[3] = {"cat","bitacora.txt",NULL};
+	return correr(hist);
+}
+
+void *scrthread(void *args)
+{
+	char c;
+	int sp_pipe[2];
+	fclose(bitacora);
+	pipe(sp_pipe);
+	const pid_t pid = fork();
+	if(!pid)
+	{
+		close(sp_pipe[1]);
+		FILE *grabadora = fopen("grabadora","w");
+		if(!grabadora) perror("bam");
+		while(read(sp_pipe[0],&c,1) > 0) 
+		{
+    		putchar(c);
+    		fputc(c,grabadora);
+    		if(c=='\n') 
+    		{
+    			fflush(stdout);
+    			fflush(grabadora);
+    		}
+		}
+		putchar('\n');
+    	close(sp_pipe[0]);
+    	fclose(grabadora);
+    	exit(1);
+	}
+	else
+	{
+		bitacora = fopen("bitacora.txt","a");
+		close(sp_pipe[0]);
+		back_sterr = dup(STDERR_FILENO);
+		back_stout = dup(STDOUT_FILENO); 
+    	dup2(sp_pipe[1],STDOUT_FILENO);  
+    	dup2(sp_pipe[1],STDERR_FILENO); 
+    	close(sp_pipe[1]);
+	}
+}
+
+int miscript(char **args)
+{
+	scripting=scripting?0:1;
+	if(!scripting)
+	{
+		dup2(back_sterr, STDERR_FILENO);
+		close(back_sterr);
+		dup2(back_stout, STDOUT_FILENO);
+		close(back_stout);
+	}
+	else
+	{
+		if(pthread_create(&scr_thread, NULL, scrthread, NULL))
+		perror("bam");
+	}
+	return 1;
 }
 
 int main(int argc, char const *argv[])
