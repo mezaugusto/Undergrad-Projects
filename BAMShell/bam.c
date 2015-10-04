@@ -5,25 +5,40 @@
 #include <time.h>
 #include <sys/wait.h>
 #include <pthread.h>
+#include <signal.h>
 
 #define MAX_ARGS 64
 #define LIMITADORES " \t\r\n\a"
+#define INPUT_CTRL	11
 
 FILE *bitacora;
 char *linea;
+char *prompt;
 int estado=1,changed=0,scripting=0,back_stout,back_sterr;
-pthread_t his_thread,scr_thread;
+pthread_t his_thread;
 int micd(char **args);
 int miayuda(char **args);
 int misalida(char **args);
 int mihistory(char **args);
 int miscript(char **args);
-char *nuestros[] = {"cd","ayuda","salir","history","script"};
-int (*funciones[]) (char **) = {&micd,&miayuda,&misalida,&mihistory,&miscript};
+int mitee(char **args);
+int mipipe(char **args,int i);
+int mireds(char **args,int i);
+int mirede(char **args,int i);
+int mired2(char **args,int i);
+char *pipedel[] = {"|",">","<","2>"};
+int (*pipefunc[]) (char **,int i) = {&mipipe,&mireds,&mirede,&mired2};
+char *nuestros[] = {"cd","ayuda","salir","history","script","tee"};
+int (*funciones[]) (char **) = {&micd,&miayuda,&misalida,&mihistory,&miscript,&mitee};
 
 int cuantasFunciones()
 {
 	return sizeof(nuestros)/sizeof(char*);
+}
+
+int cuantasPipe()
+{
+	return sizeof(pipedel)/sizeof(char*);
 }
 
 char **parseo(char *linea)
@@ -66,16 +81,23 @@ int correr(char **linea_parse)
 	}
 	else if(pid<0)	perror("bam"),exit(0);
 	else	waitpid(pid,&estado,WUNTRACED);
-	bitacora = fopen("bitacora.txt","a");
+	bitacora = fopen("bitacora","a");
 	if(!bitacora)	perror("bam");
 	return 1;
 }
 
 int ejecutar(char **linea_parse)
 {
-	int i;
+	int i,j;
 	if(linea_parse[0]==NULL)	return 1;
-
+	for(i=0;i<MAX_ARGS;i++)
+	{
+		for(j=0;j<cuantasPipe();j++)
+		{
+			if(strcmp(linea_parse[j],pipedel[i])==0)
+				return(*pipefunc[i])(linea_parse,j);
+		}
+	}
 	for(i=0;i<cuantasFunciones();i++)
 	{
 		if(strcmp(linea_parse[0],nuestros[i])==0)
@@ -89,7 +111,8 @@ void loop()
 	char **linea_parse;
 	size_t lon = 0;
 	do {
-		if(!scripting)printf("¬ ");
+		printf("%s ",prompt);
+		fflush(stdout);
 		linea = (char*)NULL;
 		getline(&linea,&lon,stdin);
 		linea_parse = parseo(linea);
@@ -105,15 +128,15 @@ void *histhread(void *args)
  	struct tm * timeinfo;
 	time(&rawtime);
 	timeinfo=localtime(&rawtime);
-	bitacora = fopen("bitacora.txt","a");
+	bitacora = fopen("bitacora","a");
 	if(!bitacora)	perror("bam");
 	fprintf (bitacora,"Fecha y Hora: %s", asctime(timeinfo));
 	do{
 		if(changed)
 		{
-			if(scripting)	fprintf(stdout, "¬ %s", linea);
+			if(scripting) fprintf(stdout, "%c%s%c", INPUT_CTRL,linea,INPUT_CTRL),fflush(stdout);
 			fprintf(bitacora, "%s", linea);
-			changed=0;		
+			changed=0;
 		}
 	}while(estado);
 	fclose(bitacora);
@@ -149,47 +172,33 @@ int misalida(char **args)
 
 int mihistory(char **args)
 {
-	char *hist[3] = {"cat","bitacora.txt",NULL};
+	char *hist[3] = {"cat","bitacora",NULL};
 	return correr(hist);
 }
 
-void *scrthread(void *args)
+int mitee(char **args)
 {
-	char c;
-	int sp_pipe[2];
-	fclose(bitacora);
-	pipe(sp_pipe);
-	const pid_t pid = fork();
-	if(!pid)
-	{
-		close(sp_pipe[1]);
-		FILE *grabadora = fopen("grabadora","w");
-		if(!grabadora) perror("bam");
-		while(read(sp_pipe[0],&c,1) > 0) 
-		{
-    		putchar(c);
-    		fputc(c,grabadora);
-    		if(c=='\n') 
-    		{
-    			fflush(stdout);
-    			fflush(grabadora);
-    		}
-		}
-		putchar('\n');
-    	close(sp_pipe[0]);
-    	fclose(grabadora);
-    	exit(1);
-	}
-	else
-	{
-		bitacora = fopen("bitacora.txt","a");
-		close(sp_pipe[0]);
-		back_sterr = dup(STDERR_FILENO);
-		back_stout = dup(STDOUT_FILENO); 
-    	dup2(sp_pipe[1],STDOUT_FILENO);  
-    	dup2(sp_pipe[1],STDERR_FILENO); 
-    	close(sp_pipe[1]);
-	}
+	return 1;
+}
+
+int mipipe(char **args,int j)
+{
+	return 1;
+}
+
+int mirede(char **args,int j)
+{
+	return 1;
+}
+
+int mireds(char **args,int j)
+{
+	return 1;
+}
+
+int mired2(char **args,int j)
+{
+	return 1;
 }
 
 int miscript(char **args)
@@ -201,22 +210,81 @@ int miscript(char **args)
 		close(back_sterr);
 		dup2(back_stout, STDOUT_FILENO);
 		close(back_stout);
+		fflush(stdout);
+		printf("Cerrando script....\n");
 	}
 	else
 	{
-		if(pthread_create(&scr_thread, NULL, scrthread, NULL))
-		perror("bam");
+		char c;
+		int sp_pipe[2];
+		fclose(bitacora);
+		pipe(sp_pipe);
+		const pid_t pid = fork();
+		if(!pid)
+		{
+			close(sp_pipe[1]);
+			int noprint=0;
+			FILE *grabadora;
+			grabadora = fopen("grabadora","w");
+			if(!grabadora) perror("bam");
+			while(read(sp_pipe[0],&c,1) > 0) 
+			{
+				if(c==INPUT_CTRL)	noprint=noprint?0:1;
+				else
+				{
+					fputc(c,grabadora);
+	    			if(!noprint)putchar(c);
+	    			fflush(stdout);
+	    			fflush(grabadora);
+	    		}
+			}
+	    	close(sp_pipe[0]);
+	    	fclose(grabadora);
+	    	fflush(stdout);
+	    	exit(1);
+		}
+		else
+		{
+			bitacora = fopen("bitacora","a");
+			close(sp_pipe[0]);
+			back_sterr = dup(STDERR_FILENO);
+			back_stout = dup(STDOUT_FILENO); 
+	    	dup2(sp_pipe[1],STDOUT_FILENO);  
+	    	dup2(sp_pipe[1],STDERR_FILENO); 
+	    	close(sp_pipe[1]);
+		}
 	}
 	return 1;
 }
 
+void veintinueve()
+{
+	strcpy(prompt,"=D");
+}
+
+void treinta()
+{
+	strcpy(prompt,"=P");
+}
+
+void treintauno()
+{
+	strcpy(prompt,"O.o");
+}
+
 int main(int argc, char const *argv[])
 {
+	prompt=malloc(100);
+	strcpy(prompt,"¬");
 	if(pthread_create(&his_thread, NULL, histhread, NULL))
 		perror("bam");
 	system("clear");
+	signal(29, veintinueve);
+	signal(30, treinta);
+	signal(31, treintauno);
 	loop();
 	if(pthread_join(his_thread, NULL))
 		perror("bam");
+	free(prompt);
 	return 0;
 }
