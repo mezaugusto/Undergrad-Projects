@@ -16,6 +16,8 @@
 #include <sys/wait.h>
 #include <pthread.h>
 #include <signal.h>
+#include <fcntl.h>
+
 /**************************
 *       				  *
 *   CONSTANTES GLOBALES   *
@@ -172,6 +174,32 @@ int mihistory(char **args)
 
 int mitee(char **args)
 {
+	int p[2],readbytes,a,esp;
+    char buffer[FILENAME_MAX];
+    char *buffer2;
+    size_t lon = 0;
+    pid_t pid;
+    pipe(p);
+    if((pid = fork()) == 0){ // codigo del hijo 
+        close(p[1]); // cerramos escritura
+        a = open(args[1],O_WRONLY | O_CREAT | O_TRUNC,0644); // se abre el archivo con sus respectivos modificadores de acceso y regresa su fd
+        while((readbytes = read(p[0],buffer,FILENAME_MAX)) > 0){ //se lee el buffer, por bloques de tamaño FILENAME_MAX
+            write(a,buffer,readbytes); //se escribe en el archivo
+            write(1,buffer,readbytes); // se escribe en la terminal stdout
+        }
+        close(a); // cerramos flujos
+        close(p[0]);
+        exit(EXIT_SUCCESS);
+    }else{ // codigo del padre
+        close(p[0]); //cerramos lectura
+        while(!feof(stdin)){
+            buffer2 = (char*)NULL;
+            getline(&buffer2,&lon,stdin); 
+            write(p[1],buffer2,strlen(buffer2)); // se escribe en la tuberia
+        }
+        close(p[1]); // cerramos flujos
+    }
+    waitpid(pid,NULL,0); // se espera al hijo 
 	return 1;
 }
 
