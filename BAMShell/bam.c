@@ -40,7 +40,7 @@ char *prompt;
 pthread_t his_thread;
 /**************************
 *       				  *
-*  BANDERAS Y RESPALDOS   *
+*  BANDERAS   *
 *       				  *
 **************************/
 int estado=1,changed=0,scripting=0,back_stout,back_sterr;
