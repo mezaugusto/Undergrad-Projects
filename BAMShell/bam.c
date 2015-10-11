@@ -56,7 +56,7 @@ int mireds(char **args,int i);
 int mirede(char **args,int i);
 int mired2(char **args,int i);
 char *pipedel[] = {"|",">","<","2>"};
-int (*pipefunc[]) (char **,int i) = {&mipipe,&mireds,&mirede,&mired2};
+int (*pipefunc[]) (char **,int i) = {&mipipe,&mirede,&mireds,&mired2};
 /*********************************************
 *       				  					 *
 *    DECLARACION DE LAS FUNCIONES PROPIAS    *
@@ -101,32 +101,21 @@ int cuantasPipe()
 
 int mipipe(char **args,int div)
 {
-	int p[2],readbytes,i=-1,esp;
-    char buffer[FILENAME_MAX];
-    char *buffer2;
-    size_t lon = 0;
+	int p[2],i,j;
     pid_t pid,pid2;
-    args[div]=NULL;
     char *args1[div+1];
     char *args2[MAX_ARGS-div+1];
-    do
-    {
-    	i++;
+    args[div]=NULL;
+    for(i=0;i<div;i++)
     	args1[i]=args[i];
-    }while(args[i]!=NULL);
-    args1[i]=NULL;
-    int r=-1;
-    do
-    {
-    	i++;
-    	r++;
-    	args2[r]=args[i];
-    	}while(args[i]!=NULL);
-    args2[r]=NULL;
+   	args1[i]=NULL;
+   	for(j=0,i++;args[i]!=NULL;i++,j++)
+    	args2[j]=args[i];
+    args2[j]=NULL;
     pipe(p);
     if((pid = fork()) == 0){ // codigo del hijo
     	close(1);
-        close(p[0]); // cerramos escritura
+        close(p[0]); 
         dup2(p[1],1);
         close(p[1]);
         ejecutar(args1);
@@ -134,7 +123,7 @@ int mipipe(char **args,int div)
     }else{ // codigo del padre  
    		if((pid2 = fork()) == 0){ // codigo del hijo 
 	        close(0);
-	        close(p[1]); //cerramos lectura
+	        close(p[1]); 
 	        dup2(p[0],0);
         	close(p[0]);
            	ejecutar(args2);
@@ -143,23 +132,131 @@ int mipipe(char **args,int div)
     	close(p[0]);   		
     	close(p[1]);
     }
-    waitpid(pid,NULL,0);// se espera al hijo 
+    waitpid(pid,NULL,0);
 	waitpid(pid2,NULL,0);
 	return 1;
 }
 
-int mirede(char **args,int j)
+int mirede(char **args,int div)
 {
+	int p[2],readbytes,a,i,j;
+    char *buffer;
+    pid_t pid,pid2;
+    buffer = malloc(sizeof(char)*FILENAME_MAX);
+    char *args1[div+1];
+    char *args2[MAX_ARGS-div+1];
+    args[div]=NULL;
+    for(i=0;i<div;i++)
+    	args1[i]=args[i];
+   	args1[i]=NULL;
+   	for(j=0,i++;args[i]!=NULL;i++,j++)
+    	args2[j]=args[i];
+    args2[j]=NULL;
+    pipe(p);
+    if((pid = fork()) == 0){ // codigo del hijo
+    	close(1);
+        close(p[0]); 
+        dup2(p[1],1);
+        close(p[1]);
+        ejecutar(args1);
+        exit(EXIT_SUCCESS);
+    }else{ // codigo del padre  
+   		if((pid2 = fork()) == 0){ // codigo del hijo 
+	        close(0);
+	        close(p[1]); 
+           	a = open(args2[0],O_WRONLY | O_CREAT | O_TRUNC,0644);
+           	while((readbytes = read(p[0],buffer,FILENAME_MAX)) > 0)
+	            write(a,buffer,readbytes); //se escribe en el archivo
+        	close(p[0]);
+	        exit(EXIT_SUCCESS);
+    	}
+    	close(p[0]);   		
+    	close(p[1]);
+    }
+    waitpid(pid,NULL,0);
+	waitpid(pid2,NULL,0);
 	return 1;
 }
 
 int mireds(char **args,int j)
 {
+	int p[2],readbytes,a,i,j;
+    char *buffer;
+    pid_t pid,pid2;
+    buffer = malloc(sizeof(char)*FILENAME_MAX);
+    char *args1[div+1];
+    char *args2[MAX_ARGS-div+1];
+    args[div]=NULL;
+    for(i=0;i<div;i++)
+    	args1[i]=args[i];
+   	args1[i]=NULL;
+   	for(j=0,i++;args[i]!=NULL;i++,j++)
+    	args2[j]=args[i];
+    args2[j]=NULL;
+    pipe(p);
+    if((pid = fork()) == 0){ // codigo del hijo
+    	close(1);
+        close(p[0]); 
+        dup2(p[1],1);
+        close(p[1]);
+        ejecutar(args1);
+        exit(EXIT_SUCCESS);
+    }else{ // codigo del padre  
+   		if((pid2 = fork()) == 0){ // codigo del hijo 
+	        close(0);
+	        close(p[1]); 
+           	a = open(args2[0],O_WRONLY | O_CREAT | O_TRUNC,0644);
+           	while((readbytes = read(p[0],buffer,FILENAME_MAX)) > 0)
+	            write(a,buffer,readbytes); //se escribe en el archivo
+        	close(p[0]);
+	        exit(EXIT_SUCCESS);
+    	}
+    	close(p[0]);   		
+    	close(p[1]);
+    }
+    waitpid(pid,NULL,0);
+	waitpid(pid2,NULL,0);
 	return 1;
 }
 
-int mired2(char **args,int j)
+int mired2(char **args,int div)
 {
+	int p[2],readbytes,a,i,j;
+    char *buffer;
+    pid_t pid,pid2;
+    buffer = malloc(sizeof(char)*FILENAME_MAX);
+    char *args1[div+1];
+    char *args2[MAX_ARGS-div+1];
+    args[div]=NULL;
+    for(i=0;i<div;i++)
+    	args1[i]=args[i];
+   	args1[i]=NULL;
+   	for(j=0,i++;args[i]!=NULL;i++,j++)
+    	args2[j]=args[i];
+    args2[j]=NULL;
+    pipe(p);
+    if((pid = fork()) == 0){ // codigo del hijo
+    	close(2);
+        close(p[0]); 
+        dup2(p[1],2);
+        close(p[1]);
+        ejecutar(args1);
+        exit(EXIT_SUCCESS);
+    }else{ // codigo del padre  
+   		if((pid2 = fork()) == 0){ // codigo del hijo 
+	        close(0);
+	        close(p[1]); 
+           	a = open(args2[0],O_WRONLY | O_CREAT | O_TRUNC,0644);
+           	while((readbytes = read(p[0],buffer,FILENAME_MAX)) > 0)
+	            write(a,buffer,readbytes); //se escribe en el archivo
+        	close(p[0]);
+	        exit(EXIT_SUCCESS);
+    	}
+    	close(p[0]);   		
+    	close(p[1]);
+    }
+    waitpid(pid,NULL,0);
+	waitpid(pid2,NULL,0);
 	return 1;
 }
 /*********************************************
@@ -184,12 +281,11 @@ int micd(char **args)
 int miayuda(char **args)
 {
 	int i;
-	char *ayuda[3] = {"cat","ayuda",NULL};
 	printf("\t\tBAM Shell\n");
 	printf("Comandos del Shell\n");
 	for (i = 0; i < cuantasFunciones(); i++)
     	printf("  %s\n", nuestros[i]);
-    return correr(ayuda);
+    return 1;
 }
 
 int misalida(char **args)
@@ -205,9 +301,9 @@ int mihistory(char **args)
 
 int mitee(char **args)
 {
-	int p[2],readbytes,a,esp;
-    char buffer[FILENAME_MAX];
-    char *buffer2;
+	int p[2],readbytes,a;
+    char *buffer;
+    buffer = malloc(sizeof(char)*FILENAME_MAX);
     size_t lon = 0;
     pid_t pid;
     pipe(p);
@@ -224,13 +320,14 @@ int mitee(char **args)
     }else{ // codigo del padre
         close(p[0]); //cerramos lectura
         while(!feof(stdin)){
-            buffer2 = (char*)NULL;
-            getline(&buffer2,&lon,stdin); 
-            write(p[1],buffer2,strlen(buffer2)); // se escribe en la tuberia
+            buffer = (char*)NULL;
+            getline(&buffer,&lon,stdin); 
+            write(p[1],buffer,strlen(buffer)); // se escribe en la tuberia
         }
         close(p[1]); // cerramos flujos
     }
     waitpid(pid,NULL,0); // se espera al hijo 
+    free(buffer);
 	return 1;
 }
 
