@@ -124,24 +124,24 @@ int mipipe(char **args,int div)
     	}while(args[i]!=NULL);
     args2[r]=NULL;
     pipe(p);
-
-    if((pid = fork()) == 0){ // codigo del hijo 
+    if((pid = fork()) == 0){ // codigo del hijo
+    	close(1);
         close(p[0]); // cerramos escritura
-        dup2(p[1],STDOUT_FILENO);
+        dup2(p[1],1);
         close(p[1]);
-        correr(args1);
+        ejecutar(args1);
         exit(EXIT_SUCCESS);
-    }else{ // codigo del padre
-    	close(p[0]);   		
-    	close(p[1]);  
-
+    }else{ // codigo del padre  
    		if((pid2 = fork()) == 0){ // codigo del hijo 
+	        close(0);
 	        close(p[1]); //cerramos lectura
-	        dup2(p[0],STDIN_FILENO);
+	        dup2(p[0],0);
         	close(p[0]);
-           	correr(args2);
+           	ejecutar(args2);
 	        exit(EXIT_SUCCESS);
     	}
+    	close(p[0]);   		
+    	close(p[1]);
     }
     waitpid(pid,NULL,0);// se espera al hijo 
 	waitpid(pid2,NULL,0);
