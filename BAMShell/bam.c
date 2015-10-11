@@ -45,7 +45,7 @@ pthread_t his_thread;
 *  BANDERAS   *
 *       				  *
 **************************/
-int estado=1,changed=0,scripting=0,back_stout,back_sterr;
+int estado=1,changed=0,scripting=0,isChild=0,back_stout,back_sterr;
 /*********************************************
 *       				  					 *
 *   DECLARACION DE LOS OPERADORES PROPIOS    *
@@ -113,6 +113,11 @@ int mipipe(char **args,int div)
     	args2[j]=args[i];
     args2[j]=NULL;
     pipe(p);
+    if(!isChild)
+    {
+    	fclose(bitacora);
+    	isChild=isChild?0:1;
+    }
     if((pid = fork()) == 0){ // codigo del hijo
     	close(1);
         close(p[0]); 
@@ -120,7 +125,7 @@ int mipipe(char **args,int div)
         close(p[1]);
         ejecutar(args1);
         exit(EXIT_SUCCESS);
-    }else{ // codigo del padre  
+    }else{ // codigo del padre
    		if((pid2 = fork()) == 0){ // codigo del hijo 
 	        close(0);
 	        close(p[1]); 
@@ -129,6 +134,8 @@ int mipipe(char **args,int div)
            	ejecutar(args2);
 	        exit(EXIT_SUCCESS);
     	}
+    	bitacora = fopen("bitacora","a");
+    	isChild=isChild?0:1;
     	close(p[0]);   		
     	close(p[1]);
     }
@@ -153,6 +160,11 @@ int mirede(char **args,int div)
     	args2[j]=args[i];
     args2[j]=NULL;
     pipe(p);
+    if(!isChild)
+    {
+    	fclose(bitacora);
+    	isChild=isChild?0:1;
+    }
     if((pid = fork()) == 0){ // codigo del hijo
     	close(1);
         close(p[0]); 
@@ -170,6 +182,8 @@ int mirede(char **args,int div)
         	close(p[0]);
 	        exit(EXIT_SUCCESS);
     	}
+    	bitacora = fopen("bitacora","a");
+    	isChild=isChild?0:1;
     	close(p[0]);   		
     	close(p[1]);
     }
@@ -178,7 +192,7 @@ int mirede(char **args,int div)
 	return 1;
 }
 
-int mireds(char **args,int j)
+int mireds(char **args,int div)
 {
 	int p[2],readbytes,a,i,j;
     char *buffer;
@@ -194,23 +208,30 @@ int mireds(char **args,int j)
     	args2[j]=args[i];
     args2[j]=NULL;
     pipe(p);
+    if(!isChild)
+    {
+    	fclose(bitacora);
+    	isChild=isChild?0:1;
+    }
     if((pid = fork()) == 0){ // codigo del hijo
-    	close(1);
-        close(p[0]); 
-        dup2(p[1],1);
-        close(p[1]);
+    	close(0);
+        close(p[1]); 
+        dup2(p[0],0);
+        close(p[0]);
         ejecutar(args1);
         exit(EXIT_SUCCESS);
     }else{ // codigo del padre  
    		if((pid2 = fork()) == 0){ // codigo del hijo 
-	        close(0);
-	        close(p[1]); 
-           	a = open(args2[0],O_WRONLY | O_CREAT | O_TRUNC,0644);
-           	while((readbytes = read(p[0],buffer,FILENAME_MAX)) > 0)
-	            write(a,buffer,readbytes); //se escribe en el archivo
-        	close(p[0]);
+	        close(1);
+	        close(p[0]); 
+           	a = open(args2[0],O_RDONLY,0644);
+           	while((readbytes = read(a,buffer,FILENAME_MAX)) > 0)
+	            write(p[1],buffer,readbytes); //se escribe en el archivo
+        	close(p[1]);
 	        exit(EXIT_SUCCESS);
     	}
+    	bitacora = fopen("bitacora","a");
+    	isChild=isChild?0:1;
     	close(p[0]);   		
     	close(p[1]);
     }
@@ -235,6 +256,11 @@ int mired2(char **args,int div)
     	args2[j]=args[i];
     args2[j]=NULL;
     pipe(p);
+    if(!isChild)
+    {
+    	fclose(bitacora);
+    	isChild=isChild?0:1;
+    }
     if((pid = fork()) == 0){ // codigo del hijo
     	close(2);
         close(p[0]); 
@@ -252,6 +278,8 @@ int mired2(char **args,int div)
         	close(p[0]);
 	        exit(EXIT_SUCCESS);
     	}
+    	bitacora = fopen("bitacora","a");
+    	isChild=isChild?0:1;
     	close(p[0]);   		
     	close(p[1]);
     }
@@ -307,6 +335,12 @@ int mitee(char **args)
     size_t lon = 0;
     pid_t pid;
     pipe(p);
+    if(!isChild)
+    {
+    	fclose(bitacora);
+    	isChild=isChild?0:1;
+    }
+    fflush(stdout);
     if((pid = fork()) == 0){ // codigo del hijo 
         close(p[1]); // cerramos escritura
         a = open(args[1],O_WRONLY | O_CREAT | O_TRUNC,0644); // se abre el archivo con sus respectivos modificadores de acceso y regresa su fd
@@ -325,6 +359,8 @@ int mitee(char **args)
             write(p[1],buffer,strlen(buffer)); // se escribe en la tuberia
         }
         close(p[1]); // cerramos flujos
+        bitacora = fopen("bitacora","a");
+    	isChild=isChild?0:1;
     }
     waitpid(pid,NULL,0); // se espera al hijo 
     free(buffer);
@@ -333,6 +369,7 @@ int mitee(char **args)
 
 int miscript(char **args)
 {
+	printf("%i\n", isChild);
 	scripting=scripting?0:1;
 	if(!scripting)
 	{
@@ -398,7 +435,7 @@ char **parseo(char *linea)
 	char **tokens = malloc(MAX_ARGS * sizeof(char *));
 	char *token;
 	changed=1;
-	do{}while(changed);
+	do{}while(changed && !isChild);
 	if(!tokens)
 	{
 		fprintf(stderr, "bam: no se pudo reservar memoria\n");
@@ -423,7 +460,8 @@ char **parseo(char *linea)
 int correr(char **linea_parse)
 {
 	int estado,pid;
-	fclose(bitacora);
+	fflush(stdout);
+	if(!isChild)	fclose(bitacora);
 	if((pid = fork())==0)
 	{
 		
@@ -433,7 +471,7 @@ int correr(char **linea_parse)
 	}
 	else if(pid<0)	perror("bam"),exit(0);
 	else	waitpid(pid,&estado,WUNTRACED);
-	bitacora = fopen("bitacora","a");
+	if(!isChild) bitacora = fopen("bitacora","a");
 	if(!bitacora)	perror("bam");
 	return 1;
 }
@@ -468,7 +506,7 @@ void loop()
 	signal(30, treinta);
 	signal(31, treintauno);
 	do {
-		printf("%s ",prompt);
+		printf("%s%i ",prompt,getpid());
 		fflush(stdout);
 		linea = (char*)NULL;
 		getline(&linea,&lon,stdin);
@@ -493,7 +531,7 @@ void *histhread(void *args)
 	if(!bitacora)	perror("bam");
 	fprintf (bitacora,"Fecha y Hora: %s", asctime(timeinfo));
 	do{
-		if(changed)
+		if(changed && !isChild)
 		{
 			if(scripting)
 			{
