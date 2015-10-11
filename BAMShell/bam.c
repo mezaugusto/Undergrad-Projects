@@ -101,19 +101,50 @@ int cuantasPipe()
 
 int mipipe(char **args,int div)
 {
-	int i,j;
-	printf("Dividiendo... \n1)");
-	for(i=0;i<div;i++)
-	{
-		printf("%s ",args[i]);
-	}
-	printf("\n2)");
-	while(args[div+1]!=NULL)
-	{
-		div++;
-		printf("%s ",args[div]);
-	}
-	printf("\n");
+	int p[2],readbytes,i=-1,esp;
+    char buffer[FILENAME_MAX];
+    char *buffer2;
+    size_t lon = 0;
+    pid_t pid,pid2;
+    args[div]=NULL;
+    char *args1[div+1];
+    char *args2[MAX_ARGS-div+1];
+    do
+    {
+    	i++;
+    	args1[i]=args[i];
+    }while(args[i]!=NULL);
+    args1[i]=NULL;
+    int r=-1;
+    do
+    {
+    	i++;
+    	r++;
+    	args2[r]=args[i];
+    	}while(args[i]!=NULL);
+    args2[r]=NULL;
+    pipe(p);
+
+    if((pid = fork()) == 0){ // codigo del hijo 
+        close(p[0]); // cerramos escritura
+        dup2(p[1],STDOUT_FILENO);
+        close(p[1]);
+        correr(args1);
+        exit(EXIT_SUCCESS);
+    }else{ // codigo del padre
+    	close(p[0]);   		
+    	close(p[1]);  
+
+   		if((pid2 = fork()) == 0){ // codigo del hijo 
+	        close(p[1]); //cerramos lectura
+	        dup2(p[0],STDIN_FILENO);
+        	close(p[0]);
+           	correr(args2);
+	        exit(EXIT_SUCCESS);
+    	}
+    }
+    waitpid(pid,NULL,0);// se espera al hijo 
+	waitpid(pid2,NULL,0);
 	return 1;
 }
 
@@ -298,6 +329,7 @@ int correr(char **linea_parse)
 	fclose(bitacora);
 	if((pid = fork())==0)
 	{
+		
 		execvp(linea_parse[0], linea_parse);
 		perror("bam");
 		exit(0);
@@ -313,18 +345,16 @@ int ejecutar(char **linea_parse)
 {
 	int i,j=0;
 	if(linea_parse[0]==NULL)	return 1;
-	if(linea_parse[66]==NULL)	i++;
 	for(i=0;i<MAX_ARGS;i++)
-	{
 		for(j=0;j<cuantasPipe();j++)
 		{
-			if(linea_parse[i]==NULL)	break;
+			if(linea_parse[i]==NULL)	i=MAX_ARGS,j=cuantasPipe();
 			else if (strcmp(linea_parse[i],pipedel[j])==0)
 			{
 				return(*pipefunc[j])(linea_parse,i);
 			}
 		}
-	}
+	
 	for(i=0;i<cuantasFunciones();i++)
 	{
 		if(strcmp(linea_parse[0],nuestros[i])==0)
