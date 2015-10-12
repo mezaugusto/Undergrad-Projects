@@ -18,8 +18,8 @@
 #define MAX_ARGS 64				//Numero maximo de argumentos por linea
 #define LIMITADORES " \t\r\n\a" //Separadores de Argumentos
 #define INPUT_CTRL	11			//Script: char que separa los comandos
-#define BIT_PATH "bitacora"    //Paths para la grabadora y la bitacora
-#define GRA_PATH "grabadora"
+#define BIT_PATH "/bitacora"    //Paths para la grabadora y la bitacora
+#define GRA_PATH "/grabadora"
 /**************************
 *       				  *
 *   VARIABLES GLOBALES    *
@@ -406,7 +406,7 @@ int miscript(char **args)
 					fputc(c,grabadora);
 	    			if(!noprint)putchar(c);//para no imprimir dos veces el comando
 	    			fflush(stdout);
-	    			fflush(gxrabadora);
+	    			fflush(grabadora);
 	    		}
 			}
 	    	close(sp_pipe[0]);
@@ -547,6 +547,7 @@ void *histhread(void *args)
 		}
 	}while(estado);//Mientras el programa corra
 	fclose(bitacora);
+	return NULL;
 }
 /*********************************************
 *       				  					 *

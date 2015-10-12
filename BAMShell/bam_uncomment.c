@@ -11,8 +11,8 @@
 #define MAX_ARGS 64				
 #define LIMITADORES " \t\r\n\a" 
 #define INPUT_CTRL	11			
-#define BIT_PATH "bitacora"
-#define GRA_PATH "grabadora"
+#define BIT_PATH "/bitacora"
+#define GRA_PATH "/grabadora"
 
 FILE *bitacora;
 char *linea;
@@ -495,6 +495,7 @@ void *histhread(void *args)
 		}
 	}while(estado);
 	fclose(bitacora);
+	return NULL;
 }
 
 void veintinueve()
