@@ -55,10 +55,6 @@ int main(int argc, char const *argv[])
         (long long) st.st_size);//file size in bytes
     //printf("%lld ",
      //(long long) st.st_blocks);//blocks allcated
-
-    printf("%s ",ctime(&st.st_ctime));//last status change
-    printf("%s ",ctime(&st.st_atime));//last file access
-    printf("%s ",ctime(&st.st_mtime));//last file modification
-    printf("%s\n", *argv[1] );
+    printf("%s %s\n",ctime(&st.st_mtime),argv[1]);//last file modification
     return 0;
 }
