@@ -3,15 +3,12 @@ body,html{
     height: 100%;
     font-family: 'Lato',"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
-h1,
-h2,
-h3,
-h4{
-    font-family: 'Lato',"Helvetica Neue",Helvetica,Arial,sans-serif;
+h1,h2,h3,h4{
 	color: #f8f8f8;
     margin: 0;
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
 }
+
 .intro-header {
     display: flex;
     width: 100%;
@@ -19,10 +16,10 @@ h4{
     text-align: center;
     justify-content: center;
     align-items: center;
-    color: #f8f8f8;
     background: url(../images/landing.jpg) no-repeat center center;
     background-size: cover;
 }
+
 img{
     width: 30vw;
     max-width : 200px;
@@ -59,6 +56,7 @@ img{
 .network-name {
     text-transform: uppercase;
     font-size: 20px;
+    color: #528CCC;
     font-weight: 400;
     letter-spacing: 2px;
     
