@@ -9,7 +9,7 @@ html
 
 body
 { 
-  font: normal 100% Arial, Helvetica, sans-serif;
+  font-family: 'Lato',"Helvetica Neue",Helvetica,Arial,sans-serif;
   background: #3B3D40;
   color: #000;
   text-align:justify;
@@ -34,7 +34,6 @@ img
 
 h1, h2, h3, h4, h5, h6 
 { 
-  font: normal 175% Arial, Helvetica, sans-serif;
   color: #528CCC;
   letter-spacing: -1px;
   margin: 0 0 10px 0;
@@ -42,23 +41,23 @@ h1, h2, h3, h4, h5, h6
  }
 
 h2
-{ font: normal 165% Arial, Helvetica, sans-serif;}
+{ font-weight: lighter;}
 cz
 h3
-{ font: normal 100% Arial, Helvetica, sans-serif;}
+{ font-size: 100%;}
 
 h4, h5, h6
 { 
   margin: 0;
   padding: 0 0 5px 0;
-  font: normal 150% Arial, Helvetica, sans-serif;
+  font-size: 15vw;
   color: #528CCC;
   line-height: 1.5em;
  }
 
 h5, h6
 { 
-  font: normal 95% Arial, Helvetica, sans-serif;
+  font-size: 15vw;
   color: #888;
   padding-bottom: 15px;
  }
@@ -88,7 +87,7 @@ ol
 ol li
 { margin: 0 0 11px 0;}
 
-#main, #header, #banner, #menubar, #site_content, #footer, #container_footer, #container_header
+#main, header, #banner, #menubar, #site_content, #footer, #container_footer, #container_header
 { 
   margin-left: auto; 
   margin-right: auto;
@@ -103,7 +102,7 @@ ol li
   background: #3B3D40;
 }
 
-#header
+header
 { 
   width: 940px;
   height: 155px;
@@ -132,14 +131,14 @@ ol li
 
 #banner H1
 { 
-  font: normal 200% Arial, Helvetica, sans-serif;
+  font: normal 200%;
   color: #FFF;
   padding-bottom: 10px;
 }  
   
 #banner_slogan
 { 
-  font: normal 80% Arial, Helvetica, sans-serif;
+  font: normal 80%;
   width: 300px;
   position: relative;
   float: right;
@@ -202,7 +201,7 @@ ul#menu li
 
 ul#menu li a
 { 
-  font: normal 110% arial, sans-serif;
+  font: normal 110%;
   display: inline;
   letter-spacing: -1px;
   height: 25px;
@@ -253,7 +252,7 @@ ul#menu li a:hover
 
 .sidebar_item
 { 
-  font: normal 100% Arial, Helvetica, sans-serif;
+  font: normal 100%;
   padding: 0 15px 0 10px;
   width: 240px;
 }
@@ -264,6 +263,7 @@ ul#menu li a:hover
   color: #FFF;
   width: 240px;
   padding-left: 10px;
+    text-align: center;
 }
   
 .sidebar h4
@@ -324,7 +324,7 @@ ul#menu li a:hover
   
 #footer
 { 
-  font: normal 120% Arial, Helvetica, sans-serif;
+  font: normal 120%;
   letter-spacing: -1px;
   width: 940px;
   height: 25px;
@@ -383,7 +383,7 @@ ul#menu li a:hover
 { 
   padding: 2px; 
   width: 299px; 
-  font: 100% arial; 
+  font: 100%; 
   border: 1px solid #E5E5DB; 
   background: #FFF; 
   color: #47433F;
@@ -393,7 +393,7 @@ ul#menu li a:hover
 { 
   padding: 2px 0; 
   width: 15px; 
-  font: 100% arial; 
+  font: 100% ; 
   border: 0; 
   background: #FFF; 
   color: #47433F;
@@ -402,7 +402,7 @@ ul#menu li a:hover
 
 .form_settings .submit
 { 
-  font: 100% arial; 
+  font: 100%; 
   border: 1px solid; 
   width: 99px; 
   margin: 0 0 0 206px; 
@@ -417,7 +417,7 @@ ul.slideshow
 {
   list-style: none;
   width: 630px;
-  height: 200px;
+  height: 300px;
   overflow: hidden;
   position: relative;
   margin-left: 20px;
@@ -442,7 +442,7 @@ ul img
 #slideshow-caption 
 {
   width: 600px;
-  height: 210px;
+  height: 300px;
   text-align: right;
   position: absolute;
   bottom: 10px;
@@ -459,7 +459,6 @@ ul img
 #slideshow-caption p 
 {
   padding: 0;
-  font: normal 150% bolder georgia, sans-serif;
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
   color: #000000 solid;
 }
@@ -515,7 +514,6 @@ a.button{
         border-radius: 15px;
         padding: 10px 20px;
         display: block;
-        font-family: arial;
         font-weight: bold;
         text-decoration: none;
         text-shadow:0px 1px 0px #fff;
@@ -564,4 +562,8 @@ a.button{
 {
 	background:#CACAFF;
 	font-weight:bold;
+}
+
+.content_container img {
+    display: block;
 }
