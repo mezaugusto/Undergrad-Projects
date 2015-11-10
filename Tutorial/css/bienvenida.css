@@ -2,8 +2,10 @@ body,html{
     width: 100%;
     height: 100%;
     font-family: 'Lato',"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background: url(../images/landing.jpg) no-repeat center center;
+    background-size: cover;
 }
-h1,h2,h3,h4{
+h1,h2,h3,h4,p{
 	color: #f8f8f8;
     margin: 0;
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
@@ -16,8 +18,6 @@ h1,h2,h3,h4{
     text-align: center;
     justify-content: center;
     align-items: center;
-    background: url(../images/landing.jpg) no-repeat center center;
-    background-size: cover;
 }
 
 img{
@@ -45,12 +45,17 @@ img{
 }
 
 .intro-message > h4 {
-    font-size: 2.5vw;
+    font-size: 2.3vw;
 }
 
 .intro-divider {
     border-top: 1px solid #f8f8f8;
     border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+p {
+    padding-top: 2vh;
+    font-size: 1.3vw;
 }
 
 .network-name {
@@ -84,7 +89,11 @@ img{
     }
 
     .intro-message > h4 {
-        font-size: 2.5vw;
+        font-size: 2.2vw;
+    }
+    p {
+        padding-top: 2vh;
+        font-size: 1.8vw;
     }
 }
 
@@ -110,6 +119,10 @@ img{
     .intro-message > h4 {
         font-size: 4vw;
     }
+    p {
+        padding-top: 2vh;
+        font-size: 2vw;
+    }
 }
 @media(max-width:500px) {
     .intro-message > h1 {
@@ -129,4 +142,12 @@ img{
     .intro-message > h4 {
         font-size: 5vw;
     }
+    p {
+        padding-top: 2vh;
+        font-size: 3vw;
+    }
+}
+
+.titulo {
+    font-size: 3.2vw;
 }

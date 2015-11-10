@@ -230,7 +230,7 @@ ul#menu li a:hover
   width: 920px;
   overflow: hidden;
   margin: 0 auto;
-  padding: 0 0 0 20px;
+  padding: 0 0 0 3px;
   border-left: 1px solid #CBCDCF;  
   border-right: 1px solid #CBCDCF;  
   background: #FFF;
@@ -473,7 +473,7 @@ audio
 
 table
 {
-	border-spacing:150px 30px;
+	border-spacing:.2vw;
 }
 
 td
@@ -566,4 +566,13 @@ a.button{
 
 .content_container img {
     display: block;
+}
+
+.listas {
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+.tutorial span {
+    font-weight: 900;
 }

@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <head>
-    <title>Tutorial 4 Metodolog&iacute;as del desarollo de software</title>
-        <!--[if lt IE 9]>
-        <script src="../js/corrector.js"></script>
-        <![endif]-->
-        <meta name="description" content="p&aacute;gina tutorial del tema 4.? Metodolog&iacute;as del desarollo de software para el semestre 2016-1"/>
-        <meta name="keywords" content="tutorial,FI,UNAM,Metodologias,desarollo,software,2016-1,ingenieria"/>
+    <title>Tutorial 4 Metodolog&iacute;as del desarrollo de software</title>
+    <!--[if lt IE 9]>
+    <script src="../js/corrector.js"></script>
+    <![endif]-->
+    <meta name="description" content="p&aacute;gina tutorial del tema 4.? Metodolog&iacute;as del desarrollo de software para el semestre 2016-1"/>
+    <meta name="keywords" content="tutorial,FI,UNAM,Metodologias,desarrollo,software,2016-1,ingenieria"/>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="../css/detalles.css" />
 		<!--[if lt IE 8]>
 			<link rel="stylesheet" type="text/css" href="../css/especial.css" />
 		<![endif]-->
 	</head>
+
 	<body>
-		<div id="header_container">  
+		<header>  
 			<div id="header">
 				<div id="banner">
-					<h1><span>7.3</span>Validaci&oacute;n de Sistemas Cr&iacute;ticos</h1>
+                    <h1><span>4.1</span>Metodolog&iacute;as del desarrollo de software</h1>
 				</div>
 				<div id="banner_slogan">
 					<h2>Ingenier&iacute;a de Software</h2>
@@ -30,136 +31,60 @@
 						<li><a href="video.html">Video</a></li>
 						<li>
 							<audio controls>
-								<source src="../music/1.mp3" type="audio/mp3"/>
+								<source src="../music/agil.mp3" type="audio/mp3"/>
 							</audio>
 							<!--[if lt IE 9]>
-								<embed autostart="false" src="../music/1.mp3" height=16 width=100></embed>
+								<embed autostart="false" src="../music/agil.mp3" height=16 width=100></embed>
 							<![endif]-->
 						</li>
 					</ul>
 				</div>
 			</div>
-		</div>
+		</header>
 		<div id="main">
 			<div id="site_content">	
 				<div id="content2">
-					<br/><h1>Fiabilidad</h1>	
+					<br/><h1>M&eacute;todos ágiles</h1>	
+					<p class="tutorial">
+                        A medida que las empresas notaron la utilidad de los sistemas computacionales se vieron en la necesidad de implementarlos para mantenerse competitivos. Pero dado el ambiente empresarial tan volátil en que se vive las estrategias comunes a la ingeniería, esto es, la planeación detallada de un proyecto, no son compatibles con este mercado tan cambiante. Es por ello que surgió un acercamiento diferente para resolver este problema.<br><br>
 
-					<p class="tutorial">
-						El objetivo de un sistema cr&iacute;tico es que sea lo m&aacute;s confiable posible, en otras palabras que sea fiable, seguro, est&eacute;
-						disponible siempre y tenga protecci&oacute;n contra cualquier tipo de ataque. Para asegurar la confiabilidad hay que realizar varias pruebas
-						para validar y verificar el sistema, la prueba se considera exitosa cuando el sistema cumple con los objetivos para la cual
-						fue creada la prueba, una de las funciones principales de las pruebas es saber si est&aacute;n cumpliendo las especificaciones, ya sea
-						a nivel general o &uacute;nicamente un componente, cuando se prueba un componente se dice que es una prueba unitaria.
+                        Los métodos ágiles permiten crear sistemas que se adapten al cambio de manera fluida, permiten un acercamiento con el cliente y además son compatibles con el desarrollo acelerado que requiere la industria empresarial. Agregado a esto, los requerimientos cambian constantemente o simplemente no se conocen a priori.<br><br>
+
+                        Estos métodos, cabe aclarar, no son recomendados para sistemas críticos o con equipos de desarrollo muy grandes, ya que en el primer caso se requiere de una alta fiabilidad y seguridad que no ofrece este metodo, ademas los requerimientos de un sistema crítico casi siempre están dados desde el principio. Para el segundo caso, es difícil que un equipo de programadores muy grande pueda colaborar sin interferir y conociendo todo el sistema. Pues como se ahondará más adelante es necesario que todo el equipo de trabajo sepa el funcionamiento de todo el código y pueda modificarlo a discreción.<br><br>
+
+                        Los métodos ágiles más usados en la actualidad son el <a href="extrema.html">método de programación extrema</a> y el <a href="scrum.html">método scrum</a>. Ambos son variaciones del método incremental, pero en lugar de estar basados en un plan se van adaptando al cambio. No se desarrollan de una pasada, sino que se van dividiendo en módulos y se van agregando en forma de incrementos. En general se puede decir que los métodos ágiles comparten las siguientes características.<br><br>
+                    </p>    
+                    <ol class="listas">
+                        <li><p>Las etapas de especificación, diseño e implementación están relacionadas, la documentación se minimiza y los requerimientos no son detallados.</p></li>
+                        <li><p>El sistema es versionado. Es decir, cada que se libera el sistema se agrega una nueva funcionalidad o se realiza una documentación del sistema. Los clientes retroalimentan cada una de estas etapas.</p></li>
+                        <li><p>Las interfaces de usuario se hacen adaptativas, es decir, agregar funcionalidades no supone un rediseño completo ni una nueva implementación.</p></li>
+                    </ol>
+                    <p class="tutorial">
+                        Además de compartir estas características los métodos ágiles, en su mayoría toman como principios lo que se conoce como Manifiesto Ágil y que en resumen tiene los siguientes conceptos:
+                        <br><br><span>Participación del cliente</span>: Para que el software se diseñe a medida del cliente este debe estar presente durante el proceso de desarrollo y ser colaborativo, es decir que evalúe puntualmente las liberaciones del sistema.
+                        <br><span>Entrega Incremental</span>: Ya que está basado en el método incremental es natural que se desarrolle de esta manera, y en cada uno es indispensable que el cliente fije los requerimientos que deberá tener la siguiente liberación.
+                        <br><span>Personas, no procesos</span>: A diferencia de los métodos tradicionales, que son más centrados en los procesos, en el método ágil se debe de enfatizar en el aprovechamiento de los recursos humanos disponibles y sin entorpecer su ritmo de trabajo.
+                        <br><span>Adoptar el cambio</span>: En cuanto se cambien los requerimientos del sistema, este debe adaptarse al cambio y adoptar estos nuevos requerimientos.
+                        <br><span>Mantener simplicidad</span>: Mientras se desarrolla el proyecto la simplicidad y el codigo de alta calidad deben ser prioridades para el equipo de desarrollo.
+                        <br><br>
+                        Sin embargo, hay que tomar en cuenta ciertos aspectos antes de elegir un método de desarrollo ágil.</p>
+        <ol class="listas">
+            <li><p>Se debe tener un cliente dispuesto a la colaboración y que sea representativo del usuario final del sistema.</p></li>
+            <li><p>El equipo de desarrollo debe estar acostumbrado a este ritmo de trabajo y también debe estar dispuesto a colaborar con el cliente y con sus demás compañeros.</p></li>
+            <li><p>Mantener el código simple requiere de mucho esfuerzo y dedicación del equipo de desarrollo y bajo la presión de las fechas, en la práctica esto se omite.</p></li>
+            <li><p>Es difícil para una compañía tradicional cambiar su método a uno más flexible.</p></li>
+                    </ol><p class="tutorial">          Además de estos problemas, los métodos ágiles tienen un problema más general. Los contratos de desarrollo de software normalmente se basan en los requerimientos del sistema y en los métodos ágiles esto no se conoce de antemano.  
+                        <br><br>
+                        Este método además no está formalizado para el mantenimiento de sistemas, y aunque se ha utilizado es más parecido al método de evolución de software.  Además, ya que la documentación es mínima es difícil dar mantenimiento a estos sistemas, por eso se recomiendan estos métodos para sistemas de un ciclo de vida relativamente bajo. En este mismo rubro es difícil que el cliente se involucre cuando requiere mantener un sistema que cuando lo quiere nuevo. Y relacionado con los equipos de trabajo estos no se pueden modificar ya que se han integrado y conocen a la perfección la estructura del sistema.
 					</p>
-					<p class="tutorial">
-						Validar responde a la pregunta ¿estamos construyendo el producto correcto?, mientras que la verificaci&oacute;n 
-						responde a la pregunta ¿estamos construyendo el producto correctamente?, o lo que es lo mismo, validaci&oacute;n es asegurarse que el 
-						producto cumple con las especificaciones del cliente, mientras que la verificaci&oacute;n se encarga de asegurar el
-						funcionamiento correcto y &oacute;ptimo de las funciones implementadas ya que de esto depende el &eacute;xito o fracaso de un 
-						sistema cr&iacute;tico.
-					</p>
-					<!--[if !IE]>
-						<p>
-							<img src="../images/check.jpg" style="height: 250px; width: 300px; margin-left: auto; margin-right: auto; display:block;"/>
-						</p> 
-					<![endif]-->
-					<p class="tutorial">
-						Para comprender mejor como es el estudio de la fiabilidad se debe conocer primero como es un perfil operacional, consiste en una 
-						especificaci&oacute;n de entradas y la probabilidad de que ocurra cada entrada respectivamente, de esta manera las entradas que tienen la m&aacute;s 
-						alta probabilidad de ocurrir se encuentran en una sola parte, mientras que cada entrada especial se encuentra por separado para 
-						su estudio particular.
-					</p>
-					<p>
-						<img src="../images/perfilOperacional.png" style="height: 400px; width: 700px; margin-left: auto; margin-right: auto; display:block;"/>
-					</p>    
-					<p class="tutorial">
-						Para poder conocer el estado de la fiabilidad de un sistema se deben de seguir los siguientes pasos:
-						<ol class="tutorialul">
-							<li>Se establece un perfil operacional estudiando los sistemas existentes que sean similares al que se desea desarrollar.</li>
-							<li>Se construye un conjunto de datos de prueba provenientes del perfil operacional.</li>
-							<li>Se prueba el sistema con estos datos y se registra la frecuencia con la que ocurren los errores.</li>
-							<li>Se calcula la fiabilidad del sistema obteniendo suficientes datos en el paso anterior para realizar un estudio estad&iacute;stico.</li>
-						</ol>
-					</p>
-					<p class="tutorial">
-						A esta forma de conocer la fiabilidad se le llama prueba estad&iacute;stica, su objetivo es medir la fiabilidad usando una gran
-						cantidad de datos obtenidos con pruebas aleatorias, es lo contrario a las pruebas de defectos donde se trata de encontrar la mayor 
-						cantidad de errores sin importar que tan fiable haya resultado el sistema.
-					</p>
-					<p class="tutorial">
-						Si se aplica correctamente este m&eacute;todo se puede conocer la fiabilidad, pero en la pr&aacute;ctica es dif&iacute;cil lograr realizar bien 
-						todos los pasos, esto se debe principalmente a:
-						<ol class="tutorialul">
-							<li>Los perfiles operacionales no son una descripci&oacute;n precisa de la utilizaci&oacute;n real del sistema, adem&aacute;s no es 
-							posible tener un perfil completo ya que el sistema debe ser capaz de responder a entradas no contempladas 
-							en el perfil.</li>
-							<li>Los altos costos en la generaci&oacute;n de datos de prueba.</li>
-							<li>La incertidumbre estad&iacute;stica cuando se busca una fiabilidad alta.</li>
-						</ol>
-					</p>
-					<p class="tutorial">
-						La incertidumbre estad&iacute;stica es un problema que siempre estar&aacute; presente en los modelos probabil&iacute;sticos, ya que obtener una
-						buena predicci&oacute;n de la fiabilidad requiere provocar errores del sistema, pero los datos que obtendremos siempre ser&aacute;n una 
-						muestra y no representar&aacute; todos los errores de nuestro sistema para todo instante de tiempo;
-						la mejor manera de generar los datos que se usar&aacute;n en las pruebas es por medio de herramientas que generen los
-						datos con las caracter&iacute;sticas que se necesitan, pero muchas veces &eacute;stas herramientas no son suficientes para generar
-						los datos de los sistemas con mayor interaci&oacute;n, por lo que los datos se deben generar a mano e implica un mayor costo.
-					</p>
-					<p>
-						<img src="../images/duda.jpg" style="height: 200px; width: 250px; margin-left: auto; margin-right: auto; display:block;"/>
-					</p> 
-					<p class="tutorial">
-						Un sistema nunca lograr&aacute; ser 100% confiable, generalmente un sistema de alta fiabilidad debe tener un error cada 100000 a&ntilde;os, 
-						el nivel de fiabilidad se debe negociar con el cliente ya que mientras m&aacute;s fiable se desea un sistema los costos y el tiempo necesario aumentan de manera no lineal. Para predecir la 
-						fiabilidad se necesita tratarla como una variable de un modelo matem&aacute;tico, el modelo m&aacute;s simple de crecimiento de la fiabilidad 
-						es un modelo de funci&oacute;n escalonada, en donde la fiabilidad va aumentando cada vez que se repara un error, el problema con este 
-						modelo es que supone que cada error es igual de importante y que la soluci&oacute;n al error se implementa de forma correcta sin afectar
-						a los dem&aacute;s componentes del sistema,  lo que ocasiona que cuando se hacen las reparaciones el ROCOF (ROCOF: Rate of OCcurrence Of 
-						Failures, tasa de ocurrencia de fallos) siempre disminuye.
-					</p>
-					<p>
-						<img src="../images/escalonada.gif" style="height: 400px; width: 700px; margin-left: auto; margin-right: auto; display:block;"/>
-					</p>      
-					<p class="tutorial">
-						Cuando se reparan los errores comunes la fiabilidad aumenta m&aacute;s a comparaci&oacute;
-						de arreglar los que ocurren menos seguido, con lo que es m&aacute;s claro porqu&eacute; el crecimiento en la fiabilidad del sistema no es 
-						constante con cada error arreglado. En los modelos posteriores siempre se toma en cuenta una variable aleatoria para
-						representar a los errores nuevos que se crear&aacute;n por arreglar los errores anteriores.
-					</p>
-					<p>
-						<img src="../images/escalonada2.gif" style="height: 400px; width: 700px; margin-left: auto; margin-right: auto; display:block;"/>
-					</p>      
-					<P class="tutorial">
-						Si se compara el avance de la fiabilidad con modelos similares se podr&iacute;a predecir la fiabilidad extrapolando los datos, aunque
-						estos valores sean aproximados se puede tener una idea de como ser&aacute; el comportamiento general del sistema si no sucede algo
-						que ocasione un cambio dr&aacute;stico. Mientras no se logre llegar al nivel de fiabilidad requerido las pruebas y la depuraci&oacute;n deben 
-						continuar hasta ese momento, en donde las depuraciones consisten en m&aacute;s pruebas estad&iacute;sticas y en tener las especificaciones de 
-						una manera formal para poder entender y arreglar los errores encontrados en las pruebas.
-					</P>
-					<p class="tutorial">
-						Aunque no exista un modelo perfecto para obtener la fiabilidad, el modelo anterior tiene muchas ventajas, por lo que es necesario
-						gastar parte de los recursos en usarlo, conocer con antelaci&oacute;n el crecimiento de la fiabilidad es &uacute;til:
-						<ol class="tutorialul">
-							<li>Se puede calendarizar las pruebas, con la calendarizaci&oacute;n de las pruebas se puede obtener el tiempo necesario que se le dedicara a 
-							las pruebas, con &eacute;ste se puede conocer si es necesario asignar m&aacute;s recursos a la fiabilidad para entregar el proyecto en la
-							fecha acordada con el cliente.</li>
-							<li>Se negocian los requerimientos del sistema, si el modelo de crecimiento de la fiabilidad es lento se puede negociar con los clientes 
-							&eacute;ste punto para saber si se le asignar&aacute;n m&aacute;s recursos a la fiabilidad o si se bajar&aacute; el nivel requerido de fiabilidad.</li>
-						</ol>
-					</p>
-					<a href="metodos.html" class="button">Anterior<i class="icon-chevron-right"></i></a>
-					<a href="seguridad.html" class="button">Siguiente<i class="icon-chevron-right"></i></a>
-				</div> 
-			</di v>
-			<div id="footer_container">     
-				<div id="footer">
-                    <p>P&aacute;gina creada por Meza Peña Augusto en el semestre 2016-1, Facultad de Ingenier&iacute;a, UNAM.</p>
 				</div>
+				<a href="tutorial.html" class="button">Regresar<i class="icon-chevron-right"></i></a>
+			</div> 
+		</div>
+		<div id="footer_container">     
+			<div id="footer">
+                <p>P&aacute;gina creada por Meza Peña Augusto en el semestre 2016-1, Facultad de Ingenier&iacute;a, UNAM.</p>
 			</div>
 		</div> 
 	</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
-<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </html>

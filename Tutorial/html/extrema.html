@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+    <title>Tutorial 4 Metodolog&iacute;as del desarrollo de software</title>
+    <!--[if lt IE 9]>
+    <script src="../js/corrector.js"></script>
+    <![endif]-->
+    <meta name="description" content="p&aacute;gina tutorial del tema 4.? Metodolog&iacute;as del desarrollo de software para el semestre 2016-1"/>
+    <meta name="keywords" content="tutorial,FI,UNAM,Metodologias,desarrollo,software,2016-1,ingenieria"/>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../css/detalles.css" />
+		<!--[if lt IE 8]>
+			<link rel="stylesheet" type="text/css" href="../css/especial.css" />
+		<![endif]-->
+	</head>
+
+	<body>
+		<header>  
+			<div id="header">
+				<div id="banner">
+                    <h1><span>4.1</span>Metodolog&iacute;as del desarrollo de software</h1>
+				</div>
+				<div id="banner_slogan">
+					<h2>Ingenier&iacute;a de Software</h2>
+				</div>
+				<div id="menubar">
+					<ul id="menu">
+						<li><a href="principal.html">Inicio</a></li>
+						<li CLASS="current"><a href="tutorial.html">Tutorial</a></li>
+						<li><a href="cuestionario.html">Cuestionario</a></li>
+						<li><a href="bibliografia.html">Bibliograf&iacute;a</a></li>
+						<li><a href="video.html">Video</a></li>
+						<li>
+							<audio controls>
+								<source src="../music/extrema.mp3" type="audio/mp3"/>
+							</audio>
+							<!--[if lt IE 9]>
+								<embed autostart="false" src="../music/extrema.mp3" height=16 width=100></embed>
+							<![endif]-->
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<div id="main">
+			<div id="site_content">	
+				<div id="content2">
+					<br/><h1>Programación extrema</h1>	
+					<p class="tutorial">
+                        Es llamado extremo porque llevó al límite lo que se conocía como el método iterativo, en un mismo día se pueden presentar varias versiones de un sistema.<br><br>
+                        <img src="../images/extrema.png" width="850px">
+                        En este método los requerimientos se les llama historias de usuario, que a su vez el equipo de trabajo subdivide en tareas. Si llegan a cambiar los requerimientos las historias no implementadas son desechadas y se crean nuevas.  Hay ocasiones en que se requiere diseñar la arquitectura del sistema o la documentación, en ese caso se generan versiones que no producen código y que solo se enfocan en lo anterior, se les conoce con el nombre de picos. <br><br>
+
+                        Al principio se desarrolla una versión mínima, ya sea con lo más urgente o lo más útil para el cliente. Relacionado con esto primero se elabora un diseño simple y se va construyendo sobre el.<br><br>
+
+                        El equipo de desarrollo debe de asegurarse que el código está optimizado, por esta razón se prioriza la refactorización del código para mantenerlo simple y mantenible. <br><br>
+
+                        Los desarrolladores trabajan en parejas (no siempre las mismas) , así uno puede comprobar el trabajo del otro, y cuando se llegue a requerir la creación de una prueba esta sea imparcial. Esto tiene numerosas ventajas; por una parte el equipo se hace responsable de todo el sistema y el equipo debe sacar adelante su tarea y cualquier programador debe poder modificar cualquier función a través de todo el sistema. Los dos verifican su trabajo mutuamente y los errores se detectan más rápido. Favorece la refactorización del código, pues es algo que le conviene a todas las partes del proyecto. Inclusive a pesar de que se pueda disminuir la productividad en parejas los beneficios siguen siendo mayores, reducen los riesgos y distribuyen la carga.<br><br>
+
+                        En cuanto los desarrolladores han terminado una tarea esta se integra a la nueva versión, siempre y cuando se cumplan todas las pruebas, estas versiones no deben consumir mucho tiempo, normalmente dos semanas. Para validar que la versión es satisfactoria debe estar in situ un cliente para corroborarlo y si no es satisfactoria se desecha y se pasa para la siguiente versión.<br><br>
+
+                        A diferencia de los métodos tradicionales, aquí no se diseña previendo el futuro pues los ciclos de vida de estos sistemas son muy cortos y no vale la pena el esfuerzo.<br><br>
+
+                        Un contrapeso de la programación extrema es que poco a poco corrompe el sistema y lo vuelve más difícil de cambiar, más si no hay una buena refactorización del código. Por esto, el código debe ser de fácil comprensión y con una alta simplicidad.<br><br>
+
+                        En la programación extrema el código se prueba conforme a las pruebas diseñadas al principio después con cada historia se van agregando pruebas y el cliente a su vez agrega las pruebas que considere necesarias. Con todo esto se genera un marco de pruebas automatizadas que comprueban que todo esté correcto para cada versión del sistema.
+				</div>
+				<a href="agil.html" class="button">Regresar<i class="icon-chevron-right"></i></a>
+			</div> 
+		</div>
+		<div id="footer_container">     
+			<div id="footer">
+                <p>P&aacute;gina creada por Meza Peña Augusto en el semestre 2016-1, Facultad de Ingenier&iacute;a, UNAM.</p>
+			</div>
+		</div> 
+	</body>
+</html>
