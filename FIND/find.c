@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include <fcntl.h>
-#include <ftw.h>
+#include <fcntl.h> //READ
+#include <ftw.h> // FILE TREE WALK
 
 #define MAX_ARGS 64             //Numero maximo de argumentos por linea
 #define LIMITADORES " \t\r\n\a" //Separadores de Argumentos
@@ -19,6 +19,7 @@ char* permis;
 char* commands;
 int tfnd, nfnd, pfnd, ufnd, efnd;
 
+//Importado del BAMShell
 char **parseo(char *linea)
 {
     int pos = 0;
@@ -45,6 +46,7 @@ char **parseo(char *linea)
     return tokens;
 }
 
+//Importado de BAMShell
 int correr(char **linea_parse)
 {
     int estado,pid;
@@ -59,6 +61,7 @@ int correr(char **linea_parse)
     return 1;
 }
 
+//Mueve la memoria para recortar una parte de un string
 int str_cut(char *str, int begin, int len)
 {
     int l = strlen(str);
@@ -69,6 +72,7 @@ int str_cut(char *str, int begin, int len)
     return len;
 }
 
+//Comprueba que el tipo de archivo corresponda
 int byType(const struct stat st)
 {
     int isTrue=0;
@@ -86,16 +90,18 @@ int byType(const struct stat st)
     return isTrue;
 }
 
+//Comprueba que el nombre corresponda
 int byName(const char *fpath)
 {
     int isTrue=0;
     char backup[strlen(fpath)];
     strcpy(backup,fpath);
-    str_cut(backup,0,strlen(backup)-strlen(name));
+    str_cut(backup,0,strlen(backup)-strlen(name)); //recorta el string hasta mascara nombre
     isTrue=!strcmp(backup,name)?1:isTrue;
     return isTrue;
 }
 
+//Comprueba que el usuario corresponda
 int byUser(const struct stat st)
 {
     int isTrue=0;
@@ -103,6 +109,7 @@ int byUser(const struct stat st)
     return isTrue;
 }
 
+//Comprueba que el permiso corresponda
 int byPerm(const struct stat st)
 {
     int isTrue=0;
@@ -113,6 +120,7 @@ int byPerm(const struct stat st)
     return isTrue;
 }
 
+//Display Info de la busqueda
 static int display_info(const char *fpath, const struct stat *sb, int tflag, struct FTW *ftwbuf)
 {
     if((tfnd?byType(*sb):1) && (ufnd?byUser(*sb):1) && (nfnd?byName(fpath):1) && (pfnd?byPerm(*sb):1))
@@ -129,6 +137,7 @@ int main(int argc, char *argv[])
   nfnd = 0;
   efnd = 0;
 
+  //Parser de las opciones
   while ((opt = getopt(argc, argv, "n:p:t:u:e:")) != -1) {
     switch (opt)
     {
@@ -177,30 +186,33 @@ int main(int argc, char *argv[])
     }
   }
 
+  if((tfnd+ufnd+pfnd+nfnd)==0)  exit(EXIT_FAILURE);
+
   if (optind >= argc) {
       fprintf(stderr, "Se esperaba argumento\n");
       exit(EXIT_FAILURE);
   }
 
+//Importado de PIPE
   if(efnd)
   {
     int p[2];
     pid_t pid,pid2;
     pipe(p);
-    if((pid = fork()) == 0){ // codigo del hijo
+    if((pid = fork()) == 0){
         close(1);
         dup(p[1]);
         close(p[0]); 
         close(p[1]);
         if (nftw((argc < 2) ? "." : argv[optind], display_info, 10, FTW_PHYS)== -1)
-  {
-    perror("myfind");
-    exit(EXIT_FAILURE);
-  }
+        {
+            perror("myfind");
+            exit(EXIT_FAILURE);
+        }
         exit(EXIT_SUCCESS);
     }
     if((pid2 = fork()) == 0)
-    { // codigo del hijo 
+    {
         close(0);
         dup(p[0]);
         close(p[1]); 
@@ -214,13 +226,11 @@ int main(int argc, char *argv[])
     waitpid(pid2,NULL,0);
   }
   else
-  {
     if (nftw((argc < 2) ? "." : argv[optind], display_info, 10, FTW_PHYS)== -1)
     {
-    perror("myfind");
-    exit(EXIT_FAILURE);
+        perror("myfind");
+        exit(EXIT_FAILURE);
     }
-  }
   free(name);
   free(type);
   free(user);
