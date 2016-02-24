@@ -6,8 +6,6 @@ def newpoly(head):
     for exponente in polinomio[::-1]:
         polinomio[exponente] = float(input("Cual es el coeficiente del exponente("+str(exponente)+"): "))
     return poly1d(polinomio[::-1])
-    # return polinomio         SI LALO NO DEJA USAR LIBRERIAS USAMOS ESTE ARREGLO PARA HACER LAS OPERACIONES
-
 
 def valuar(polinomio):
     x = float(input("Valor de x donde desea valuar la funcion: "))
@@ -27,7 +25,7 @@ def iden(polinomio_1, polinomio_2):
 
 
 def opuesto(polinomio):
-    print(polinomio-polinomio-polinomio)
+    print(polinomio*-1)
 
 
 def multi(polinomio_1, polinomio_2):
