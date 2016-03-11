@@ -73,4 +73,4 @@ def booleana(cadena):
     elif simbolo == '|' or simbolo == '∨':
         return booleana(subcadena) or booleana(subcadena2)
 
-print(booleana(input('Cadena: ').replace(" ", '')))
+print("Resultado: "+str(booleana(input('Expresion Booleana: ').replace(" ", ''))))
