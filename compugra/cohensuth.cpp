@@ -44,6 +44,6 @@ int main(){
 	line[1] = 3.0;
 	line[2] = 8.0;
 	line[3] = 6.0;
-	printf("La linea que va de (%1.2f, %1.2f) a (%1.2f, %1.2f) se %s\n",line[0],line[1],line[2],line[3],cohensuth(window,line));
+	printf("La linea de (%1.2f, %1.2f) a (%1.2f, %1.2f) se %s\n",line[0],line[1],line[2],line[3],cohensuth(window,line));
 	return 0;
 }
