@@ -3,8 +3,9 @@ using namespace std;
 #include <stdlib.h>
 #include <fstream>
 #define INPUT_FILE "input.txt"
+#define MAX_LINES 3
 
-
+/* El archivo de entrada debe tener un salto de linea al final de los puntos*/
 int defineRegion(int x, int y, int* window){
 	int a,b,c,d;
 	int region = 0;
@@ -34,11 +35,12 @@ void readLines(int* window, char * filename){
 	char ch;
 	char str_point[11] = "";
 	int step = 0;
+	int lines = 0;
 	int points = 0;
 	int line[4];
 	fstream fin(filename, fstream::in);
 	while (fin >> noskipws >> ch) {
-		if (ch == ',' || ch == '\n') {
+		if (ch == ' ' || ch == '\n') {
 			char *substring = (char *)malloc((step + 1) * sizeof(char));;
 			strncpy(substring, str_point, step);
 			substring[step+1] = '\0';
@@ -47,7 +49,8 @@ void readLines(int* window, char * filename){
 			step = 0;
 			if (points == 4) {
 				points = 0;
-				printf("La linea de (%d, %d) a (%d, %d) se %s\n", line[0], line[1], line[2], line[3], cohenSuth(window, line));
+				lines++;
+				if(lines<=MAX_LINES) printf("La linea de (%d, %d) a (%d, %d) se %s\n", line[0], line[1], line[2], line[3], cohenSuth(window, line));
 			}
 		}
 		else {
