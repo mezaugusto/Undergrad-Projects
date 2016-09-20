@@ -6,24 +6,34 @@
 //*************	Muñoz Alvarez Rosa Maria Yolotzin		******//
 //************************************************************//
 #include "Main.h"
-int c = 0;
-int a = 1;
-int m = 2;
-int star = 3;
-double colors[4][3] = {
-	{0.9098, 0.7882, 0.364},//Beige
-	{0.8196, 0.4196, 0.3294 }, //Cereza
-	{0.6627, 0.8470, 0.7843}, //Azul
-	{0.2627, 0.2039, 0.2784} //Morado
-};
+
+DWORD dwFrames = 0;
+DWORD dwCurrentTime = 0;
+DWORD dwLastUpdateTime = 0;
+DWORD dwElapsedTime = 0;
+
+bool boca_open = true;
+
+double tetera[3] = {0.7882,0.7490,0.6352};
+double tetera_sombra[3] = { 0.5450,0.5176,0.4352};
+double tetera_luz[3] = {0.9450,0.9058,0.7803};
+double hair[3] = {0.3568,0.3176,0.2078};
+double skin[3] = {0.8470,0.7254,0.5647};
+double nose[3] = {0.8627,0.6666,0.5960};
+double teeth[3] = {0.9294,0.9058,0.7921};
+double boca[3] = {0.5529,0.3882,0.2980};
+double lengua[3] = {0.8117,0.4823,0.4352};
+double oberol[3] = {0.4666,0.5254,0.4117};
+double shirt[3] = {0.8745,0.8470,0.7607};
+double strip[3] = {0.3254,0.2352,0.1058 };
+double back[3] = {0.3607,0.3098,0.2156};
+double bag[3] = {0.4588,0.3921,0.2747};
+double coin[3] = {0.6666,0.5607,0.3294};
+double coin_luz[3] = {0.7843,0.7098,0.4078};
+double shirt_sombra[3] = { 0.8039,0.7764, 0.6941};
 void InitGL ( GLvoid )     // Inicializamos parametros
 {
-	//glShadeModel(GL_FLAT);							// Habilitamos Smooth Shading
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);				// Negro de fondo
-	//glClearDepth(1.0f);									// Configuramos Depth Buffer
-	//glEnable(GL_DEPTH_TEST);							// Habilitamos Depth Testing
-	//glDepthFunc(GL_LEQUAL);								// Tipo de Depth Testing a realizar
-	
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);				//Blanco de fondo
 	
 }
 
@@ -32,132 +42,26 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Limiamos pantalla y Depth Buffer	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();									// Reinicializamos la actual matriz Modelview
-
-
-	glPointSize(5.0);
-	glLineWidth(4.0);
-
-	/*glBegin(GL_LINE_LOOP);
-		glVertex3f(1.0, 1.0, -0.2);
-		glVertex3f(1.0, 8.0, -0.2);
-		glVertex3f(5.0, 8.0, -0.2);
-		glVertex3f(5.0, 6.0, -0.2);
-		glVertex3f(2.8, 6.0, -0.2);
-		glVertex3f(2.8, 3.0, -0.2);
-		glVertex3f(5.0, 3.0, -0.2);
-		glVertex3f(5.0, 1.0, -0.2);
-	glEnd();*/
+	glLineWidth(3.0);
 
 	glBegin(GL_QUADS);
-	// Letra C
-	glColor3f(colors[c][0], colors[c][1], colors[c][2]);
-		glVertex3f(1.0, 1.0, -0.2);
-		glVertex3f(2.8, 3.0, -0.2);
-		glVertex3f(5.0, 3.0, -0.2);
-		glVertex3f(5.0, 1.0, -0.2);
-
-		glVertex3f(1.0, 1.0, -0.2);
-		glVertex3f(1.0, 8.0, -0.2);
-		glVertex3f(2.8, 6.0, -0.2);
-		glVertex3f(2.8, 3.0, -0.2);
-
-		glVertex3f(1.0, 8.0, -0.2);
-		glVertex3f(5.0, 8.0, -0.2);
-		glVertex3f(5.0, 6.0, -0.2);
-		glVertex3f(2.8, 6.0, -0.2);
-	//Letra A
-	glColor3f(colors[a][0], colors[a][1], colors[a][2]);
-
-		glVertex3f(6.0, 1.0, -0.2);
-		glVertex3f(9.0, 8.0, -0.2);
-		glVertex3f(9.0, 6.0, -0.2);
-		glVertex3f(7.0, 1.0, -0.2);
-
-		glVertex3f(9.0, 8.0, -0.2);
-		glVertex3f(9.0, 6.0, -0.2);
-		glVertex3f(11.0, 1.0, -0.2);
-		glVertex3f(12.0, 1.0, -0.2);
-
-		glVertex3f(8.2, 4.0, -0.2);
-		glVertex3f(9.8, 4.0, -0.2);
-		glVertex3f(10.2, 3.0, -0.2);
-		glVertex3f(7.8, 3.0, -0.2);
-	//Letra M
-	glColor3f(colors[m][0], colors[m][1], colors[m][2]);
-
-		glVertex3f(13.0, 1.0, -0.2);
-		glVertex3f(13.0, 8.0, -0.2);
-		glVertex3f(14.0, 5.5, -0.2);
-		glVertex3f(14.0, 1.0, -0.2);
-
-		glVertex3f(13.0, 8.0, -0.2);
-		glVertex3f(16.0, 5.0, -0.2);
-		glVertex3f(16.0, 3.5, -0.2);
-		glVertex3f(14.0, 5.5, -0.2);
-
-		glVertex3f(16.0, 3.5, -0.2);
-		glVertex3f(16.0, 5.0, -0.2);
-		glVertex3f(19.0, 8.0, -0.2);
-		glVertex3f(18.0, 5.5, -0.2);
-
-		glVertex3f(19.0, 8.0, -0.2);
-		glVertex3f(19.0, 1.0, -0.2);
-		glVertex3f(18.0, 1.0, -0.2);
-		glVertex3f(18.0, 5.5, -0.2);
-
+	// Prueba
+	if (boca_open) {
+		glColor3f(boca[0], boca[1], boca[2]);
+	}
+	else {
+		glColor3f(skin[0], skin[1], skin[2]);
+	}
+	glVertex3d(474, 545, -0.2);
+	glVertex3d(723, 719, -0.2);
+	glVertex3d(687, 633, -0.2);
+	glVertex3d(556, 507, -0.2);
 	glEnd();
 
-	//Estrella
-	glBegin(GL_POLYGON);
-	glColor3f(colors[star][0], colors[star][1], colors[star][2]);
-		glVertex3f(25.0, 3.0, -0.2);
-		glVertex3f(26.2, 4.2, -0.2);
-		glVertex3f(26.0, 6.0, -0.2);
-		glVertex3f(24.0, 6.0, -0.2);
-		glVertex3f(23.8, 4.2, -0.2);
-	glEnd(); 
-
-	glBegin(GL_TRIANGLES);
-	glColor3f(colors[star][0], colors[star][1], colors[star][2]);
-
-		glVertex3f(24.0, 6.0, -0.2);
-		glVertex3f(25.0, 8.5, -0.2);
-		glVertex3f(26.0, 6.0, -0.2);
-
-		glVertex3f(26.0, 6.0, -0.2);
-		glVertex3f(28.5, 6.0, -0.2);
-		glVertex3f(26.2, 4.2, -0.2);
-
-		glVertex3f(26.2, 4.2, -0.2);
-		glVertex3f(27.0, 1.8, -0.2);
-		glVertex3f(25.0, 3.0, -0.2);
-
-		glVertex3f(25.0, 3.0, -0.2);
-		glVertex3f(23.0, 1.8, -0.2);
-		glVertex3f(23.8, 4.2, -0.2);
-
-		glVertex3f(24.0, 6.0, -0.2);
-		glVertex3f(21.5, 6.0, -0.2);
-		glVertex3f(23.8, 4.2, -0.2);
-	glEnd();
-
-	/*Poner aqui codigo ha dibujar
-	glBegin(GL_POLYGON); //POLYGON, QUADS, TRANGLES, STRIP, FAN
-	glColor3f(0.2, 0.84, 0.87);
-		glVertex3f(0.0, 0.0, -0.2); //regla de union: orden de aparicion de vertices
-		glVertex3f(5.0, 0.0, -0.2);
-	glColor3f(1.0, 1.0, 1.0);
-		glVertex3f(6.0, 5.0, -0.2);	
-	glColor3f(1.0, 0.0, 0.0);
-		glVertex3f(-2.0, 6.0, -0.2);
-		glVertex3f(-14.0, 3.0, -0.2);
-	glEnd();*/
-
-	/*glBegin(GL_POINTS); LINES
-		glVertex3f(-4.0, 3.0, -0.2);
-	glEnd();*/
+	//Augusto
 
 
+	//Rosa
 
 	glFlush();
 }
@@ -174,8 +78,7 @@ void reshape ( int width , int height )   // Creamos funcion Reshape
 	glMatrixMode(GL_PROJECTION);						// Seleccionamos Projection Matrix
 	glLoadIdentity();
 
-	// Ortogonal
-	glOrtho(0,30,0,10,0.1,2);//COORDENADAS
+	glOrtho(0,1600,900,0,0.1,2);//COORDENADAS
 
 	glMatrixMode(GL_MODELVIEW);							// Seleccionamos Modelview Matrix
 	glLoadIdentity();									
@@ -188,23 +91,25 @@ void keyboard(unsigned char key, int x, int y)
 	 {
 		case 27: exit(0);
 				 break;
-		case 'c':
-			if (c == 3) {
-				c = 0;
-				a = 1;
-				m = 2;
-				star = 3;
-			}
-			else {
-				int temp = c;
-				c = a;
-				a = m;
-				m = star;
-				star = temp;
-			}
 	 }
-	  glutPostRedisplay();
-}    
+	 glutPostRedisplay();
+}
+
+void animacion()
+{
+	// Calculate the number of frames per one second:
+	//dwFrames++;
+	dwCurrentTime = GetTickCount(); // Even better to use timeGetTime()
+	dwElapsedTime = dwCurrentTime - dwLastUpdateTime;
+
+	if (dwElapsedTime >= 480)
+	{
+		boca_open = !boca_open;
+		dwLastUpdateTime = dwCurrentTime;
+	}
+
+	glutPostRedisplay();
+}
 
 int main ( int argc, char** argv )   // Main Function
 {
@@ -217,6 +122,7 @@ int main ( int argc, char** argv )   // Main Function
   glutDisplayFunc     ( display );  //Indicamos a Glut función de dibujo
   glutReshapeFunc     ( reshape );	//Indicamos a Glut función en caso de cambio de tamano
   glutKeyboardFunc	  (keyboard);	//Indicamos a Glut función de manejo de teclado
+  glutIdleFunc		  (animacion);
   glutMainLoop        ( );          // 
 
   return 0;
