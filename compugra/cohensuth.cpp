@@ -1,9 +1,12 @@
+//Tarea 1
+//Meza Peña Augusto
+//Muñoz Álvarez Rosa María Yolotzin
 using namespace std; 
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
 #define INPUT_FILE "input.txt"
-#define MAX_LINES 3
+#define MAX_LINES 3 //Numero maximo de lineas por archivo
 
 /* El archivo de entrada debe tener un salto de linea al final de los puntos*/
 int defineRegion(int x, int y, int* window){
