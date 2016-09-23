@@ -2164,7 +2164,525 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	
 	glEnd();
 
+	if (!boca_open) {
+		//mouth background fill
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glBegin(GL_POLYGON);
+		glColor3fv(boca);
+		f(730, 588);//beg middle teeth
+		f(723, 589);
+		f(710, 595);//finishes mid teeth
+		f(697, 606);//finishes secnd
+		f(693, 613);
+		f(689, 627);
+		f(689, 648);
+		f(695, 663);
+		f(700, 670);//beginning tongue left
+		f(704, 674);//beg teeth 1
+		f(711, 679);
+		f(719, 682);//beg teeth 2
+		f(729, 685);
+		f(739, 686);//beg teeth 3
+		f(748, 685);
+		f(755, 682);//beg teeth 4
+		f(762, 678);
+		f(769, 670);//finishes teeth 4
+		f(772, 664);//beginning tongue right
+		f(776, 653);
+		f(775, 628);
+		f(769, 612);
+		f(759, 600);//finishes 4th teeth
+		f(752, 596);//finishes thrd teth
+		f(742, 591);
+		f(730, 588);
+		glEnd();
+
+		//mouth background line
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glBegin(GL_LINE_STRIP);
+		glColor3fv(black);
+		f(730, 588);//beg middle teeth
+		f(723, 589);
+		f(710, 595);//finishes mid teeth
+		f(697, 606);//finishes secnd
+		f(693, 613);
+		f(689, 627);
+		f(689, 648);
+		f(695, 663);
+		f(700, 670);//beginning tongue left
+		f(704, 674);//beg teeth 1
+		f(711, 679);
+		f(719, 682);//beg teeth 2
+		f(729, 685);
+		f(739, 686);//beg teeth 3
+		f(748, 685);
+		f(755, 682);//beg teeth 4
+		f(762, 678);
+		f(769, 670);//finishes teeth 4
+		f(772, 664);//beginning tongue right
+		f(776, 653);
+		f(775, 628);
+		f(769, 612);
+		f(759, 600);//finishes 4th teeth
+		f(752, 596);//finishes thrd teth
+		f(742, 591);
+		f(730, 588);
+		glEnd();
+
+		//tooth fill
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glBegin(GL_POLYGON);
+		glColor3fv(teeth);
+		f(730, 588);//beg middle teeth
+		f(723, 589);
+		f(710, 595);//finishes mid teeth
+		f(697, 606);//finishes secnd
+		f(759, 600);//finishes 4th teeth
+		f(752, 596);//finishes thrd teth
+		f(742, 591);
+		f(730, 588);
+		glEnd();
+
+		//upper tooth line
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glBegin(GL_LINE_STRIP);
+		glColor3fv(black);
+		f(730, 588);//beg middle teeth
+		f(723, 589);
+		f(710, 595);//finishes mid teeth
+		f(697, 606);//finishes secnd
+		f(710, 605);
+		f(710, 595);
+		f(710, 605);
+		f(730, 603);
+		f(730, 588);
+		f(730, 603);
+		f(752, 601);
+		f(752, 596);
+		f(752, 601);
+		f(759, 600);
+		f(752, 595);//finishes thrd teth
+		f(742, 591);
+		f(730, 588);
+		glEnd();
+
+		//tongue fill
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glBegin(GL_POLYGON);
+		glColor3fv(lengua);
+		f(769, 670);
+		f(772, 664);//beginning tongue right
+
+		f(767, 658);
+		f(765, 657);
+		f(759, 654);
+		f(755, 652);
+		f(751, 651);
+		f(747, 651);
+		f(741, 653);
+		f(736, 655);
+		f(731, 659);
+		f(725, 656);
+		f(721, 656);
+		f(718, 656);
+		f(715, 657);
+		f(714, 658);
+		f(709, 660);
+		f(704, 665);
+		f(700, 670);
+		f(704, 674);
+		glEnd();
+
+		//bottom tooth fill
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glBegin(GL_POLYGON);
+		glColor3fv(teeth);
+		f(704, 674);//beg teeth 1
+		f(711, 679);
+		f(719, 682);//beg teeth 2
+		f(729, 685);
+		f(739, 686);//beg teeth 3
+		f(748, 685);
+		f(755, 682);//beg teeth 4
+		f(762, 678);
+		f(769, 670);//finishes teeth 4
+		f(739, 672);
+		glEnd();
+
+
+		//bottom tooth line
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glBegin(GL_LINE_STRIP);
+		glColor3fv(black);
+		f(704, 674);//beg teeth 1
+		f(711, 679);
+		f(719, 682);//beg teeth 2
+		f(719, 673);
+		f(719, 682);
+		f(729, 685);
+		f(739, 686);//beg teeth 3
+		f(739, 672);
+		f(739, 686);
+		f(748, 685);
+		f(755, 682);//beg teeth 4
+		f(754, 671);
+		f(755, 682);
+		f(762, 678);
+		f(769, 670);//finishes teeth 4
+		f(704, 674);
+		glEnd();
+
+
+		//tongue line
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glBegin(GL_LINE_STRIP);
+		glColor3fv(black);
+		f(769, 670);
+		f(772, 664);//beginning tongue right
+		f(767, 658);
+		f(765, 657);
+		f(759, 654);
+		f(755, 652);
+		f(751, 651);
+		f(747, 651);
+		f(741, 653);
+		f(736, 655);
+		f(731, 659);
+		f(725, 656);
+		f(721, 656);
+		f(718, 656);
+		f(715, 657);
+		f(714, 658);
+		f(709, 660);
+		f(707, 662);
+		f(704, 665);
+		f(703, 666);
+		f(700, 670);
+		f(704, 674);
+		glEnd();
+	}
+	else {
+		//mouth background fill
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glBegin(GL_POLYGON);
+		glColor3fv(boca);
+		f(715, 615);
+		f(717, 616);
+		f(738, 615);
+		f(753, 616);
+		f(753, 609);
+		f(751, 605);
+		f(748, 603);
+		f(746, 602);
+		f(729, 603);
+		f(725, 605);
+		f(720, 609);
+		f(715, 615);
+
+		glEnd();
+	
+
+	//mouth background line
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glBegin(GL_LINE_STRIP);
+	glColor3fv(black);
+		f(715, 615);
+		f(717, 616);
+		f(738, 615);
+		f(753, 616);
+		f(753, 609);
+		f(751, 605);
+		f(748, 603);
+		f(746, 602);
+		f(729, 603);
+		f(725, 605);
+		f(720, 609);
+		f(715, 615);
+	glEnd();
+    }
+
+
+
+	//nose fill
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glBegin(GL_POLYGON);
+	glColor3fv(nose);
+	f(729, 550);//beg middle teeth
+	
+	f(723, 551);
+	f(720, 555);//finishes mid teeth
+	f(719, 557);
+	f(718, 560);
+	f(720, 568);
+	f(723, 570);
+	f(728, 572);
+	f(732, 571);
+	f(737, 568);
+	f(737, 566);
+	f(738, 564);
+	f(739, 561);
+	f(739, 558);
+	f(737, 555);
+	f(734, 552);
+	f(729, 550);
+	glEnd();
+
+	//nose line
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glBegin(GL_LINE_STRIP);
+	glColor3fv(black);
+	f(729, 550);//beg middle teeth
+	
+	f(723, 551);
+	f(720, 555);//finishes mid teeth
+	f(719, 557);
+	f(718, 560);
+	f(720, 568);
+	f(723, 570);
+	f(728, 572);
+	f(732, 571);
+	f(737, 568);
+	f(737, 566);
+	f(738, 564);
+	f(739, 561);
+	f(739, 558);
+	f(737, 555);
+	f(734, 552);
+	f(729, 550);
+	glEnd();
+
+	//left eye
+
+	//eye globe fill
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glBegin(GL_POLYGON);
+	glColor3fv(white);
+	f(614, 450);
+	f(603, 452);
+	f(595, 456);
+	f(584, 462);
+	f(572, 472);
+	f(567, 477);
+	f(561, 488);
+	f(560, 491);
+	f(557, 501);
+	f(557, 531);
+	f(563, 547);
+	f(573, 560);
+	f(591, 574);
+	f(604, 580);
+	f(618, 581);
+	f(633, 579);
+	f(647, 575);
+	f(658, 569);
+	f(669, 559);
+	f(678, 545);
+	f(684, 532);
+	f(686, 508);
+	f(683, 499);
+	f(678, 483);
+	f(667, 468);
+	f(655, 460);
+	f(643, 455);
+	f(634, 451);
+	f(614, 450);
+	glEnd();
+
+	//eye line
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glBegin(GL_LINE_STRIP);
+	glColor3fv(black);
+	f(614,450);
+	f(603,452);
+	f(595,456);
+	f(584,462);
+	f(572,472);
+	f(567,477);
+	f(561,488);
+	f(560,491);
+	f(557,501);
+	f(557,531);
+	f(563,547);
+	f(573,560);
+	f(591,574);
+	f(604,580);
+	f(618,581);
+	f(633,579);
+	f(647,575);
+	f(658,569);
+	f(669,559);
+	f(678,545);
+	f(684,532);
+	f(686,508);
+	f(683,499);
+	f(678,483);
+	f(667,468);
+	f(655,460);
+	f(643,455);
+	f(634,451);
+	f(614, 450);
+	glEnd();
+
+
+	//center eye fill
+	if(!boca_open){
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glBegin(GL_POLYGON);
+	glColor3fv(black);
+	f(614,483);
+	f(606,486);
+	f(599,492);
+	f(593,503);
+	f(592,517);
+	f(596,528);
+	f(604,535);
+	f(613,540);
+	f(621,541);
+	f(632,540);
+	f(639,536);
+	f(644,531);
+	f(648,526);
+	f(651,519);
+	f(651,504);
+	f(648,496);
+	f(645,492);
+	f(637,485);
+	f(628,482);
+	f(614, 483);
+	glEnd();
+}
+
+	//right eye
+
+	//eye globe fill
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glBegin(GL_POLYGON);
+	glColor3fv(white);
+	f(808, 437);
+	f(792, 443);
+	f(786, 446);
+	f(775, 456);
+	f(768, 466);
+	f(762, 474);
+	f(759, 488);
+	f(757, 502);
+	f(759, 517);
+	f(764, 530);
+	f(775, 545);
+	f(792, 559);
+	f(800, 563);
+	f(824, 567);
+	f(836, 565);
+	f(846, 562);
+	f(858, 556);
+	f(872, 544);
+	f(881, 532);
+	f(887, 518);
+	f(889, 502);
+	f(887, 484);
+	f(881, 471);
+	f(875, 461);
+	f(861, 447);
+	f(849, 441);
+	f(838, 437);
+	f(827, 436);
+	f(818, 436);
+	f(808, 437);
+	
+	glEnd();
+
+	//eye line
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glBegin(GL_LINE_STRIP);
+	glColor3fv(black);
+	f(808, 437);
+	f(792, 443);
+	f(786, 446);
+	f(775, 456);
+	f(768, 466);
+	f(762, 474);
+	f(759, 488);
+	f(757, 502);
+	f(759, 517);
+	f(764, 530);
+	f(775, 545);
+	f(792, 559);
+	f(800, 563);
+	f(824, 567);
+	f(836, 565);
+	f(846, 562);
+	f(858, 556);
+	f(872, 544);
+	f(881, 532);
+	f(887, 518);
+	f(889, 502);
+	f(887, 484);
+	f(881, 471);
+	f(875, 461);
+	f(861, 447);
+	f(849, 441);
+	f(838, 437);
+	f(827, 436);
+	f(818, 436);
+	f(808, 437);
+	glEnd();
+
+
+	//center eye fill
+	if(!boca_open){
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glBegin(GL_POLYGON);
+	glColor3fv(black);
+	f(826,467);
+	f(813,469);
+	f(803,476);
+	f(797,488);
+	f(797,504);
+	f(799,512);
+	f(805,519);
+	f(811,523);
+	f(818,526);
+	f(824,527);
+	f(832,526);
+	f(838,524);
+	f(845,520);
+	f(850,515);
+	f(854,508);
+	f(856,502);
+	f(856,493);
+	f(852,481);
+	f(847,474);
+	f(841,470);
+	f(837,468);
+	f(829, 467);
+	glEnd();	
+}
 	glFlush();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
  
 void reshape ( int width , int height )   // Creamos funcion Reshape
