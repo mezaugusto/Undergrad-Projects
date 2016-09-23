@@ -27,6 +27,7 @@ float boca[3] = {0.5529f,0.3882f,0.2980f};
 float lengua[3] = {0.8117f,0.4823f,0.4352f};
 float oberol[3] = {0.4666f,0.5254f,0.4117f};
 float oberol_light[3] = { 0.5490f,0.6235f,0.4862f };
+float boton[3] = { 0.1529f,0.1254f,0.0823f };
 float shirt[3] = {0.8745f,0.8470f,0.7607f};
 float strip[3] = {0.3254f,0.2352f,0.1058f };
 float back[3] = {0.3607f,0.3098f,0.2156f};
@@ -110,6 +111,155 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(949, 243);
 	f(935, 142);
 	glEnd();
+	//tetera cuerpo
+	glBegin(GL_POLYGON);
+	f(516, 117);
+	f(516, 121);
+	f(506, 135);
+	f(502, 144);
+	f(497, 157);
+	f(493, 168);
+	f(491, 183);
+	f(489, 198);
+	f(490, 217);
+	f(493, 240);
+	f(497, 257);
+	f(507, 289);
+	f(515, 312);
+	f(520, 326);
+	f(529, 344);
+	f(538, 363);
+	f(848, 334);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	f(848, 337);
+	f(866, 255);
+	f(868, 225);
+	f(872, 187);
+	f(870, 157);
+	f(862, 128);
+	f(849, 106);
+	f(840, 93);
+	f(828, 81);
+	f(828, 77);
+	f(516,117);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	f(832, 72);
+	f(844, 68);
+	f(847, 65);
+	f(847, 58);
+	f(844, 52);
+	f(827, 47);
+	glEnd();
+	
+	glBegin(GL_POLYGON);
+	f(503, 80);
+	f(489, 88);
+	f(487, 91);
+	f(486, 92);
+	f(486, 104);
+	f(490, 108);
+	f(492, 108);
+	f(509, 108);
+	glEnd();
+	
+	glBegin(GL_POLYGON);
+	f(827, 47);
+	f(799, 41);
+	f(750, 36);
+	f(711, 35);
+	f(681, 36);
+	f(643, 39);
+	f(620, 43);
+	f(590, 49);
+	f(571, 54);
+	f(549, 60);
+	f(530, 66);
+	f(518, 72);
+	f(503, 80);
+	f(509, 108);
+	f(832,72);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	f(509,108);
+	f(832,72);
+	f(828, 81);
+	f(516, 117);
+	glEnd();
+	//fin tetera cuerpo
+	//mango tetera
+	glBegin(GL_POLYGON);
+	f(490, 209 );
+	f(495, 158);
+	f(474, 176);
+	f(463, 186);
+	f(450, 201);
+	f(442, 211);
+	f(433, 223);
+	f(425, 236);
+	f(418, 251);
+	f(410, 267);
+	f(407, 280);
+	f(404, 291);
+	f(403, 298);
+	f(403, 309);
+	f(404, 315);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	f(460, 246);
+	f(453, 257);
+	f(446, 272);
+	f(442, 283);
+	f(439, 291);
+	f(404, 315);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	f(404, 315);
+	f(406, 319);
+	f(409, 324);
+	f(414, 331);
+	f(419, 335);
+	f(430, 340);
+	f(439, 343);
+	f(439, 291);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	f(439, 301);
+	f(442, 306);
+	f(445, 310);
+	f(439,314);
+	glEnd();
+	
+	glBegin(GL_POLYGON);
+	f(439, 344);
+	f(439, 314);
+	f(445, 310);
+	f(445, 310);
+	f(450, 312);
+	f(456, 313);
+	f(466, 314);
+	f(492, 314);
+	f(514, 313);
+	f(512, 348);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	f(514,312);
+	f(515, 312);
+	f(520, 326);
+	f(529, 344);
+	f(512, 348);
+	glEnd();
+	//fin tetera mango
+
+
 	glBegin(GL_POLYGON);
 	f(938, 166);
 	f(941, 249);
@@ -117,7 +267,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(966, 293);
 	f(978, 300);
 	glEnd();
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
 	glColor3fv(tetera_sombra);
 	f(978, 300);
@@ -143,6 +292,84 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(892, 192);
 	f(880, 188);
 	glEnd();
+	//sombras cuerpo
+	glBegin(GL_POLYGON);
+	f(605,339);
+	f(555,354 );
+	f(540,320 );
+	f(530,289 );
+	f(519,252 );
+	f(512,227 );
+	f(509,212 );
+	f(508,202 );
+	f(507,189 );
+	f(507,177 );
+	f(507,169 );
+	f(509,159 );
+	f(512,146 );
+	f(526,141 );
+	glEnd();
+	glBegin(GL_POLYGON);
+	f(526,141 );
+	f(559,132 );
+	f(558,143);
+	f(557,155 );
+	f(557,168 );
+	f(560,184 );
+	f(563,205 );
+	f(550, 205);
+	glEnd();
+	glBegin(GL_POLYGON);
+	f(550, 205);
+	f(563, 205);
+	f(565,220);
+	f(568,230);
+	f(569,239 );
+	f(573,251 );
+	f(575,266 );
+	glEnd();
+
+
+	//2da sombra
+	glBegin(GL_POLYGON);
+	f(618,335);
+	f(602,297 );
+	f(616,291 );
+	f(634,334 );
+	glEnd();
+	glBegin(GL_POLYGON);
+	f(602, 297);
+	f(616, 291);
+	f(597,231);
+	f(583,231 );
+	glEnd();
+	glBegin(GL_POLYGON);
+	f(597, 231);
+	f(583, 231);
+	f(577,193 );
+	f(590,191 );
+	glEnd();
+	glBegin(GL_POLYGON);
+	f(577, 193);
+	f(590, 191);
+	f(586, 159);
+	f(575,174 );
+	glEnd();
+	glBegin(GL_POLYGON);
+	f(586, 159);
+	f(575, 174);
+	f(575,153 );
+	f(586,144 );
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	f(575, 153);
+	f(586, 144);
+	f(587,133);
+	f(575,138 );
+	glEnd();
+
+	//tetera iluminada
 	glBegin(GL_POLYGON);
 	glColor3fv(tetera_luz);
 	f(877, 133);
@@ -166,6 +393,33 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(915, 142);
 	f(900, 135);
 	glEnd();
+
+	glBegin(GL_POLYGON);
+	f(754,288);
+	f(829,290 );
+	f(831,267 );
+	f(831,259 );
+	f(832,212 );
+	f(830,192 );
+	f(830,176 );
+	f(750,171 );
+	f(752,191 );
+	f(753,219 );
+	f(755,253 );
+	f(754,287 );
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	f(830,176 );
+	f(825,147 );
+	f(817,121 );
+	f(740,115 );
+	f(747,147 );
+	f(749,157 );
+	f(750,171 );
+	glEnd();
+
+	//contornos tetera
 	glBegin(GL_LINE_STRIP); //<contorno boca tetera
 	glColor3fv(black);
 	f(869, 225);
@@ -368,15 +622,44 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(933,820 );
 		f(913,831 );
 		glEnd(); // fin lado derecho
+	//cuello shirt light
+	glBegin(GL_POLYGON);
+	glColor3fv(shirt_sombra);
+	f(666,718 );
+	f(666,720 );
+	f(672,727 );
+	f(678,731 );
+	f(684,733 );
+	f(701,733 );
+	f(711,728 );
+	f(719,720 );
+	glEnd();
+	glBegin(GL_POLYGON);
+	f(747, 719);
+	f(752, 723);
+	f(762, 728);
+	f(765, 729);
+	f(774, 729);
+	f(781, 726);
+	f(786, 723);
+	f(791, 719);
+	f(795, 712);
+	f(795, 709);
+	glEnd();
 	// Fin shirt
 
 	glBegin(GL_POLYGON);//oberol
-	glColor3fv(oberol_light);
+	glColor3fv(oberol_light); // triangulo de luz strap izquierdo oberol
 	f(623, 757);
 	f(654,769);
 	f(626,740 );
 	glEnd();
 	glBegin(GL_POLYGON);
+	f(628,712);
+	f(658,717 );
+	f(657,745 );
+	glEnd();
+	glBegin(GL_POLYGON);// oberol abajo dark
 	glColor3fv(oberol);
 	f(508, 835);
 	f(507, 853);
@@ -643,7 +926,75 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(850, 755);
 	f(847, 739);
 	glEnd();
+	glBegin(GL_POLYGON);
+	f(802, 707);
+	f(805, 713);
+	f(807, 723);
+	f(809, 735);
+	f(811, 751);
+	f(847, 739);
+	f(845, 731);
+	f(841, 717);
+	f(838, 707);
+	f(833, 695);
+	glEnd();
 	// fin oberol
+
+	glBegin(GL_POLYGON); //boton oberol
+	glColor3fv(boton);
+	f(830, 761);
+	f(827, 762);
+	f(827, 767);
+	f(830, 770);
+	f(834, 770);
+	f(838, 767);
+	f(838, 762);
+	f(830, 760);
+	glEnd();
+
+	//Moño
+	glBegin(GL_POLYGON);
+	glColor3fv(boton);
+	f(725, 720);
+	f(723, 729);
+	f(722, 737);
+	f(721, 747);
+	f(720, 757);
+	f(720, 765);
+	f(720, 789);
+	f(726, 790);
+	f(726, 765);
+	f(726, 752);
+	f(727, 743);
+	f(729, 735);
+	f(729, 729);
+	f(730, 725);
+	f(732, 720);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	f(739, 719);
+	f(742, 725);
+	f(745, 735);
+	f(746, 743);
+	f(748, 752);
+	f(749, 764);
+	f(751, 772);
+	f(751, 777);
+	f(752, 783);
+	f(753, 787);
+	f(753, 788);
+	f(759, 788);
+	f(759, 781);
+	f(758, 774);
+	f(756, 763);
+	f(754, 751);
+	f(752, 740);
+	f(750, 733);
+	f(748, 726);
+	f(748, 722);
+	f(746, 719);
+	glEnd();
 
 	glBegin(GL_POLYGON); // inicio strip
 	glColor3fv(strip);
@@ -707,7 +1058,8 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(868, 881);
 	f(855, 877);
 	f(840, 873);
-	glEnd();// fin strip
+	glEnd();
+	// fin strip
 	glBegin(GL_POLYGON);//mano
 	glColor3fv(skin);
 	f(687, 794);
@@ -832,78 +1184,117 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glEnd();
 	//fin backpack
 	// coins
-	glBegin(GL_POLYGON); // < coin up
-	glColor3fv(coin);
-	f(642, 765);
-	f(644, 768);
-	f(652, 770);
-	f(657, 772);
-	f(664, 773);
-	f(669, 774);
-	f(676, 773);
-	f(675, 774);
-	f(677, 772);
-	f(676, 768);
-	f(674, 765);
-	f(670, 762);
-	f(665, 760);
-	f(660, 759);
-	f(654, 758);
-	f(649, 758);
-	f(645, 759);
-	glEnd(); // </ coin up
-		glBegin(GL_POLYGON); // < coin up light
-		glColor3fv(coin_luz);
-		f(655,767 );
-		f(666,769 );
-		f(665,762 );
-		f(658,759 );
-		f(653,759 );
-		glEnd();// </ coin up light
-			glBegin(GL_POLYGON);// < coin up dark
-			glColor3fv(coin_sombra);
-			f(644,766);
-			f(649,768 );
-			f(657,772 );
-			f(666,772 );
-			f(675,773 );
-			f(675,770 );
-			f(666,771 );
-			f(654,768 );
-			f(644,763 );
-			glEnd();// </ coin up dark
+	if(boca_open){
+		glBegin(GL_POLYGON); // < coin up mouth open
+		glColor3fv(coin);
+		f(642, 765);
+		f(644, 768);
+		f(652, 770);
+		f(657, 772);
+		f(664, 773);
+		f(669, 774);
+		f(676, 773);
+		f(675, 774);
+		f(677, 772);
+		f(676, 768);
+		f(674, 765);
+		f(670, 762);
+		f(665, 760);
+		f(660, 759);
+		f(654, 758);
+		f(649, 758);
+		f(645, 759);
+		glEnd(); // </ coin up mouth open
+			glBegin(GL_POLYGON); // < coin up light
+			glColor3fv(coin_luz);
+			f(655,767 );
+			f(666,769 );
+			f(665,762 );
+			f(658,759 );
+			f(653,759 );
+			glEnd();// </ coin up light
+				glBegin(GL_POLYGON);// < coin up dark
+				glColor3fv(coin_sombra);
+				f(644,766);
+				f(649,768 );
+				f(657,772 );
+				f(666,772 );
+				f(675,773 );
+				f(675,770 );
+				f(666,771 );
+				f(654,768 );
+				f(644,763 );
+				glEnd();// </ coin up dark
+	}
+	else {
+		glBegin(GL_POLYGON);// < coin down mouth closed
+		glColor3fv(coin);
+		f(675, 777);
+		f(675, 772);
+		f(665, 767);
+		f(649, 765);
+		f(642, 766);
+		f(642, 774);
+		glEnd();
+	}
 	glBegin(GL_POLYGON); // < coin down dark
 	glColor3fv(coin_sombra);
-	f(642, 765);
-	f(644, 768);
-	f(652, 770);
-	f(657, 772);
-	f(664, 773);
-	f(669, 774);
-	f(676, 773);
-	f(676, 778);
-	f(670, 780);
-	f(661, 780);
-	f(657, 779);
-	f(648, 777);
-	f(642, 774);
-	f(641, 772);
-	f(641, 769);
-	f(642, 765);
-	glEnd(); // </ coin up
+	if (boca_open) {
+		f(642, 765);
+		f(644, 768);
+		f(652, 770);
+		f(657, 772);
+		f(664, 773);
+		f(669, 774);
+		f(676, 773);
+		f(676, 778);
+		f(670, 780);
+		f(661, 780);
+		f(657, 779);
+		f(648, 777);
+		f(642, 774);
+		f(641, 772);
+		f(641, 769);
+		f(642, 765);
+	}
+	else {
+		f(675, 779);
+		f(650, 778);
+		f(650, 775);
+		f(674, 776);
+	}
+	glEnd(); // </ coin down dark
+		if (!boca_open) {
+			glBegin(GL_POLYGON); // < coin down sombra mouth closed
+			f(653,779 );
+			f(654,775 );
+			f(642,770 );
+			f(642,774 );
+			glEnd();
+		}
 		glBegin(GL_POLYGON); // < coin down light
 		glColor3fv(coin_luz);
 		f(654,774);
 		f(653,772 );
 		f(665,775 );
-		glEnd();// </ coin up light
+		glEnd();// </ coin down light
+		if (!boca_open) {
+			glBegin(GL_POLYGON); // < coin down light
+			f(653,772);
+			f(652,767 );
+			f(661,768 );
+			f(665,775 );
+			glEnd();// </ coin down light
+		}
 			glBegin(GL_POLYGON);// < coin down
 			glColor3fv(coin);
-			f(654, 774);
-			f(653, 772);
-			f(644,768 );
-			f(643,771 );
-			f(648,773 );
+			if (boca_open) {
+				f(654, 774);
+				f(653, 772);
+				f(644, 768);
+				f(643, 771);
+				f(648, 773);
+			}
 			glEnd();// </ coin down dark
 
 	//Lineas del cuerpo
@@ -940,7 +1331,15 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(624, 747);
 		f(625, 738);
 		f(644, 758);
+		glEnd();
+	if (boca_open) {
+		glBegin(GL_LINE_STRIP);// < oberol debajo brazo
+		f(644, 758);
 		f(643, 761);
+		f(642, 765);
+		glEnd();
+	}
+	glBegin(GL_LINE_STRIP);// < oberol debajo brazo
 		f(642, 765);
 		f(638, 765);
 		f(630, 758);
@@ -949,7 +1348,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(623, 765);
 		f(627, 769);
 	glEnd();
-	glBegin(GL_LINE_STRIP);
+	glBegin(GL_LINE_STRIP); // contorno brazo izq debajo
 		f(651, 807);
 		f(653, 807);
 		f(656, 806);
@@ -988,23 +1387,27 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(914, 889);
 		f(915, 900);
 	glEnd();
+	if (boca_open) {
+		glBegin(GL_LINE_STRIP); // < moneda arriba
+		f(642, 765);
+		f(644, 768);
+		f(652, 770);
+		f(657, 772);
+		f(664, 773);
+		f(669, 774);
+		f(676, 773);
+		glEnd(); // </ moneda arriba
+	}
 	glBegin(GL_LINE_STRIP); // < moneda arriba
-		f(642,765);
-		f(644,768 );
-		f(652,770 );
-		f(657,772 );
-		f(664,773 );
-		f(669,774 );
-		f(676,773 );
-		f(676,778 );
-		f(670,780 );
-		f(661,780 );
-		f(657,779 );
-		f(648,777 );
-		f(642,774 );
-		f(641,772 );
-		f(641,769 );
-		f(642,765 );
+	f(676, 778);
+	f(670, 780);
+	f(661, 780);
+	f(657, 779);
+	f(648, 777);
+	f(642, 774);
+	f(641, 772);
+	f(641, 769);
+	f(642, 765);
 	glEnd(); // </ moneda arriba
 	//banda cafe
 	glBegin(GL_LINE_STRIP);
@@ -1013,8 +1416,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(601,711);
 		f(591,699 );
 	glEnd();
-	/* Shirt*/
-	glBegin(GL_LINE_STRIP);
+	glBegin(GL_LINE_STRIP); // strip upper
 		f(626,710);
 		f(639,725 );
 		f(649,734 );
@@ -1036,7 +1438,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(915,876 );
 		f(914,889 );
 	glEnd();
-	glBegin(GL_LINE_STRIP);
+	glBegin(GL_LINE_STRIP); //strip lower
 		f(687,794);
 		f(689,793 );
 		f(690,791 );
@@ -1044,19 +1446,37 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(690,787 );
 		f(687,784 );
 		f(684,782 );
-		f(676,778 );
-		f(676,775 );
-		f(675,774 );
-		f(677,772 );
-		f(676,768 );
-		f(674,765 );
-		f(670,762 );
-		f(665,760 );
-		f(660,759 );
-		f(654,758 );
-		f(649,758 );
-		f(645,759 );
+		f(676, 778);
+		if (boca_open) {
+			f(676, 775);
+			f(675, 774);
+			f(677, 772);
+			f(676, 768);
+			f(674, 765);
+			f(670, 762);
+			f(665, 760);
+			f(660, 759);
+			f(654, 758);
+			f(649, 758);
+			f(645, 759);
+		}
+		else {
+			f(676,773 );
+			f(670,768 );
+			f(665,767 );
+			f(660,766 );
+			f(653,765 );
+			f(648,765 );
+			f(642,766 );
+		}
 	glEnd();
+	//additional strip for mouth closed
+	if (!boca_open) {
+		glBegin(GL_LINE_STRIP);
+		f(650, 764);
+		f(641, 755);
+		glEnd();
+	}
 	/* Shirt*/
 	glBegin(GL_LINE_STRIP);// < contorno brazo izquierdo
 	glColor3fv(black);
@@ -1201,11 +1621,15 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(913,830 );
 	glEnd();
 
-	glBegin(GL_LINE_STRIP);
+	glBegin(GL_LINE_STRIP); //contorno superior oberol 
 	f(686,766 );
 	f(714,766 );
-	f(719,765 );
-	f(730,765 );
+	f(719, 765);
+	glColor3fv(boton);
+	f(721, 765);
+	f(725, 765);
+	glColor3fv(black);
+	f(730, 765);
 	f(739,764 );
 	f(748,764 );
 	f(759,763 );
@@ -1226,11 +1650,106 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(847,739 );
 	f(870,730 );
 	f(886,722 );
+	glEnd();
 
+	glBegin(GL_LINE_STRIP); //contorno straps
+	f(802,707 );
+	f(805,713 );
+	f(807,723 );
+	f(809,735 );
+	f(811,751 );
+	glEnd();
 
+	glBegin(GL_LINE_STRIP);// triangulo strap izquierdo
+	f(659,717);
+	f(659,728);
+	f(658,730 );
+	f(658,742 );
+	glEnd();
 
+	glBegin(GL_LINE_STRIP);
+	f(847,739 );
+	f(845,731 );
+	f(841,717 );
+	f(838,707 );
+	f(833,695 );
+	glEnd(); //fin straps
 
+	glBegin(GL_LINE_STRIP); //contorno boton
+	f(830,761 );
+	f(827,762 );
+	f(827,767 );
+	f(830,770 );
+	f(834,770 );
+	f(838,767 );
+	f(838,762 );
+	f(830,760 );
+	glEnd();
 
+	//cuello shirt
+	glBegin(GL_LINE_STRIP);
+	f(666,718 );
+	f(666,720 );
+	f(672,727 );
+	f(678,731 );
+	f(684,733 );
+	f(701,733 );
+	f(711,728 );
+	f(719,720 );
+	glEnd();
+	glBegin(GL_LINE_STRIP);
+	f(747,719);
+	f(752,723 );
+	f(762,728 );
+	f(765,729 );
+	f(774,729 );
+	f(781,726 );
+	f(786,723 );
+	f(791,719 );
+	f(795,712 );
+	f(795,709 );
+	glEnd();
+
+	//Moño
+	glBegin(GL_LINE_STRIP);
+	f(725,720 );
+	f(723,729 );
+	f(722,737 );
+	f(721,747 );
+	f(720,757 );
+	f(720,765 );
+	f(720,789 );
+	f(726,790 );
+	f(726,765 );
+	f(726,752 );
+	f(727,743 );
+	f(729,735 );
+	f(729,729 );
+	f(730,725 );
+	f(732,720 );
+	glEnd();
+	glBegin(GL_LINE_STRIP);
+	f(739,719 );
+	f(742,725 );
+	f(745,735 );
+	f(746,743 );
+	f(748,752 );
+	f(749,764 );
+	f(751,772 );
+	f(751,777 );
+	f(752,783 );
+	f(753,787 );
+	f(753,788 );
+	f(759,788 );
+	f(759,781 );
+	f(758,774 );
+	f(756,763 );
+	f(754,751 );
+	f(752,740 );
+	f(750,733 );
+	f(748,726 );
+	f(748,722 );
+	f(746,719 );
 	glEnd();
 
 	//Rosa
