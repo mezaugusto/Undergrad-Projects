@@ -26,6 +26,7 @@ float teeth[3] = {0.9294f,0.9058f,0.7921f};
 float boca[3] = {0.5529f,0.3882f,0.2980f};
 float lengua[3] = {0.8117f,0.4823f,0.4352f};
 float oberol[3] = {0.4666f,0.5254f,0.4117f};
+float oberol_light[3] = { 0.5490f,0.6235f,0.4862f };
 float shirt[3] = {0.8745f,0.8470f,0.7607f};
 float strip[3] = {0.3254f,0.2352f,0.1058f };
 float back[3] = {0.3607f,0.3098f,0.2156f};
@@ -51,7 +52,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();									// Reinicializamos la actual matriz Modelview
 	glLineWidth(1.5);
-	glLineWidth(3.0);
 
 
 	//Augusto
@@ -350,8 +350,33 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(560,791 );
 	f(583,763 );
 	f(609,776 );
-	glEnd(); // Fin shirt
+	glEnd(); 
+		glBegin(GL_POLYGON); //lado derecho
+		f(659, 766);
+		f(659,718 );
+		f(897,718 );
+		f(918,766 );
+		glEnd();
+		glBegin(GL_POLYGON);
+		f(874,672 );
+		f(750,719 );
+		f(897,718 );
+		glEnd();
+		glBegin(GL_POLYGON);
+		f(901,765 );
+		f(918,766 );
+		f(933,820 );
+		f(913,831 );
+		glEnd(); // fin lado derecho
+	// Fin shirt
+
 	glBegin(GL_POLYGON);//oberol
+	glColor3fv(oberol_light);
+	f(623, 757);
+	f(654,769);
+	f(626,740 );
+	glEnd();
+	glBegin(GL_POLYGON);
 	glColor3fv(oberol);
 	f(508, 835);
 	f(507, 853);
@@ -369,11 +394,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(588, 759);
 	f(586, 752);
 	f(624, 757);
-	glEnd();
-	glBegin(GL_POLYGON);
-	f(623, 757);
-	f(654,769);
-	f(626,740 );
 	glEnd();
 	glBegin(GL_POLYGON);
 	f(508, 835);
@@ -577,7 +597,54 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(914, 889);
 		f(915, 900);
 		f(855, 900);
-	glEnd();// fin oberol
+	glEnd();
+	//oberol arriba derecha
+	glBegin(GL_POLYGON);
+	f(886, 722);
+	f(889, 730);
+	f(895, 745);
+	f(901, 764);
+	f(906, 784);
+	f(910, 800);
+	f(912, 816);
+	f(914, 827);
+	f(913, 830);
+	f(914, 830);
+	f(916, 850);
+	f(916, 869);
+	f(853, 869);
+	glEnd();
+	glBegin(GL_POLYGON);
+	f(886, 722);
+	f(853, 869);
+	f(701, 803);
+	glEnd();
+	glBegin(GL_POLYGON);
+	f(686, 766);
+	f(813, 763);
+	f(719, 799);
+	glEnd();
+	glBegin(GL_POLYGON);
+	f(748, 765);
+	f(811,752);
+	f(814,769 );
+	glEnd();
+	// oberol arriba izquierda light
+	glBegin(GL_POLYGON);
+	glColor3fv(oberol_light);
+	f(811, 751);
+	f(814, 765);
+	f(814, 769);
+	f(816, 781);
+	f(816, 783);
+	f(822, 783);
+	f(837, 780);
+	f(853, 775);
+	f(850, 755);
+	f(847, 739);
+	glEnd();
+	// fin oberol
+
 	glBegin(GL_POLYGON); // inicio strip
 	glColor3fv(strip);
 	f(626, 710);
@@ -641,33 +708,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(855, 877);
 	f(840, 873);
 	glEnd();// fin strip
-	glBegin(GL_POLYGON);// inicio backpack
-	glColor3fv(back);
-	f(945, 900);
-	f(945, 895);
-	f(946, 892);
-	f(946, 886);
-	f(947, 870);
-	f(940, 856);
-	f(934, 850);
-	f(928, 848);
-	f(922, 848);
-	f(916, 850);
-	f(916, 900);
-	glEnd();
-	glBegin(GL_POLYGON);
-	glColor3fv(bag);
-	f(941, 900);
-	f(941, 892);
-	f(938, 884);
-	f(934, 874);
-	f(930, 870);
-	f(924, 866);
-	f(919, 867);
-	f(918, 868);
-	f(916, 870);
-	f(916, 900);
-	glEnd();//fin backpack
 	glBegin(GL_POLYGON);//mano
 	glColor3fv(skin);
 	f(687, 794);
@@ -690,65 +730,108 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(632, 774);
 	f(632, 780);
 	glEnd();
-	glBegin(GL_POLYGON); // 2do dedo
-	f(632, 774);
-	f(632, 784);
-	f(628, 794);
-	f(628, 800);
-	f(629, 801);
-	f(631, 802);
-	f(634, 801);
-	f(637, 797);
-	f(641, 790);
-	f(641, 791);
-	f(643, 787);
-	f(647, 784);
+		glBegin(GL_POLYGON); // 2do dedo
+		f(632, 774);
+		f(632, 784);
+		f(628, 794);
+		f(628, 800);
+		f(629, 801);
+		f(631, 802);
+		f(634, 801);
+		f(637, 797);
+		f(641, 790);
+		f(641, 791);
+		f(643, 787);
+		f(647, 784);
+		glEnd();
+			glBegin(GL_POLYGON); // < debajo segundo dedo
+			f(641, 791);
+			f(643, 787);
+			f(647, 784);
+			f(650, 785);
+			f(651, 786);
+			f(651, 798);
+			glEnd();
+		glBegin(GL_POLYGON); // tercer dedo
+		f(649, 784);
+		f(651, 786);
+		f(651, 798);
+		f(651,806);
+		f(656,805 );
+		f(658,802 );
+		f(658,800 );
+		f(659, 801);
+		f(660, 795);
+		f(660, 790);
+		f(663, 788);
+		glEnd();
+			glBegin(GL_POLYGON); // debajo tercer dedo
+			f(659, 801);
+			f(660, 795);
+			f(661, 790);
+			f(663, 789);
+			f(664, 789);
+			f(666, 792);
+			f(669, 798);
+			glEnd();
+		glBegin(GL_POLYGON);//ultimo dedo al fin
+		f(663, 789);
+		f(664, 789);
+		f(666, 792);
+		f(669, 798);
+		f(669, 798);
+		f(671, 801);
+		f(674, 804);
+		f(676, 804);
+		f(679, 803);
+		f(679, 801);
+		f(679, 796);
+		f(678, 793);
+		f(678,790);
+		glEnd();
+	glBegin(GL_POLYGON); // inicio mano derecha
+	f(940,856 );
+	f(934,850 );
+	f(928,848 );
+	f(922,848 );
+	f(916, 850);
+	f(914, 830);
+	f(930, 823);
+	f(937, 831);
+	f(942, 840);
+	f(943, 845);
+	f(943, 852);
+	f(941, 855);
+	glEnd();// fin mano derecha
+	glBegin(GL_POLYGON);// inicio backpack
+	glColor3fv(back);
+	f(945, 900);
+	f(945, 895);
+	f(946, 892);
+	f(946, 886);
+	f(947, 870);
+	f(940, 856);
+	f(934, 850);
+	f(928, 848);
+	f(922, 848);
+	f(916, 850);
+	f(916, 900);
 	glEnd();
-	glBegin(GL_POLYGON); // < debajo segundo dedo
-	f(641, 791);
-	f(643, 787);
-	f(647, 784);
-	f(650, 785);
-	f(651, 786);
-	f(651, 798);
-	glEnd();
-	glBegin(GL_POLYGON); // tercer dedo
-	f(649, 784);
-	f(651, 786);
-	f(651, 798);
-	f(651,806);
-	f(656,805 );
-	f(658,802 );
-	f(658,800 );
-	f(659, 801);
-	f(660, 795);
-	f(660, 790);
-	f(663, 788);
-	glEnd();
-	glBegin(GL_POLYGON); // debajo tercer dedo
-	f(659, 801);
-	f(660, 795);
-	f(661, 790);
-	f(663, 789);
-	f(664, 789);
-	f(666, 792);
-	f(669, 798);
-	glEnd();
-	glBegin(GL_POLYGON);//ultimo dedo al fin
-	f(663, 789);
-	f(664, 789);
-	f(666, 792);
-	f(669, 798);
-	f(669, 798);
-	f(671, 801);
-	f(674, 804);
-	f(676, 804);
-	f(679, 803);
-	f(679, 801);
-	f(679, 796);
-	f(678, 793);
-	f(678,790);
-	glEnd();
+		glBegin(GL_POLYGON); // inicio parte clara
+		glColor3fv(bag);
+		f(941, 900);
+		f(941, 892);
+		f(938, 884);
+		f(934, 874);
+		f(930, 870);
+		f(924, 866);
+		f(919, 867);
+		f(918, 868);
+		f(916, 870);
+		f(916, 900);
+		glEnd();
+	//fin backpack
+	// coins
 	glBegin(GL_POLYGON); // < coin up
 	glColor3fv(coin);
 	f(642, 765);
@@ -769,26 +852,26 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(649, 758);
 	f(645, 759);
 	glEnd(); // </ coin up
-	glBegin(GL_POLYGON); // < coin up light
-	glColor3fv(coin_luz);
-	f(655,767 );
-	f(666,769 );
-	f(665,762 );
-	f(658,759 );
-	f(653,759 );
-	glEnd();// </ coin up light
-	glBegin(GL_POLYGON);// < coin up dark
-	glColor3fv(coin_sombra);
-	f(644,766);
-	f(649,768 );
-	f(657,772 );
-	f(666,772 );
-	f(675,773 );
-	f(675,770 );
-	f(666,771 );
-	f(654,768 );
-	f(644,763 );
-	glEnd();// </ coin up dark
+		glBegin(GL_POLYGON); // < coin up light
+		glColor3fv(coin_luz);
+		f(655,767 );
+		f(666,769 );
+		f(665,762 );
+		f(658,759 );
+		f(653,759 );
+		glEnd();// </ coin up light
+			glBegin(GL_POLYGON);// < coin up dark
+			glColor3fv(coin_sombra);
+			f(644,766);
+			f(649,768 );
+			f(657,772 );
+			f(666,772 );
+			f(675,773 );
+			f(675,770 );
+			f(666,771 );
+			f(654,768 );
+			f(644,763 );
+			glEnd();// </ coin up dark
 	glBegin(GL_POLYGON); // < coin down dark
 	glColor3fv(coin_sombra);
 	f(642, 765);
@@ -808,20 +891,22 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(641, 769);
 	f(642, 765);
 	glEnd(); // </ coin up
-	glBegin(GL_POLYGON); // < coin down light
-	glColor3fv(coin_luz);
-	f(654,774);
-	f(653,772 );
-	f(665,775 );
-	glEnd();// </ coin up light
-	glBegin(GL_POLYGON);// < coin down
-	glColor3fv(coin);
-	f(654, 774);
-	f(653, 772);
-	f(644,768 );
-	f(643,771 );
-	f(648,773 );
-	glEnd();// </ coin down dark
+		glBegin(GL_POLYGON); // < coin down light
+		glColor3fv(coin_luz);
+		f(654,774);
+		f(653,772 );
+		f(665,775 );
+		glEnd();// </ coin up light
+			glBegin(GL_POLYGON);// < coin down
+			glColor3fv(coin);
+			f(654, 774);
+			f(653, 772);
+			f(644,768 );
+			f(643,771 );
+			f(648,773 );
+			glEnd();// </ coin down dark
+
+	//Lineas del cuerpo
 	glBegin(GL_LINE_STRIP);
 	glColor3fv(black); // < costado izquierdo cuerpo
 		f(507, 900);
@@ -1061,7 +1146,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(916,870 );
 	glEnd();
 
-	glBegin(GL_LINE_STRIP);
+	glBegin(GL_LINE_STRIP);//backpack shadow
 	f(945,900);
 	f(945,895 );
 	f(946,892 );
@@ -1071,7 +1156,81 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(934,850 );
 	f(928,848 );
 	f(922,848 );
-	f(916,850 );
+	f(916, 850);
+	f(916, 869);
+	glEnd();
+
+	glBegin(GL_LINE_STRIP); // mano derecha
+	f(916,850);
+	f(914,830 );
+	f(930,823 );
+	f(937,831 );
+	f(942,840 );
+	f(943,845 );
+	f(943,852 );
+	f(941,855 );
+	f(940, 856);
+	glEnd();
+
+	glBegin(GL_LINE_STRIP); // contorno externo brazo derecho
+	f(930,823);
+	f(932,821 );
+	f(932,819 );
+	f(928,801 );
+	f(925,788 );
+	f(919,769 );
+	f(913,752 );
+	f(905,734 );
+	f(897,716 );
+	f(891,704 );
+	f(880,684 );
+	f(872,672 );
+	glEnd();
+
+	glBegin(GL_LINE_STRIP);//contorno interno brazo derecho
+	f(867,681 );
+	f(876,697 );
+	f(882,711 );
+	f(889,730 );
+	f(895,745 );
+	f(901,764 );
+	f(906,784 );
+	f(910,800 );
+	f(912,816 );
+	f(914,827 );
+	f(913,830 );
+	glEnd();
+
+	glBegin(GL_LINE_STRIP);
+	f(686,766 );
+	f(714,766 );
+	f(719,765 );
+	f(730,765 );
+	f(739,764 );
+	f(748,764 );
+	f(759,763 );
+	f(765,762 );
+	f(778,760 );
+	f(790,758 );
+	f(799,755 );
+	f(806,753 );
+	f(811,751 );
+	f(814,765 );
+	f(814,769 );
+	f(816,781 );
+	f(816,783 );
+	f(822,783 );
+	f(837,780 );
+	f(853,775 );
+	f(850,755 );
+	f(847,739 );
+	f(870,730 );
+	f(886,722 );
+
+
+
+
+
 	glEnd();
 
 	//Rosa
@@ -2057,7 +2216,7 @@ int main ( int argc, char** argv )   // Main Function
 {
   glutInit            (&argc, argv); // Inicializamos OpenGL
   glutInitDisplayMode (GLUT_RGBA | GLUT_SINGLE); // Display Mode (Clores RGB y alpha | Buffer Sencillo )
-  glutInitWindowSize  (1600*.6, 900*.6);	// Tamaño de la Ventana
+  glutInitWindowSize  (1600*.9, 900*.9);	// Tamaño de la Ventana
   glutInitWindowPosition (0, 0);	//Posicion de la Ventana
   glutCreateWindow    ("Greg"); // Nombre de la Ventana
   InitGL ();						// Parametros iniciales de la aplicacion
