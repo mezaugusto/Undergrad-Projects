@@ -576,7 +576,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	/************************/
 	/*			Cuerpo		*/
 	/************************/
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);//inicio shirt
 	glColor3fv(shirt);
 	f(529,740);
@@ -1184,7 +1183,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glEnd();
 	//fin backpack
 	// coins
-	if(boca_open){
+	if(!boca_open){
 		glBegin(GL_POLYGON); // < coin up mouth open
 		glColor3fv(coin);
 		f(642, 765);
@@ -1239,7 +1238,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	}
 	glBegin(GL_POLYGON); // < coin down dark
 	glColor3fv(coin_sombra);
-	if (boca_open) {
+	if (!boca_open) {
 		f(642, 765);
 		f(644, 768);
 		f(652, 770);
@@ -1264,7 +1263,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(674, 776);
 	}
 	glEnd(); // </ coin down dark
-		if (!boca_open) {
+		if (boca_open) {
 			glBegin(GL_POLYGON); // < coin down sombra mouth closed
 			f(653,779 );
 			f(654,775 );
@@ -1278,7 +1277,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(653,772 );
 		f(665,775 );
 		glEnd();// </ coin down light
-		if (!boca_open) {
+		if (boca_open) {
 			glBegin(GL_POLYGON); // < coin down light
 			f(653,772);
 			f(652,767 );
@@ -1288,7 +1287,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		}
 			glBegin(GL_POLYGON);// < coin down
 			glColor3fv(coin);
-			if (boca_open) {
+			if (!boca_open) {
 				f(654, 774);
 				f(653, 772);
 				f(644, 768);
@@ -1332,7 +1331,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(625, 738);
 		f(644, 758);
 		glEnd();
-	if (boca_open) {
+	if (!boca_open) {
 		glBegin(GL_LINE_STRIP);// < oberol debajo brazo
 		f(644, 758);
 		f(643, 761);
@@ -1387,7 +1386,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(914, 889);
 		f(915, 900);
 	glEnd();
-	if (boca_open) {
+	if (!boca_open) {
 		glBegin(GL_LINE_STRIP); // < moneda arriba
 		f(642, 765);
 		f(644, 768);
@@ -1447,7 +1446,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(687,784 );
 		f(684,782 );
 		f(676, 778);
-		if (boca_open) {
+		if (!boca_open) {
 			f(676, 775);
 			f(675, 774);
 			f(677, 772);
@@ -1471,7 +1470,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		}
 	glEnd();
 	//additional strip for mouth closed
-	if (!boca_open) {
+	if (boca_open) {
 		glBegin(GL_LINE_STRIP);
 		f(650, 764);
 		f(641, 755);
@@ -1752,8 +1751,27 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(746,719 );
 	glEnd();
 
-	//Rosa
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glBegin(GL_LINE_STRIP);
+	glColor3fv(tetera_sombra);
+	f(536,110);
+	f(554,103 );
+	f(611,89 );
+	f(669,81 );
+	f(731,78 );
+	f(772,80 );
+	f(798,84 );
+	glEnd();
+	glBegin(GL_LINE_STRIP);
+	f(795,67 );
+	f(741,61 );
+	f(705,61 );
+	f(674,64 );
+	f(626,71 );
+	f(589,79 );
+	f(548,89 );
+	f(526,96 );
+	glEnd();
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(496, 448);
@@ -1803,7 +1821,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 	
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
 	glColor3fv(skin);
 		f(473, 544);
@@ -1814,7 +1831,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//left ear fill
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
 	glColor3fv(skin);
 	f(472, 535);
@@ -1827,7 +1843,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(497, 617);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
 	glColor3fv(skin);
 	f(473, 544);
@@ -1846,7 +1861,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
 	glColor3fv(skin);
 	f(490, 603);
@@ -1861,7 +1875,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 
 	//hair fill
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);//left part
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(557, 392);
@@ -1943,7 +1956,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//first fringe.
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(594, 378);
@@ -1958,7 +1970,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//second fringe
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);//second
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(686, 410);
@@ -1969,7 +1980,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(649, 426);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(668, 366);
@@ -1985,7 +1995,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//third fringe
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(734, 393);
@@ -1995,7 +2004,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(704, 410);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(731, 366);
@@ -2008,7 +2016,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 	
 	//4th fringe
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(813, 389);
@@ -2018,7 +2026,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(772, 403);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(811, 368);
@@ -2031,7 +2039,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//5th fringe
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(831, 370);
@@ -2044,7 +2052,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//right part
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(913, 413);
@@ -2059,7 +2067,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(831, 370);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);//down fringe
+	//down fringe
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(904, 389);
@@ -2071,7 +2079,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);//upper fringe
+	//upper fringe
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(907, 379);
@@ -2086,7 +2094,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//filling all
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(831, 370);
@@ -2094,7 +2102,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(913, 413);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(852, 334);
@@ -2113,7 +2121,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(831, 370);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(804, 324);
@@ -2137,7 +2145,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	
 	glEnd();
 	
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(720, 324);
@@ -2154,7 +2162,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 	glEnd();
 	
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(731, 366);
@@ -2177,7 +2185,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(803, 323);
 	glEnd();
 	
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(668, 366);
@@ -2212,7 +2220,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(hair);
 		f(594, 378);
@@ -2240,7 +2248,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 	
 	//hair line
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBegin(GL_LINE_STRIP);
 	glColor3fv(black);
 		f(496, 448);
@@ -2510,7 +2517,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//face fill
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(skin);
 	f(473, 544);
@@ -2530,7 +2537,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(473, 544);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(skin);
 	
@@ -2550,7 +2557,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(729, 561);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(skin);
 	f(473, 544);
@@ -2560,7 +2567,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 
 	//right ear fill
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(skin);
 		f(938, 496);
@@ -2571,7 +2578,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(940, 516);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(skin);
 	f(938, 496);
@@ -2582,7 +2589,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(940, 516);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(skin);
 		f(940, 516);
@@ -2599,7 +2606,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		f(938, 557);
 	glEnd();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(skin);
 		f(951, 582);
@@ -2608,7 +2615,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//face line
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBegin(GL_LINE_STRIP);
 	glColor3fv(black);
 		f(473, 544);
@@ -2641,7 +2647,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	
 
 	//right ear line
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBegin(GL_LINE_STRIP);
 	glColor3fv(black);
 		f(938, 496);
@@ -2662,7 +2667,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//left ear line
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBegin(GL_LINE_STRIP);
 	glColor3fv(black);
 		f(472, 535);
@@ -2685,7 +2689,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 	if (!boca_open) {
 		//mouth background fill
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		
 		glBegin(GL_POLYGON);
 		glColor3fv(boca);
 		f(730, 588);//beg middle teeth
@@ -2717,7 +2721,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glEnd();
 
 		//mouth background line
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glBegin(GL_LINE_STRIP);
 		glColor3fv(black);
 		f(730, 588);//beg middle teeth
@@ -2749,7 +2752,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glEnd();
 
 		//tooth fill
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		
 		glBegin(GL_POLYGON);
 		glColor3fv(teeth);
 		f(730, 588);//beg middle teeth
@@ -2763,7 +2766,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glEnd();
 
 		//upper tooth line
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glBegin(GL_LINE_STRIP);
 		glColor3fv(black);
 		f(730, 588);//beg middle teeth
@@ -2786,7 +2788,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glEnd();
 
 		//tongue fill
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		
 		glBegin(GL_POLYGON);
 		glColor3fv(lengua);
 		f(769, 670);
@@ -2813,7 +2815,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glEnd();
 
 		//bottom tooth fill
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		
 		glBegin(GL_POLYGON);
 		glColor3fv(teeth);
 		f(704, 674);//beg teeth 1
@@ -2830,7 +2832,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 
 		//bottom tooth line
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		
 		glBegin(GL_LINE_STRIP);
 		glColor3fv(black);
 		f(704, 674);//beg teeth 1
@@ -2853,7 +2855,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 
 		//tongue line
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		
 		glBegin(GL_LINE_STRIP);
 		glColor3fv(black);
 		f(769, 670);
@@ -2882,7 +2884,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	}
 	else {
 		//mouth background fill
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		
 		glBegin(GL_POLYGON);
 		glColor3fv(boca);
 		f(715, 615);
@@ -2902,7 +2904,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	
 
 	//mouth background line
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	
 	glBegin(GL_LINE_STRIP);
 	glColor3fv(black);
 		f(715, 615);
@@ -2923,7 +2925,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 
 	//nose fill
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(nose);
 	f(729, 550);//beg middle teeth
@@ -2947,7 +2949,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//nose line
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	
 	glBegin(GL_LINE_STRIP);
 	glColor3fv(black);
 	f(729, 550);//beg middle teeth
@@ -2973,7 +2975,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	//left eye
 
 	//eye globe fill
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(white);
 	f(614, 450);
@@ -3008,7 +3010,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glEnd();
 
 	//eye line
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	
 	glBegin(GL_LINE_STRIP);
 	glColor3fv(black);
 	f(614,450);
@@ -3045,7 +3047,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 	//center eye fill
 	if(!boca_open){
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glBegin(GL_POLYGON);
 	glColor3fv(black);
 	f(614,483);
@@ -3069,12 +3071,42 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(628,482);
 	f(614, 483);
 	glEnd();
-}
-
+	}
+	else {
+		glBegin(GL_POLYGON);
+		glColor3fv(black);
+		f(658, 569);
+		f(661, 562);
+		f(661, 561);
+		f(661, 549);
+		f(659, 546);
+		f(654, 539);
+		f(649, 536);
+		f(642, 533);
+		f(634, 532);
+		f(624, 532);
+		f(617, 533);
+		f(608, 535);
+		f(600, 540);
+		f(594, 545);
+		f(591, 549);
+		f(588, 558);
+		f(588, 562);
+		f(589, 566);
+		f(590, 567);
+		f(591, 569);
+		f(592, 571);
+		f(593, 573);
+		f(596, 576);
+		f(604, 580);
+		f(618, 581);
+		f(633, 579);
+		f(647, 575);
+		f(658, 569);
+		glEnd();
+	}
 	//right eye
-
 	//eye globe fill
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
 	glColor3fv(white);
 	f(808, 437);
@@ -3107,11 +3139,8 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(827, 436);
 	f(818, 436);
 	f(808, 437);
-	
 	glEnd();
-
 	//eye line
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBegin(GL_LINE_STRIP);
 	glColor3fv(black);
 	f(808, 437);
@@ -3145,13 +3174,10 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(818, 436);
 	f(808, 437);
 	glEnd();
-
-
 	//center eye fill
-	if(!boca_open){
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
 	glColor3fv(black);
+	if (!boca_open) {
 	f(826,467);
 	f(813,469);
 	f(803,476);
@@ -3174,34 +3200,36 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	f(841,470);
 	f(837,468);
 	f(829, 467);
-	glEnd();	
-}
+	}
+	else {
+		f(836, 565);
+		f(843, 558);
+		f(847, 552);
+		f(849, 546);
+		f(847, 537);
+		f(843, 530);
+		f(838, 525);
+		f(836, 524);
+		f(833, 522);
+		f(823, 518);
+		f(817, 517);
+		f(815, 517);
+		f(808, 516);
+		f(798, 516);
+		f(791, 519);
+		f(781, 527);
+		f(779, 531);
+		f(778, 534);
+		f(777, 540);
+		f(778, 545);
+		f(780, 550);
+		f(792, 559);
+		f(800, 563);
+		f(824, 567);
+		f(836, 565);
+	}
+	glEnd();
 	glFlush();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
  
 void reshape ( int width , int height )   // Creamos funcion Reshape
@@ -3253,7 +3281,7 @@ int main ( int argc, char** argv )   // Main Function
 {
   glutInit            (&argc, argv); // Inicializamos OpenGL
   glutInitDisplayMode (GLUT_RGBA | GLUT_SINGLE); // Display Mode (Clores RGB y alpha | Buffer Sencillo )
-  glutInitWindowSize  (1600*.9, 900*.9);	// Tamaño de la Ventana
+  glutInitWindowSize  (1600*0.6, 900*0.6);	// Tamaño de la Ventana
   glutInitWindowPosition (0, 0);	//Posicion de la Ventana
   glutCreateWindow    ("Greg"); // Nombre de la Ventana
   InitGL ();						// Parametros iniciales de la aplicacion
