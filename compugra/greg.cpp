@@ -5,12 +5,17 @@
 //*************	Augusto Meza Peña				        ******//
 //*************	Muñoz Alvarez Rosa Maria Yolotzin		******//
 //************************************************************//
-#include "Main.h"
+//#include "Main.h"
 
-DWORD dwFrames = 0;
-DWORD dwCurrentTime = 0;
-DWORD dwLastUpdateTime = 0;
-DWORD dwElapsedTime = 0;
+#include "/usr/include/GL/gl.h"
+#include <GL/freeglut.h>
+
+//DWORD dwFrames = 0;
+//DWORD dwCurrentTime = 0;
+//DWORD dwLastUpdateTime = 0;
+//DWORD dwElapsedTime = 0;
+
+int count = 0;
 
 bool boca_open = true;
 
@@ -3265,14 +3270,19 @@ void animacion()
 {
 	// Calculate the number of frames per one second:
 	//dwFrames++;
-	dwCurrentTime = GetTickCount(); // Even better to use timeGetTime()
-	dwElapsedTime = dwCurrentTime - dwLastUpdateTime;
-
-	if (dwElapsedTime >= 480)
+	//dwCurrentTime = GetTickCount(); // Even better to use timeGetTime()
+	//dwElapsedTime = dwCurrentTime - dwLastUpdateTime;
+	count+=1;
+	if (count >= 1000)
+	{
+		boca_open = !boca_open;
+		count = 0;
+	}
+	/*if (dwElapsedTime >= 480)
 	{
 		boca_open = !boca_open;
 		dwLastUpdateTime = dwCurrentTime;
-	}
+	}*/
 
 	glutPostRedisplay();
 }
