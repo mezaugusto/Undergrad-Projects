@@ -1,11 +1,13 @@
-# NTUST
-# Homework #1
-# Traveling Salesman Problem solved via state space search
-# Author: Augusto Meza Peña
-# Student ID: E10515019
-# Date: 24 March 2017
-# Notes: Must be runned in python3, graphviz package via pip required for graphic visualization
+"""
+NTUST
+Homework #1
+Traveling Salesman Problem solved via state space search
+Author: Augusto Meza Peña
+Student ID: E10515019
+Date: 24 March 2017
+Notes: Must be runned in python3, graphviz package via pip required for graphic visualization
 
+"""
 from graphviz import Digraph
 from random import choice
 
@@ -94,6 +96,7 @@ class Graph(object):
 			weight += self.weightForNodes(node1,node2)
 		return weight
 
+#example usage
 a = Node("A")
 b = Node("B")
 c = Node("C")
