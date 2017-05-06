@@ -1,8 +1,23 @@
+"""
+NTUST
+Homework #2
+K-means Algorithm
+Author: Augusto Meza Peña
+Student ID: E10515019
+Date: 6 May 2017
+Notes: In order to plot, plotly must be installed and configured
+
+"""
+input_data_filename = "data.txt"
+with_number_of_clusters = 3 #works with any number of clusters
+plot = False #If set to false, results will be saved in files named Cluster 1.csv,... etc
+
 import csv
 from random import choice
 from math import sqrt,pow,isclose
-import plotly.plotly as py
-import plotly.graph_objs as go
+if plot:
+    import plotly.plotly as py
+    import plotly.graph_objs as go
 
 def distance_between(pA,pB):
     return sqrt(pow(pA.x - pB.x, 2.0) + pow(pA.y - pB.y, 2.0))
@@ -20,7 +35,7 @@ class KmeansFrom:
         self.k = k
         self.clusters = dict()
         self.centroids = list()
-        self.define_initial_clusters()
+        self.define_initial_clusters() #Step 1: Define the initial partition
 
 
     def obtainPoints(self):
@@ -87,7 +102,7 @@ class KmeansFrom:
             for centroid in centroids:
                 self.points.append(centroid[1])
         elif self.same_centroids(centroids):
-            return self.graph(iter)
+            return self.output(iter)
         self.centroids = centroids
         self.assign_points(iter+1)
         return iter
@@ -99,7 +114,15 @@ class KmeansFrom:
                 same = False
         return same
 
-    def graph(self,iter):
+    def output(self,iter):
+        if not plot:
+            for i in self.clusters:
+                with open('Cluster '+str(i+1)+'.csv','w') as output:
+                    writer = csv.DictWriter(output, fieldnames=['x', 'y'])
+                    writer.writeheader()
+                    for point in self.clusters[i]:
+                        writer.writerow({'x':point.x,'y':point.y})
+            return
         data = []
         for i in self.clusters:
             cluster = self.clusters[i]
@@ -124,9 +147,5 @@ class KmeansFrom:
 
             )
         py.plot(fig, filename='kmeans.png')
-
-
-input_data_filename = "data.txt"
-with_number_of_clusters = 3
 
 KmeansFrom(input_data_filename,with_number_of_clusters)
