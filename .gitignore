@@ -1,4 +1,7 @@
-*.idea/*
+Lalo/.idea/*
+NPL/.idea/*
+apit/.idea/*
+.idea/*
 # Compiled source #
 ###################
 *.com
