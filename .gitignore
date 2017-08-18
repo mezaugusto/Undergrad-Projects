@@ -1,7 +1,8 @@
 Lalo/.idea/*
 NPL/.idea/*
 apit/.idea/*
-.idea/*
+*/.idea/*
+*/.ipynb_checkpoints/*
 # Compiled source #
 ###################
 *.com
