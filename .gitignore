@@ -41,3 +41,7 @@ apit/.idea/*
 ehthumbs.db
 Thumbs.db
 
+apit/solo_espanol.txt
+apit/index.txt
+apit/tokens.txt
+*.txt
