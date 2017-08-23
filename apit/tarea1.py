@@ -53,4 +53,4 @@ def index_big_file(input_file,output_file='index.txt',encoding='utf-8',chunk_siz
         return index
 
 
-index = index_big_file(input_file="solo_espanol.txt",chunk_size_mb=5)
+index = index_big_file(input_file="solo_espanol.txt",chunk_size_mb=1)
