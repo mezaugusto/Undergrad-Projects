@@ -1,18 +1,21 @@
 
 
-from re import sub,M as Multiline   #exoresiones regulares
+from re import sub,compile   #exoresiones regulares
 from nltk.tokenize import TweetTokenizer
 from sys import  stdout             #imprimir progreso
 from os import stat                 #obtener el tamaño del archivo
 from pprint import pprint           #imprimir el indice con formato
 
+nus = compile(r'@([^\s]+)')
+nur = compile(r'http[s]?://([^\s]+)')
+nre = compile(r'((\D)\2{2,})')
 
 def clean_and_tokenize(chunk):
     """ Limpiar y tokenizar un pedazo del archivo"""
-    nouser = sub(r'@([^\s]+)', '@USUARIO',chunk.lower())            #cambiar los ususarios por un placeholder
-    nourl = sub(r'http[s]?://([^\s]+)', 'URL', nouser)      #igualmente para las URL's
-    nolocale = sub(r'es\n', '\n', nourl, 0, Multiline)      #quitar el es del final de linea
-    noredundancy = sub(r'((\D)\2{2,})', r'\1_\1', nolocale) #poner un guion
+    nouser = sub(nus, '@USUARIO',chunk.lower())            #cambiar los ususarios por un placeholder
+    nourl = sub(nur, 'URL', nouser)      #igualmente para las URL's
+    nolocale = nourl.replace('es\n','\n')
+    noredundancy = sub(nre, r'\1_\1', nolocale) #poner un guion
     return noredundancy
 
 def update_progress(progress):
