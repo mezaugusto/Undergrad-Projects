@@ -1,22 +1,29 @@
-
-
 from re import sub,compile   #exoresiones regulares
 from nltk.tokenize import TweetTokenizer
 from sys import  stdout             #imprimir progreso
 from os import stat                 #obtener el tamaño del archivo
 from pprint import pprint           #imprimir el indice con formato
+from unicodedata import category
+from sys import maxunicode
+from string import digits
+import unicodedata
 
+punctuation = [char for char in range(maxunicode) if category(chr(char)).startswith('P')]
+punctuation.extend([818,35,36,43,94,96])
+punctuation.extend([ord(x) for x in digits])
 nus = compile(r'@([^\s]+)')
 nur = compile(r'http[s]?://([^\s]+)')
-nre = compile(r'((\D)\2{2,})')
+nre = compile(r'((\w)\2{2,})')
 
-def clean_and_tokenize(chunk):
+def clean_and_tokenize(chunk,tokenizer):
     """ Limpiar y tokenizar un pedazo del archivo"""
-    nouser = sub(nus, '@USUARIO',chunk.lower())            #cambiar los ususarios por un placeholder
-    nourl = sub(nur, 'URL', nouser)      #igualmente para las URL's
-    nolocale = nourl.replace('es\n','\n')
-    noredundancy = sub(nre, r'\1_\1', nolocale) #poner un guion
-    return noredundancy
+    result = sub(nus, '@USUARIO', chunk.lower())  # cambiar los ususarios por un placeholder
+    result = sub(nur, '', result)  # igualmente para las URL's
+    result = result.translate(dict.fromkeys(punctuation))
+    result = ''.join((c for c in unicodedata.normalize('NFD', result) if unicodedata.category(c) != 'Mn'))
+    result = result.replace('es\n', 'FDTWEET\n')
+    result = result.replace('caracterdesaltodelinea', '')
+    return tokenizer.tokenize(sub(nre, r'\2_\2', result))
 
 def update_progress(progress):
     """ Actualiza el string de progreso"""
@@ -42,7 +49,7 @@ def index_big_file(input_file,output_file='index.txt',encoding='utf-8',chunk_siz
     update_progress(0)
     with open(input_file, encoding=encoding) as corpus:
         for chunk in iter(lambda:corpus.read(chunk_size_mb),''):
-            tokens+=tknzr.tokenize(clean_and_tokenize(chunk))
+            tokens+=clean_and_tokenize(chunk,tknzr)
             current_progress += step
             update_progress(current_progress)
             if debug and current_progress > 5:
@@ -56,4 +63,4 @@ def index_big_file(input_file,output_file='index.txt',encoding='utf-8',chunk_siz
         return index
 
 
-index = index_big_file(input_file="solo_espanol.txt",chunk_size_mb=1)
+index = index_big_file(input_file="solo_espanol.txt",chunk_size_mb=1,debug=True)
