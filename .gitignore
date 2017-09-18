@@ -46,3 +46,4 @@ apit/index.txt
 apit/tokens.txt
 *.txt
 *.pickle
+*.csv
